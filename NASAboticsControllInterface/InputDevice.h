@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "CommandStruct.h"
+#include "CommandHolder.h"
 
 class InputDevice 
 {
@@ -20,6 +20,6 @@ public:
 	/*
 		Virtual Functions
 	*/
-	virtual CommandStruct GetInput() = 0;
+	virtual CommandHolder* GetInput() = 0;
 
 };
