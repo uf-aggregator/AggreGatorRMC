@@ -3,7 +3,9 @@
 NASAboticsControlInterface::NASAboticsControlInterface(QWidget *parent) :
 	QWidget(parent), input_device_(NULL), input_device_thread_(),
 	send_frequency_(0.10f), send_cmd_timer_(NULL),
-	running_average_count_(1), stop_input_thread_(false)
+	running_average_count_(1), stop_input_thread_(false),
+	kXBeeAddress(0xC0A80105), kXBeePort(0x2000),
+	launchpad_sock_(NULL) 
 {
 
 	current_cmd_ = new CommandHolder();
@@ -12,8 +14,12 @@ NASAboticsControlInterface::NASAboticsControlInterface(QWidget *parent) :
 	send_cmd_timer_ = new QTimer(this);
 	send_cmd_timer_->start((int)(1000.0f / send_frequency_));
 
+	//set up Sockets
+	launchpad_sock_ = new QTcpSocket(this);
+
 	//setup GUI
 	ui.setupUi(this);
+
 }
 
 NASAboticsControlInterface::~NASAboticsControlInterface()
@@ -25,6 +31,12 @@ NASAboticsControlInterface::~NASAboticsControlInterface()
 
 	if(current_cmd_ != NULL)
 		delete current_cmd_;
+
+	if(launchpad_sock_ != NULL)
+	{
+		launchpad_sock_->disconnectFromHost();
+		delete launchpad_sock_;
+	}
 }
 
 /*
@@ -105,12 +117,16 @@ void NASAboticsControlInterface::AttachNewController(InputDevice* input_device)
 //Write out the commands to be sent to communicator
 void NASAboticsControlInterface::WriteCommands()
 {
-	running_average_count_ = 0;								//reset running average
+	running_average_count_ = 0;									//reset running average
 
 	//std::cout << current_cmd.DebugOutput();					//output debug info
-	std::string output = current_cmd_->SendCommand();			//Set output = to the formated command
+	std::string output = /*current_cmd_->SendCommand()*/current_cmd_->DebugOutput();			//Set output = to the formated command
 
 	//send the formated command out on the network
+	if(launchpad_sock_->state() == QAbstractSocket::ConnectedState)
+	{
+		launchpad_sock_->write(output.c_str());
+	}
 }
 
 void NASAboticsControlInterface::SetSendRate(double frequency)
@@ -185,6 +201,24 @@ void NASAboticsControlInterface::ConnectWidgets()
 
 	QObject::connect(ui.take_picture_button_, SIGNAL(clicked()),
 		current_cmd_, SLOT(TakePicture()));
+
+	//connect/disconect to Launchpad
+	QObject::connect(ui.connect_to_launchpad_btn_, SIGNAL(clicked()),
+		this, SLOT(LaunchpadBtn()));
+
+	//Connected to launchpad
+	QObject::connect(launchpad_sock_, SIGNAL(connected()), 
+		this, SLOT(ConnectLaunchpad()));
+
+	//disconnect launchpad
+	QObject::connect(launchpad_sock_, SIGNAL(disconnected()),
+		this, SLOT(DisconnectLaunchpad()));
+
+	//Connect/Disconect to O-droid
+
+	//Socket error
+	QObject::connect(launchpad_sock_, SIGNAL(error(QAbstractSocket::SocketError)),
+		this, SLOT(SocketError(QAbstractSocket::SocketError)));
 }
 
 //used to stop the input thread!
@@ -193,4 +227,64 @@ void NASAboticsControlInterface::StopInputThread()
 	stop_input_thread_ = true;
 	input_device_thread_.join();
 	stop_input_thread_ = false;
+}
+
+//Launchpad button pressed
+void NASAboticsControlInterface::LaunchpadBtn()
+{
+	switch(launchpad_sock_->state())
+	{
+	case QAbstractSocket::ConnectedState:
+		launchpad_sock_->disconnectFromHost();
+		break;
+	case QAbstractSocket::UnconnectedState:
+		launchpad_sock_->connectToHost(kXBeeAddress, kXBeePort);
+		break;
+	default:
+		break;
+	}
+}
+
+//launchpad connect
+void NASAboticsControlInterface::ConnectLaunchpad()
+{
+	ui.connect_to_launchpad_btn_->setText("Disconnect launchpad");
+	//QMessageBox::information(this, "Launchpad connection state", "Connected to Launchpad");
+}
+
+void NASAboticsControlInterface::DisconnectLaunchpad()
+{
+	ui.connect_to_launchpad_btn_->setText("Connect launchpad");
+	//QMessageBox::information(this, "Launchpad connection state", "Disconnected from Launchpad");
+}
+
+//Connect to the O-Droid
+void NASAboticsControlInterface::OdroidBtn()
+{
+
+}
+
+//Socket Communication error
+void NASAboticsControlInterface::SocketError(QAbstractSocket::SocketError error)
+{
+	std::string error_num = "Error number " +
+			static_cast<std::ostringstream*>(&(std::ostringstream() << static_cast<int>(error)))->str() +    //convert int to string
+			": ";
+
+	//append appropriate message
+	switch(error)
+	{
+	case QAbstractSocket::ConnectionRefusedError:
+		error_num.append("Connection refused or connection time out");
+		break;
+	case QAbstractSocket::HostNotFoundError:
+		error_num.append("Host not found");
+		break;
+	default:
+		error_num.append("See http://qt-project.org/doc/qt-4.8/qabstractsocket.html#SocketError-enum for details");
+		
+	}
+
+	//display warning
+	QMessageBox::warning(this, "Connection Error", error_num.c_str());
 }

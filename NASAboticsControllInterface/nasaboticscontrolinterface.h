@@ -12,6 +12,11 @@
 #include "InputDeviceEnum.h"
 #include "XBoxController.h"
 #include <qtimer.h>
+#include <qmessagebox.h>
+#include <QtNetwork\qtcpsocket.h>
+#include <QtNetwork\qhostaddress.h>
+#include <sstream>
+#include <string>
 
 class NASAboticsControlInterface : public QWidget
 {
@@ -34,6 +39,13 @@ private:
 												//between sends
 	//GUI stuff
 	Ui::NASAboticsControlInterfaceClass ui;		//GUI stuff (honestly IDK what this is yet)
+
+	//Sockets
+	//Launchpad socket
+	const QHostAddress kXBeeAddress;			//192.168.1.110 (C0.A8.01.6E)
+	const uint16_t kXBeePort;					//0x2000
+	QTcpSocket* launchpad_sock_;				//a socket to connect to the X-bee attached to the launchpad
+
 
 public:
 	NASAboticsControlInterface(QWidget *parent = 0);
@@ -61,9 +73,16 @@ private:
 public slots:
 	void SetSendRate(double frequency);			//sets the frequency of sending cmds to the NASAbot
 	void AttachNewController(int new_device);	//Takes an enum value and attaches the appropriate controller
+	void LaunchpadBtn();						//When connect to launchpad is pressed this will ether connect or disconect launchpad
+	void OdroidBtn();							//When launchpad connect btn is pressed this will ether connect or disconect Odroid
 
 	//Write command
 	void WriteCommands();
+
+	//socket slots
+	void ConnectLaunchpad();					//Changes settings when it connects to Launchpad
+	void DisconnectLaunchpad();					//chane settings when disconnect from launcpad
+	void SocketError(QAbstractSocket::SocketError error);		//Envoked when a socket has a communication error
 };
 
 #endif // NASABOTICSCONTROLINTERFACE_H

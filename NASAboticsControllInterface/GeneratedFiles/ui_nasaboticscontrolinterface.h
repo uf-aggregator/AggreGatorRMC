@@ -72,12 +72,14 @@ public:
     QPushButton *take_picture_button_;
     QPushButton *poll_ladar_button_;
     QLabel *label;
+    QPushButton *connect_to_odroid_btn_;
+    QPushButton *connect_to_launchpad_btn_;
 
     void setupUi(QWidget *NASAboticsControlInterfaceClass)
     {
         if (NASAboticsControlInterfaceClass->objectName().isEmpty())
             NASAboticsControlInterfaceClass->setObjectName(QStringLiteral("NASAboticsControlInterfaceClass"));
-        NASAboticsControlInterfaceClass->resize(595, 282);
+        NASAboticsControlInterfaceClass->resize(638, 286);
         gridLayout = new QGridLayout(NASAboticsControlInterfaceClass);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -337,6 +339,16 @@ public:
 
         gridLayout->addWidget(label, 4, 0, 1, 1);
 
+        connect_to_odroid_btn_ = new QPushButton(NASAboticsControlInterfaceClass);
+        connect_to_odroid_btn_->setObjectName(QStringLiteral("connect_to_odroid_btn_"));
+
+        gridLayout->addWidget(connect_to_odroid_btn_, 0, 1, 1, 1);
+
+        connect_to_launchpad_btn_ = new QPushButton(NASAboticsControlInterfaceClass);
+        connect_to_launchpad_btn_->setObjectName(QStringLiteral("connect_to_launchpad_btn_"));
+
+        gridLayout->addWidget(connect_to_launchpad_btn_, 0, 2, 1, 1);
+
         QWidget::setTabOrder(send_frequency_spinbox_, controller_select_);
         QWidget::setTabOrder(controller_select_, bucket_pitch_control_slider_);
         QWidget::setTabOrder(bucket_pitch_control_slider_, bucket_pitch_control_spinbox_);
@@ -387,6 +399,8 @@ public:
         take_picture_button_->setText(QApplication::translate("NASAboticsControlInterfaceClass", "Take Picture", 0));
         poll_ladar_button_->setText(QApplication::translate("NASAboticsControlInterfaceClass", "Poll LADAR", 0));
         label->setText(QString());
+        connect_to_odroid_btn_->setText(QApplication::translate("NASAboticsControlInterfaceClass", "Connect to Odroid", 0));
+        connect_to_launchpad_btn_->setText(QApplication::translate("NASAboticsControlInterfaceClass", "Connect to Launchpad", 0));
     } // retranslateUi
 
 };
