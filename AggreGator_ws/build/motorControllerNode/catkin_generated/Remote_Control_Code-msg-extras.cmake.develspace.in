@@ -1,0 +1,2 @@
+set(Remote_Control_Code_MESSAGE_FILES "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/motorMSG.msg;/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/I2CMSG.msg")
+set(Remote_Control_Code_SERVICE_FILES "")
