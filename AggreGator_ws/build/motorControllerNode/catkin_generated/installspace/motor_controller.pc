@@ -1,8 +1,0 @@
-prefix=/home/viki/GIThub/NASAboticsCode/AggreGator_ws/install
-
-Name: motor_controller
-Description: Description of motor_controller
-Version: 0.0.0
-Cflags: -I/home/viki/GIThub/NASAboticsCode/AggreGator_ws/install/include
-Libs: -L/home/viki/GIThub/NASAboticsCode/AggreGator_ws/install/lib 
-Requires: message_runtime
