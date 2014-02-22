@@ -3,6 +3,7 @@ CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles/
 build/
+devel/
 bin/
 msg_gen/
 srv_gen/
