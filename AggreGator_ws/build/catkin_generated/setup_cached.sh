@@ -7,4 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export PWD="/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build"
+export PWD="/home/viki/GIThub/NASAboticsCode/AggreGator_ws/build"

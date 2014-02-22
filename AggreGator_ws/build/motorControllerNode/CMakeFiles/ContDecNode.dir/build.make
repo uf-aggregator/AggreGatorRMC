@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src
+CMAKE_SOURCE_DIR = /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build
+CMAKE_BINARY_DIR = /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build
 
 # Include any dependencies generated for this target.
 include motorControllerNode/CMakeFiles/ContDecNode.dir/depend.make
@@ -47,18 +47,18 @@ include motorControllerNode/CMakeFiles/ContDecNode.dir/progress.make
 include motorControllerNode/CMakeFiles/ContDecNode.dir/flags.make
 
 motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o: motorControllerNode/CMakeFiles/ContDecNode.dir/flags.make
-motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o: /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/src/ContDecNode.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/CMakeFiles $(CMAKE_PROGRESS_1)
+motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o: /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/src/ContDecNode.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o"
-	cd /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/motorControllerNode && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o -c /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/src/ContDecNode.cpp
+	cd /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/motorControllerNode && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o -c /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/src/ContDecNode.cpp
 
 motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.i"
-	cd /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/motorControllerNode && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/src/ContDecNode.cpp > CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.i
+	cd /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/motorControllerNode && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/src/ContDecNode.cpp > CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.i
 
 motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.s"
-	cd /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/motorControllerNode && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/src/ContDecNode.cpp -o CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.s
+	cd /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/motorControllerNode && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/src/ContDecNode.cpp -o CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.s
 
 motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o.requires:
 .PHONY : motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o.requires
@@ -76,41 +76,41 @@ ContDecNode_OBJECTS = \
 # External object files for target ContDecNode
 ContDecNode_EXTERNAL_OBJECTS =
 
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/libroscpp.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/libboost_signals-mt.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/libboost_filesystem-mt.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/librosconsole.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/librosconsole_log4cxx.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/librosconsole_backend_interface.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/liblog4cxx.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/libboost_regex-mt.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/libxmlrpcpp.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/libroscpp_serialization.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/librostime.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/libboost_date_time-mt.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/libboost_system-mt.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/libboost_thread-mt.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/x86_64-linux-gnu/libpthread.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/libcpp_common.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/libconsole_bridge.so
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: motorControllerNode/CMakeFiles/ContDecNode.dir/build.make
-/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: motorControllerNode/CMakeFiles/ContDecNode.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode"
-	cd /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/motorControllerNode && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ContDecNode.dir/link.txt --verbose=$(VERBOSE)
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/libroscpp.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/libboost_signals-mt.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/libboost_filesystem-mt.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/librosconsole.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/librosconsole_log4cxx.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/librosconsole_backend_interface.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/liblog4cxx.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/libboost_regex-mt.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/libxmlrpcpp.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/libroscpp_serialization.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/librostime.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/libboost_date_time-mt.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/libboost_system-mt.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/libboost_thread-mt.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /usr/lib/i386-linux-gnu/libpthread.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/libcpp_common.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: /opt/ros/hydro/lib/libconsole_bridge.so
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: motorControllerNode/CMakeFiles/ContDecNode.dir/build.make
+/home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode: motorControllerNode/CMakeFiles/ContDecNode.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable /home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode"
+	cd /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/motorControllerNode && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ContDecNode.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-motorControllerNode/CMakeFiles/ContDecNode.dir/build: /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode
+motorControllerNode/CMakeFiles/ContDecNode.dir/build: /home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib/motor_controller/ContDecNode
 .PHONY : motorControllerNode/CMakeFiles/ContDecNode.dir/build
 
 motorControllerNode/CMakeFiles/ContDecNode.dir/requires: motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o.requires
 .PHONY : motorControllerNode/CMakeFiles/ContDecNode.dir/requires
 
 motorControllerNode/CMakeFiles/ContDecNode.dir/clean:
-	cd /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/motorControllerNode && $(CMAKE_COMMAND) -P CMakeFiles/ContDecNode.dir/cmake_clean.cmake
+	cd /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/motorControllerNode && $(CMAKE_COMMAND) -P CMakeFiles/ContDecNode.dir/cmake_clean.cmake
 .PHONY : motorControllerNode/CMakeFiles/ContDecNode.dir/clean
 
 motorControllerNode/CMakeFiles/ContDecNode.dir/depend:
-	cd /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/motorControllerNode /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/motorControllerNode/CMakeFiles/ContDecNode.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/motorControllerNode /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/motorControllerNode/CMakeFiles/ContDecNode.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : motorControllerNode/CMakeFiles/ContDecNode.dir/depend
 

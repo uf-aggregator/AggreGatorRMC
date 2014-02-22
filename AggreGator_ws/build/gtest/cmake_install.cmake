@@ -2,7 +2,7 @@
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

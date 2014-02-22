@@ -1,0 +1,8 @@
+prefix=/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel
+
+Name: motor_controller
+Description: Description of motor_controller
+Version: 0.0.0
+Cflags: -I/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/include
+Libs: -L/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib 
+Requires: message_runtime

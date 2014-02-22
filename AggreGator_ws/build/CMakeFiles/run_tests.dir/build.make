@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src
+CMAKE_SOURCE_DIR = /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build
+CMAKE_BINARY_DIR = /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build
 
 # Utility rule file for run_tests.
 
@@ -57,6 +57,6 @@ CMakeFiles/run_tests.dir/clean:
 .PHONY : CMakeFiles/run_tests.dir/clean
 
 CMakeFiles/run_tests.dir/depend:
-	cd /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/CMakeFiles/run_tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/CMakeFiles/run_tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/run_tests.dir/depend
 

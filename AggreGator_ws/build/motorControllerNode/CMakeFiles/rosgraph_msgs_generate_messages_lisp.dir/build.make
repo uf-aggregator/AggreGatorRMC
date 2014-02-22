@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src
+CMAKE_SOURCE_DIR = /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build
+CMAKE_BINARY_DIR = /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build
 
 # Utility rule file for rosgraph_msgs_generate_messages_lisp.
 
@@ -53,10 +53,10 @@ motorControllerNode/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build: r
 .PHONY : motorControllerNode/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
 
 motorControllerNode/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/clean:
-	cd /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/motorControllerNode && $(CMAKE_COMMAND) -P CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/cmake_clean.cmake
+	cd /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/motorControllerNode && $(CMAKE_COMMAND) -P CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/cmake_clean.cmake
 .PHONY : motorControllerNode/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/clean
 
 motorControllerNode/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/depend:
-	cd /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/motorControllerNode /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/motorControllerNode/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/motorControllerNode /home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/motorControllerNode/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : motorControllerNode/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/depend
 

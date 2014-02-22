@@ -2,7 +2,7 @@
 
 message(STATUS "motor_controller: 2 messages, 0 services")
 
-set(MSG_I_FLAGS "-Imotor_controller:/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg;-Istd_msgs:/opt/ros/hydro/share/std_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Imotor_controller:/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg;-Istd_msgs:/opt/ros/hydro/share/std_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -18,13 +18,13 @@ add_custom_target(motor_controller_generate_messages ALL)
 ### Section generating for lang: gencpp
 ### Generating Messages
 _generate_msg_cpp(motor_controller
-  "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/I2CMSG.msg"
+  "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/I2CMSG.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/motor_controller
 )
 _generate_msg_cpp(motor_controller
-  "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/motorMSG.msg"
+  "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/motorMSG.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/motor_controller
@@ -53,13 +53,13 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS motor_controller_generate_messages_
 ### Section generating for lang: genlisp
 ### Generating Messages
 _generate_msg_lisp(motor_controller
-  "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/I2CMSG.msg"
+  "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/I2CMSG.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/motor_controller
 )
 _generate_msg_lisp(motor_controller
-  "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/motorMSG.msg"
+  "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/motorMSG.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/motor_controller
@@ -88,13 +88,13 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS motor_controller_generate_messages_
 ### Section generating for lang: genpy
 ### Generating Messages
 _generate_msg_py(motor_controller
-  "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/I2CMSG.msg"
+  "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/I2CMSG.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/motor_controller
 )
 _generate_msg_py(motor_controller
-  "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/motorMSG.msg"
+  "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/msg/motorMSG.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/motor_controller

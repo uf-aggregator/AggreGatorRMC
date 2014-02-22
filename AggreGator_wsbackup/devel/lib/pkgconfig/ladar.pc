@@ -1,0 +1,8 @@
+prefix=/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel
+
+Name: ladar
+Description: Description of ladar
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib 
+Requires: message_runtime

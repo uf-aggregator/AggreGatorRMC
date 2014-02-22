@@ -4,7 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/src/ContDecNode.cpp" "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/build/motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o"
+  "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/src/ContDecNode.cpp" "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/motorControllerNode/CMakeFiles/ContDecNode.dir/src/ContDecNode.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 
