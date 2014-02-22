@@ -1,6 +1,0 @@
-/home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/CMakeFiles/clean_test_results.dir
-/home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/CMakeFiles/doxygen.dir
-/home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/gtest/CMakeFiles/gtest.dir
-/home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/gtest/CMakeFiles/gtest_main.dir
-/home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/CMakeFiles/run_tests.dir
-/home/viki/GIThub/NASAboticsCode/AggreGator_ws/build/CMakeFiles/tests.dir
