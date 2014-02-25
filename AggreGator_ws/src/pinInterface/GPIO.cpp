@@ -8,16 +8,135 @@ using namespace std;
 
 void GPIOWrite(int pin_number, int value)
 {
-	string gpioLookUp[27] = {"105.7","114.1","87.6","96.4","105.3","87.4","87.3","96.3","105.6","96.7","87.1","96.2","87.2","114.0","87.0","gnd","87.7","105.0","96.1","96.6","105.2","105.5","96.5","114.3","114.2","105.1","105.4"};
+	string gpioLookUp[27] = 							   					  {"112","115","93","100","108","91","90","99","111","103","88","98","89","114","87","GND","94",
+"105","97","102","107","110","101","117","116","106","109"};
 	
 	int pinNumber = pinNumber;
 	int pinNumberIndex = pinNumber - 17;
-	int gpioChip = gpioLookUp[pinNumberIndex]; 
+	string gpioExport = gpioLookUp[pinNumberIndex]; 
+	int value = value;
+	ofstream gpioFile;
+	
+	cout << "Exporting GPIO" << gpioExport << "which is physical pin " << pinNumber << " on the Odroid X2 header";
+	
+
+	gpioFile.open("/sys/class/gpio/export", ios::out);
+	if(gpioFile.is_open())
+	{
+		gpioFile << gpioExport
+		gpioFile.close();
+	}
+	else
+	{
+		cout  << "Unable to open /sys/class/gpio/export";
+	}
+
+	gpioFile.open("/sys/class/gpio/gpio" + gpioExport + "/direction", ios::out);
+	
+	if(gpioFile.is_open())
+	{
+		gpioFile << "out";
+		gpioFile.close();
+	}
+	else
+	{
+		cout  << "Unable to open /sys/class/gpio/gpio" << gpioExport << "/direction";
+	}
+	
+	gpioFile.open("/sys/class/gpio/" + gpioExport + "/value", ios::out);
+	if(gpioFile.is_open())
+	{
+		stringstream ss;
+		ss << value;
+		string val = ss.str();
+
+		gpioFile << val;
+		gpioFile.close();
+	}
+	else
+	{
+		cout  << "Unable to open /sys/class/gpio/" << gpioExport << "/value";
+	}
+
+	gpioFile.open("/sys/class/gpio/unexport", ios::out);
+	if(gpioFile.is_open())
+	{
+		gpioFile << gpioExport;
+		gpioFile.close();
+	}
+	else
+	{
+		cout  << "Unable to open /sys/class/gpio/unexport";
+	}
+	
+	delete[] gpioLookUp;
+}
+	
+
+void GPIOWrite(int pin_number, int value)
+{
+	string gpioLookUp[27] = 							   					  {"112","115","93","100","108","91","90","99","111","103","88","98","89","114","87","GND","94",
+"105","97","102","107","110","101","117","116","106","109"};
+	
+	int pinNumber = pinNumber;
+	int pinNumberIndex = pinNumber - 17;
+	string gpioExport = gpioLookUp[pinNumberIndex]; 
 	int value = value;
 	fstream gpioFile;
 	
-	gpioFile.open("/sys/class/gpio/gpio" + gpioChip + "/direction")  
+	cout << "Exporting GPIO" << gpioExport << "which is physical pin " << pinNumber << " on the Odroid X2 header";
 	
-	if(!gpioFile.is_open)
+
+	gpioFile.open("/sys/class/gpio/export", ios::out);
+	if(gpioFile.is_open())
 	{
-		cout << "Exporting GPIO" << pin_number << 
+		gpioFile << gpioExport
+		gpioFile.close();
+	}
+	else
+	{
+		cout  << "Unable to open /sys/class/gpio/export";
+	}
+
+	gpioFile.open("/sys/class/gpio/gpio" + gpioExport + "/direction", ios::out);
+	
+	if(gpioFile.is_open())
+	{
+		gpioFile << "in";
+		gpioFile.close();
+	}
+	else
+	{
+		cout  << "Unable to open /sys/class/gpio/gpio" << gpioExport << "/direction";
+	}
+	
+	gpioFile.open("/sys/class/gpio/" + gpioExport + "/value", ios::in);
+	if(gpioFile.is_open())
+	{
+		while(getline (gpioFile,line))
+		{
+			istringstream ss(line);
+			int val;
+			ss >> val;
+		}
+		gpioFile.close();
+	}
+	else
+	{
+		cout  << "Unable to open /sys/class/gpio/" << gpioExport << "/value";
+	}
+
+	gpioFile.open("/sys/class/gpio/unexport", ios::out);
+	if(gpioFile.is_open())
+	{
+		gpioFile << gpioExport;
+		gpioFile.close();
+	}
+	else
+	{
+		cout  << "Unable to open /sys/class/gpio/unexport";
+	}
+	
+	delete[] gpioLookUp;
+}
+
