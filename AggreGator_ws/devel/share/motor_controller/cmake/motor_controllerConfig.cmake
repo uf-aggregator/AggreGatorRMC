@@ -67,14 +67,14 @@ set(motor_controller_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(motor_controller_SOURCE_PREFIX /home/geoff/github/NASAboticsCode/AggreGator_ws/src/motorControllerNode)
-  set(motor_controller_DEVEL_PREFIX /home/geoff/github/NASAboticsCode/AggreGator_ws/devel)
+  set(motor_controller_SOURCE_PREFIX /home/faytxzen/GitHub/NASAboticsCode/AggreGator_ws/src/motorControllerNode)
+  set(motor_controller_DEVEL_PREFIX /home/faytxzen/GitHub/NASAboticsCode/AggreGator_ws/devel)
   set(motor_controller_INSTALL_PREFIX "")
   set(motor_controller_PREFIX ${motor_controller_DEVEL_PREFIX})
 else()
   set(motor_controller_SOURCE_PREFIX "")
   set(motor_controller_DEVEL_PREFIX "")
-  set(motor_controller_INSTALL_PREFIX /home/geoff/github/NASAboticsCode/AggreGator_ws/install)
+  set(motor_controller_INSTALL_PREFIX /home/faytxzen/GitHub/NASAboticsCode/AggreGator_ws/install)
   set(motor_controller_PREFIX ${motor_controller_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(motor_controller_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/geoff/github/NASAboticsCode/AggreGator_ws/devel/include" STREQUAL "")
+if(NOT "/home/faytxzen/GitHub/NASAboticsCode/AggreGator_ws/devel/include" STREQUAL "")
   set(motor_controller_INCLUDE_DIRS "")
-  set(_include_dirs "/home/geoff/github/NASAboticsCode/AggreGator_ws/devel/include")
+  set(_include_dirs "/home/faytxzen/GitHub/NASAboticsCode/AggreGator_ws/devel/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
@@ -103,7 +103,7 @@ if(NOT "/home/geoff/github/NASAboticsCode/AggreGator_ws/devel/include" STREQUAL 
         message(FATAL_ERROR "Project 'motor_controller' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  Ask the maintainer 'viki <dkelly67@ufl.edu>' to fix it.")
       endif()
     else()
-      message(FATAL_ERROR "Project 'motor_controller' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/geoff/github/NASAboticsCode/AggreGator_ws/src/motorControllerNode/${idir}'.  Ask the maintainer 'viki <dkelly67@ufl.edu>' to fix it.")
+      message(FATAL_ERROR "Project 'motor_controller' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/faytxzen/GitHub/NASAboticsCode/AggreGator_ws/src/motorControllerNode/${idir}'.  Ask the maintainer 'viki <dkelly67@ufl.edu>' to fix it.")
     endif()
     _list_append_unique(motor_controller_INCLUDE_DIRS ${include})
   endforeach()
@@ -122,7 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/geoff/github/NASAboticsCode/AggreGator_ws/devel/lib;/opt/ros/hydro/lib)
+    foreach(path /home/faytxzen/GitHub/NASAboticsCode/AggreGator_ws/devel/lib;/opt/ros/hydro/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
