@@ -15,7 +15,7 @@ generate_messages(
 
 catkin_package(
 	
-	INCLUDE_DIRS include
+	#INCLUDE_DIRS include				#Not working for some reason
 	CATKIN_DEPENDS message_runtime
 )
 
