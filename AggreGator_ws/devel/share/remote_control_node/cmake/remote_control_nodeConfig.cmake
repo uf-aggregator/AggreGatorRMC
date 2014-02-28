@@ -122,7 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib;/opt/ros/hydro/lib)
+    foreach(path /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib;/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib;/opt/ros/hydro/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -145,7 +145,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(remote_control_node_EXPORTED_TARGETS "")
+set(remote_control_node_EXPORTED_TARGETS "remote_control_node_generate_messages_cpp;remote_control_node_generate_messages_lisp;remote_control_node_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${remote_control_node_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -182,7 +182,7 @@ foreach(depend ${depends})
   list(APPEND remote_control_node_EXPORTED_TARGETS ${${remote_control_node_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "remote_control_node-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${remote_control_node_DIR}/${extra})
