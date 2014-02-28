@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(remote_control_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "" STREQUAL "")
+if(NOT "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/include" STREQUAL "")
   set(remote_control_INCLUDE_DIRS "")
-  set(_include_dirs "")
+  set(_include_dirs "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
@@ -122,7 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib;/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib;/opt/ros/hydro/lib)
+    foreach(path /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib;/opt/ros/hydro/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -153,7 +153,7 @@ foreach(t ${remote_control_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "")
+set(depends "message_runtime")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls
