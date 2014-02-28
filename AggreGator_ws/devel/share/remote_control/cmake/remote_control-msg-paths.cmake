@@ -2,4 +2,4 @@
 
 # message include dirs in develspace
 set(remote_control_MSG_INCLUDE_DIRS "")
-set(remote_control_MSG_DEPENDENCIES std_msgs)
+set(remote_control_MSG_DEPENDENCIES sensor_msgs)

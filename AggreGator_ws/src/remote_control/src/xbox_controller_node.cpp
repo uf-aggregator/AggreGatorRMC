@@ -1,6 +1,47 @@
 #include "ros/ros.h"
-#include <std_msgs/String.h>
-#include <sstream>
+#include <sensor_msgs/Joy.h>
+//#include <std_msgs/String.h>
+//#include <sstream>
+
+enum XboxButtons
+{
+    A,
+    B,
+    X,
+    Y,
+    LB,
+    RB,
+    BACK,
+    START,
+    POWER,
+    LEFT_STICK,
+    RIGHT_STICK
+};
+
+/*
+ * LR = left right
+ * UD = up down
+ * Left = left stick
+ * Right = right stick
+ * RT = right trigger
+ * LT = left trigger
+ */
+enum XboxAxis
+{
+    LR_LEFT,
+    UD_LEFT,
+    LR_RIGHT,
+    UD_RIGHT,
+    RT,
+    LT,
+    LR_DPAD,        //I'm not sure this is actually the DPAD
+    UD_DPAD
+};
+
+void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
+{
+    ROS_INFO("%f", joy->axes[LR_LEFT]);
+}
 
 int main(int argc, char** argv)
 {
@@ -10,35 +51,15 @@ int main(int argc, char** argv)
     //Node handler this is how you work with ROS
     ros::NodeHandle n;
 
-    /*
-     * Advertise on the remote_control topic
-     * returns a publisher
-     * Parm1 = ???
-     * Parm2 = num of messages to buffer
-     */
-    ros::Publisher remote_control_pub = n.advertise<std_msgs::String>("remote_control", 1000);
-
     //Set the send in Hz
     ros::Rate loop_rate(10);
 
-    // debug stuff
-    int count = 0;
+    //Set up subscriber
+    ros::Subscriber joy_sub = n.subscribe<sensor_msgs::Joy>("joy", 10, XboxCallback);
+
     while (ros::ok())
     {
-        std_msgs::String msg;
 
-        std::stringstream ss;
-        ss << "Hello AggreGator " << count;
-        msg.data = ss.str();
-
-        ROS_INFO("%s", msg.data.c_str());
-
-
-        remote_control_pub.publish(msg);
-
-        ros::spinOnce();
-
-        loop_rate.sleep();
-        ++count;
+        ros::spin();
     }
 }
