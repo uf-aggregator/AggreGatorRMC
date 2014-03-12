@@ -168,3 +168,9 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 add_executable(wheel_motor_node src/wheel_motor_node.cpp)
 target_link_libraries(wheel_motor_node ${catkin_LIBRARIES})
 #add_dependencies(talker beginner_tutorials_generate_messages_cpp)
+
+add_executable(bucket_motor_node src/bucket_motor_node.cpp)
+target_link_libraries(bucket_motor_node ${catkin_LIBRARIES})
+
+add_executable(linear_actuator_node src/linear_actuator_node.cpp)
+target_link_libraries(linear_actuator_node ${catkin_LIBRARIES})
