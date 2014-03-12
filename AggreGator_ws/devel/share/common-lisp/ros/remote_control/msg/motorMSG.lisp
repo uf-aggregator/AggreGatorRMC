@@ -109,10 +109,10 @@
   "f0f17242b728bc2f9b92df609716f415")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<motorMSG>)))
   "Returns full string definition for message of type '<motorMSG>"
-  (cl:format cl:nil "~%int16 LF_motorVal~%int16 RF_motorVal~%int16 RR_motorVal~%int16 LR_motorVal~%~%~%"))
+  (cl:format cl:nil "int16 LF_motorVal~%int16 RF_motorVal~%int16 RR_motorVal~%int16 LR_motorVal~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'motorMSG)))
   "Returns full string definition for message of type 'motorMSG"
-  (cl:format cl:nil "~%int16 LF_motorVal~%int16 RF_motorVal~%int16 RR_motorVal~%int16 LR_motorVal~%~%~%"))
+  (cl:format cl:nil "int16 LF_motorVal~%int16 RF_motorVal~%int16 RR_motorVal~%int16 LR_motorVal~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <motorMSG>))
   (cl:+ 0
      2

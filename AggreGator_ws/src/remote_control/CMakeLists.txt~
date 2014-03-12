@@ -4,8 +4,9 @@ project(remote_control)
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
   roscpp
-  sensor_msgs
+  #sensor_msgs
   genmsg
+  std_msgs
 )
 
 
@@ -16,13 +17,14 @@ find_package(catkin REQUIRED COMPONENTS
 #Generate messages in the msg folder
 add_message_files( FILES
 	motorMSG.msg
+	#int16.msg
 )
 
 ## Generate added messages and services with any dependencies listed here
-#generate_messages(
+generate_messages(
 #   DEPENDENCIES
 #   sensor_msgs
-# )
+)
 
 ###################################
 ## catkin specific configuration ##

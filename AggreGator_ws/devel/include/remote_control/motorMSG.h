@@ -185,8 +185,7 @@ struct Definition< ::remote_control::motorMSG_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "\n\
-int16 LF_motorVal\n\
+    return "int16 LF_motorVal\n\
 int16 RF_motorVal\n\
 int16 RR_motorVal\n\
 int16 LR_motorVal\n\

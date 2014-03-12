@@ -4,8 +4,8 @@ project(remote_control)
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
   roscpp
-  sensor_msgs
   genmsg
+  std_msgs
 )
 
 

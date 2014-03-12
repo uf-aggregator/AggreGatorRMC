@@ -1,6 +1,7 @@
 #include "ros/ros.h"
 #include <sensor_msgs/Joy.h>
 #include "remote_control/motorMSG.h"
+#include <std_msgs/builtin_int16.h>
 #include "ros/time.h"
 #include "ros/duration.h"
 
@@ -14,6 +15,8 @@ ros::Time last_time, current_time;
 const ros::Duration send_time(0.1);       //time in seconds between sends
 
 ros::Publisher motor_pub;
+ros::Publisher linear_actuator_pub;
+ros::Publisher bucket_motor_pub;
 
 
 enum XboxButtons
@@ -131,8 +134,14 @@ int main(int argc, char** argv)
     ros::Subscriber joy_sub = n.subscribe<sensor_msgs::Joy>("joy", 10, XboxCallback);
 
 
-    //Setu up publisher on motor_rc, buffer up to 10 msgs
+    //Set up publisher on motor_rc, buffer up to 10 msgs
     motor_pub = n.advertise<remote_control::motorMSG>("motor_rc", 10);
+
+    //Set up publisher on linear_actuator_rc
+    linear_actuator_pub = n.advertise<std_msgs::Int16>("linear_actuator_rc", 10);
+
+    //Set up publisher on bucket_motor_rc
+    bucket_motor_pub = n.advertise<std_msgs::Int16>("bucket_motor_rc", 10);
 
     //Initilize time
     last_time = ros::Time::now();
