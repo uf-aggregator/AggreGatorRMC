@@ -11,14 +11,14 @@
 int running_avg = 0;
 double left_motors(0.0), right_motors(0.0);
 double bucket_motor(0.0), linear_actuator(0.0);
+unsigned short int bucket_motor_dir(1), linear_actuator_dir(1);
 
 //Timing variables
 ros::Time last_time, current_time;
-double send_time_float(0.1);
 ros::Duration send_time(0.1);       //time in seconds between sends
 
 //Ros publishers and subscribers
-ros::Publisher motor_pub;
+ros::Publisher wheel_motor_pub;
 ros::Publisher linear_actuator_pub;
 ros::Publisher bucket_motor_pub;
 
@@ -83,14 +83,33 @@ void WriteMotorValue()
         wheel_msg.RF_motorVal = right;
 
         //Format actuator and bucket drum data
+        /*
+         *      LT and RT are maped to:
+         *          not pressed = 1
+         *          half = 0
+         *          full pressed = -1
+         *      Transform to:
+         *          not pressed = 0
+         *          half = 16384
+         *          full pressed = 32767
+         *      Math:
+         *          value += 1
+         *          value /= 2
+         *          value *= 32767
+         *
+         *      Make positive or negative based on booleans:
+         *          value *= direction
+         *          direction = 1 or -1 based on LB and RB
+         */
+        int actuator = (linear_actuator + 1) * 16384 * linear_actuator_dir;
+        int bucket = (bucket_motor + 1) * 16384 * bucket_motor_dir;
+
         std_msgs::Int16 actuator_msg, bucket_msg;
-        int actuator = linear_actuator * 32767;
-        actuator_msg.data = actuator;
-        int bucket = bucket_motor * 32767;
-        bucket_msg.data = bucket;
+        actuator_msg.data = actuator;               //Float -> int
+        bucket_msg.data = bucket;                   //Float -> int
 
         //Send msg
-        motor_pub.publish(wheel_msg);
+        wheel_motor_pub.publish(wheel_msg);
         linear_actuator_pub.publish(actuator_msg);
         bucket_motor_pub.publish(bucket_msg);
     }
@@ -113,7 +132,7 @@ void AvgMotorInput(float left, float right, float bucket, float actuator)
         bucket_motor = ((running_avg - 1) * bucket_motor + bucket) / running_avg;
         linear_actuator = ((running_avg - 1) * linear_actuator + actuator) / running_avg;
     }
-    else
+    else //Set to first value after last send
     {
         left_motors = left;
         right_motors = right;
@@ -126,6 +145,13 @@ void AvgMotorInput(float left, float right, float bucket, float actuator)
 
 void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
+    //Check for button presses
+    if(joy->buttons[LB])
+        linear_actuator_dir *= -1;
+
+    if(joy->buttons[RB])
+        bucket_motor_dir *= -1;
+
     AvgMotorInput(joy->axes[UD_LEFT], joy->axes[UD_RIGHT], joy->axes[LT], joy->axes[RT]);
 }
 
@@ -142,14 +168,16 @@ int main(int argc, char** argv)
     ros::NodeHandle n;
 
     //Get the parameters
-    n.param<double>("/remote_control_send_freq", send_time_float, 0.1);
-    ROS_INFO("Setting send_time_freq to %f", send_time_float);
+    double temp;
+    n.param<double>("/remote_control_send_freq", temp, 0.1);
+    send_time.fromSec(1 / temp);
+    ROS_INFO("Setting send period to %f, %f", send_time.toSec(), temp);
 
     //Set up subscriber, listens to joy topic, buffer only 10 messages, us XboxCallback
     ros::Subscriber joy_sub = n.subscribe<sensor_msgs::Joy>("joy", 1000, XboxCallback);
 
     //Set up publisher on motor_rc, buffer up to 10 msgs
-    motor_pub = n.advertise<remote_control::motorMSG>("motor_rc", 1000);
+    wheel_motor_pub = n.advertise<remote_control::motorMSG>("wheel_motor_rc", 1000);
 
     //Set up publisher on linear_actuator_rc
     linear_actuator_pub = n.advertise<std_msgs::Int16>("linear_actuator_rc", 1000);

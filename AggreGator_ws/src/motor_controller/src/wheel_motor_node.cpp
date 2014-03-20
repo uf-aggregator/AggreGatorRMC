@@ -92,7 +92,7 @@ int main(int argc, char** argv)
 
 	ros::NodeHandle n; //Create nodehandle object
 
-	ros::Subscriber sub = n.subscribe("motor_rc", 1000, PIDCallback); //Create object to subscribe to topic "motor_rc"
+	ros::Subscriber sub = n.subscribe("wheel_motor_rc", 1000, PIDCallback); //Create object to subscribe to topic "wheel_motor_rc"
 	
 	ros::Publisher pub = n.advertise<motor_controller::I2CMSG>("I2C",1000); //Create object to publish to topic "I2C"
 

@@ -1,7 +1,7 @@
 	/*
-	PID Controller Node
+	Wheel Controller Node
 	Author: Daniel Kelly
-	Description: This ROS node catches data from the remote control node,processes it, and sends it out to the i2c node to be used by the motors	*/
+	Description: This ROS node catches data from the remote control node,processes it, and sends it out to the i2c node to be used by the wheel motors	*/
 
 #include "ros/ros.h"
 #include "std_msgs/String.h"
@@ -88,7 +88,7 @@ motor_controller::I2CMSG createI2CMSG(int i)
 //MAIN
 int main(int argc, char** argv)
 {
-	ros::init(argc, argv, "ContDecNode"); //Initialize node
+	ros::init(argc, argv, "wheel_motor_node"); //Initialize node
 
 	ros::NodeHandle n; //Create nodehandle object
 
