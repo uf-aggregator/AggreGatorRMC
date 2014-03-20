@@ -168,11 +168,7 @@ int main(int argc, char** argv)
 
 	ros::NodeHandle n; //Create nodehandle object
 
-<<<<<<< HEAD
-	ros::Subscriber sub = n.subscribe("wheel_motor_rc", 1000, PIDCallback); //Create object to subscribe to topic "wheel_motor_rc"
-=======
-	sub = n.subscribe("wheel_motor_rc", 1000, wheelCallback); //Create object to subscribe to topic "motor_rc"
->>>>>>> 772aa6b7fcf85f01765f39937e9a4e961fa7c58a
+	sub = n.subscribe("wheel_motor_rc", 1000, wheelCallback); //Create object to subscribe to topic "wheel_motor_rc"
 	
 	pub = n.advertise<motor_controller::I2CGeneric>("I2C",1000); //Create object to publish to topic "I2C"
 	

@@ -4,7 +4,7 @@ project(motor_controller)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation hardware_interface)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -42,8 +42,8 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation
 ## Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   motorMSG.msg 
-   I2CMSG.msg
+   WheelMotor.msg 
+   I2CGeneric.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -78,8 +78,8 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES Remote_Control_Code
-  CATKIN_DEPENDS message_runtime
-#  DEPENDS system_lib
+  CATKIN_DEPENDS message_runtime hardware_interface
+#  DEPENDS system_lib 
 )
 
 include_directories(include ${catkin_INCLUDE_DIRS})
@@ -124,7 +124,7 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS Remote_Control_Code Remote_Control_Code_node
+# install(TARGETS hardware_interface
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -132,10 +132,10 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 
 ## Mark cpp header files for installation
 # install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+#  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 #   FILES_MATCHING PATTERN "*.h"
 #   PATTERN ".svn" EXCLUDE
-# )
+ )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
@@ -164,6 +164,7 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 #add_executable(listener src/listener.cpp)
 #target_link_libraries(listener ${catkin_LIBRARIES})
 #add_dependencies(listener beginner_tutorials_generate_messages_cpp)
+
 
 add_executable(wheel_motor_node src/wheel_motor_node.cpp)
 target_link_libraries(wheel_motor_node ${catkin_LIBRARIES})

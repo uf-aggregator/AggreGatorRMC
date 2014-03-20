@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include "stdlib.h"
-#include "GPIO.h"
+#include "include/hardware_interface/GPIO.h"
 using namespace std;
 
 //Function that writes values to the valid GPIO pins on the 
