@@ -4,8 +4,8 @@
 (defsystem "motor_controller-msg"
   :depends-on (:roslisp-msg-protocol :roslisp-utils )
   :components ((:file "_package")
-    (:file "motorMSG" :depends-on ("_package_motorMSG"))
-    (:file "_package_motorMSG" :depends-on ("_package"))
-    (:file "I2CMSG" :depends-on ("_package_I2CMSG"))
-    (:file "_package_I2CMSG" :depends-on ("_package"))
+    (:file "I2CGeneric" :depends-on ("_package_I2CGeneric"))
+    (:file "_package_I2CGeneric" :depends-on ("_package"))
+    (:file "WheelMotor" :depends-on ("_package_WheelMotor"))
+    (:file "_package_WheelMotor" :depends-on ("_package"))
   ))

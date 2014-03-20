@@ -42,8 +42,8 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation
 ## Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   motorMSG.msg 
-   I2CMSG.msg
+   WheelMotor.msg 
+   I2CGeneric.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -165,7 +165,8 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 #target_link_libraries(listener ${catkin_LIBRARIES})
 #add_dependencies(listener beginner_tutorials_generate_messages_cpp)
 
-add_executable(wheel_motor_node src/wheel_motor_node.cpp)
+
+add_executable(wheel_motor_node src/wheel_motor_node.cpp /home/odroid/NASAboticsCode/AggreGator_ws/devel/include/pin_interface/GPIO.cpp)
 target_link_libraries(wheel_motor_node ${catkin_LIBRARIES})
 #add_dependencies(talker beginner_tutorials_generate_messages_cpp)
 

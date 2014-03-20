@@ -73,9 +73,13 @@ void WriteMotorValue()
         //reset running avg
         running_avg = 0;
 
+<<<<<<< HEAD
+        //Format wheel motor data
+        remote_control::motorMSG wheel_msg;
+=======
         //Format data
         remote_control::WheelMotor wheel_msg;
-
+>>>>>>> 772aa6b7fcf85f01765f39937e9a4e961fa7c58a
         int left = left_motors * 32767;       //Scale to signed 16 bit int
         int right = right_motors * 32767;     //Scale to signed 16 bit int
         wheel_msg.LF_motorVal = left;
@@ -177,8 +181,12 @@ int main(int argc, char** argv)
     //Set up subscriber, listens to joy topic, buffer only 10 messages, us XboxCallback
     ros::Subscriber joy_sub = n.subscribe<sensor_msgs::Joy>("joy", 1000, XboxCallback);
 
-    //Set up publisher on motor_rc, buffer up to 1000 msgs
-    wheel_motor_pub = n.advertise<remote_control::WheelMotor>("wheel_motor_rc", 1000);
+    //Set up publisher on motor_rc, buffer up to 10 msgs
+<<<<<<< HEAD
+    wheel_motor_pub = n.advertise<remote_control::motorMSG>("wheel_motor_rc", 1000);
+=======
+    motor_pub = n.advertise<remote_control::WheelMotor>("wheel_motor_rc", 10);
+>>>>>>> 772aa6b7fcf85f01765f39937e9a4e961fa7c58a
 
     //Set up publisher on linear_actuator_rc
     linear_actuator_pub = n.advertise<std_msgs::Int16>("linear_actuator_rc", 1000);
