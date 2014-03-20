@@ -12,14 +12,17 @@ int running_avg = 0;
 double left_motors(0.0), right_motors(0.0);
 double bucket_motor(0.0), linear_actuator(0.0);
 
+//Timing variables
 ros::Time last_time, current_time;
-const ros::Duration send_time(0.1);       //time in seconds between sends
+double send_time_float(0.1);
+ros::Duration send_time(0.1);       //time in seconds between sends
 
+//Ros publishers and subscribers
 ros::Publisher motor_pub;
 ros::Publisher linear_actuator_pub;
 ros::Publisher bucket_motor_pub;
 
-
+//Buttons on the Xbox Controller
 enum XboxButtons
 {
     A,
@@ -70,7 +73,7 @@ void WriteMotorValue()
         //reset running avg
         running_avg = 0;
 
-        //Format data
+        //Format wheel motor data
         remote_control::motorMSG wheel_msg;
         int left = left_motors * 32767;       //Scale to signed 16 bit int
         int right = right_motors * 32767;     //Scale to signed 16 bit int
@@ -79,6 +82,7 @@ void WriteMotorValue()
         wheel_msg.RR_motorVal = right;
         wheel_msg.RF_motorVal = right;
 
+        //Format actuator and bucket drum data
         std_msgs::Int16 actuator_msg, bucket_msg;
         int actuator = linear_actuator * 32767;
         actuator_msg.data = actuator;
@@ -89,7 +93,6 @@ void WriteMotorValue()
         motor_pub.publish(wheel_msg);
         linear_actuator_pub.publish(actuator_msg);
         bucket_motor_pub.publish(bucket_msg);
-        //ROS_INFO("Published a motor msg L:%i_R:%i", msg.LF_motorVal, msg.RR_motorVal);
     }
 }
 
@@ -124,8 +127,6 @@ void AvgMotorInput(float left, float right, float bucket, float actuator)
 void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
     AvgMotorInput(joy->axes[UD_LEFT], joy->axes[UD_RIGHT], joy->axes[LT], joy->axes[RT]);
-
-    //ROS_INFO("0:%f_1:%f_2:%f_3:%f_4:%f_5:%f_6:%f_7:%f_8:%f", joy->axes[0], joy->axes[1], joy->axes[2], joy->axes[3], joy->axes[4], joy->axes[5], joy->axes[6], joy->axes[7]);
 }
 
 int main(int argc, char** argv)
@@ -140,26 +141,25 @@ int main(int argc, char** argv)
     //Node handler this is how you work with ROS
     ros::NodeHandle n;
 
-    //Set the send in Hz
-    ros::Rate loop_rate(10);
+    //Get the parameters
+    n.param<double>("/remote_control_send_freq", send_time_float, 0.1);
+    ROS_INFO("Setting send_time_freq to %f", send_time_float);
 
     //Set up subscriber, listens to joy topic, buffer only 10 messages, us XboxCallback
-    ros::Subscriber joy_sub = n.subscribe<sensor_msgs::Joy>("joy", 10, XboxCallback);
-
+    ros::Subscriber joy_sub = n.subscribe<sensor_msgs::Joy>("joy", 1000, XboxCallback);
 
     //Set up publisher on motor_rc, buffer up to 10 msgs
-    motor_pub = n.advertise<remote_control::motorMSG>("motor_rc", 10);
+    motor_pub = n.advertise<remote_control::motorMSG>("motor_rc", 1000);
 
     //Set up publisher on linear_actuator_rc
-    linear_actuator_pub = n.advertise<std_msgs::Int16>("linear_actuator_rc", 10);
+    linear_actuator_pub = n.advertise<std_msgs::Int16>("linear_actuator_rc", 1000);
 
     //Set up publisher on bucket_motor_rc
-    bucket_motor_pub = n.advertise<std_msgs::Int16>("bucket_motor_rc", 10);
+    bucket_motor_pub = n.advertise<std_msgs::Int16>("bucket_motor_rc", 1000);
 
     //Initilize time
     last_time = ros::Time::now();
     current_time = last_time;
-
 
 
     /*
