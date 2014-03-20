@@ -57,7 +57,7 @@ enum XboxAxis
  * Write the motor msg out
  * Rights the current command out
  * IN: none
- * Out: WheelMotor to wheel_motor_rc topic
+ * Out: WheelMotor to motor_rc topic
  */
 void WriteMotorValue()
 {
@@ -148,7 +148,7 @@ int main(int argc, char** argv)
 
 
     //Set up publisher on motor_rc, buffer up to 10 msgs
-    motor_pub = n.advertise<remote_control::WheelMotor>("wheel_motor_rc", 10);
+    motor_pub = n.advertise<remote_control::WheelMotor>("motor_rc", 10);
 
     //Set up publisher on linear_actuator_rc
     linear_actuator_pub = n.advertise<std_msgs::Int16>("linear_actuator_rc", 10);
