@@ -7,7 +7,7 @@
 #include "std_msgs/String.h"
 #include "motor_controller/WheelMotor.h"
 #include "motor_controller/I2CGeneric.h"
-#include "pin_interface/GPIO.h"
+#include "hardware_interface/GPIO.h"
 #include <iostream>
 
 using namespace std;
