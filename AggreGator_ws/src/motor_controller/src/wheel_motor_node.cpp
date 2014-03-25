@@ -131,18 +131,7 @@ motor_controller::I2CGeneric createOutput()
 	return msg;
 
 }
-//Upon shutdown, reset all GPIO pins to 0
-void resetGPIO()
-{
-	 setGPIOWrite(44,0);
-         setGPIOWrite(43,0);
-         setGPIOWrite(42,0);
-         setGPIOWrite(41,0);
-         setGPIOWrite(40,0);
-         setGPIOWrite(39,0);
-         setGPIOWrite(38,0);
-         setGPIOWrite(37,0);
-}
+
 //Callback function which fills motorArray with values from the message
 void wheelCallback (const motor_controller::WheelMotor& msg)
 {

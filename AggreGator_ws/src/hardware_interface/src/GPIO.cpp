@@ -209,7 +209,8 @@ void setGPIORead(int pinNumber)
 		gpioFile << gpioExport;
 		gpioFile.close();
 	}
-	else	{
+	else	
+	{
 		cout  << "Unable to open /sys/class/gpio/export" << endl << "Try another pin: "
 		<< "Try another pin: ";
 		cin >> pinNumber;
@@ -286,7 +287,21 @@ void setGPIORead(int pinNumber)
 	
         return pinValue;
 	break;
+	}
 }
-	
-}
+
+//Upon shutdown, reset all GPIO pins to 0
+void resetGPIO()
+{
+	 
+	for(int i = 17; i <= 31; i++)
+	{
+		setGPIOWrite(i,0);
+	}
+	for(int k = 33; k <= 45; k++)
+	{
+		setGPIOWrite(k,0);
+	}
+}	
+
 

@@ -146,7 +146,7 @@ void resetGPIO()
 //Callback function which fills motorArray with values from the message
 void wheelCallback (const motor_controller::WheelMotor& msg)
 {
-	ROS_INFO("YOLO");
+	
 	motorArray[0] = msg.LF_motorVal;
 	motorArray[1] = msg.LR_motorVal;
 	motorArray[2] = msg.RR_motorVal;

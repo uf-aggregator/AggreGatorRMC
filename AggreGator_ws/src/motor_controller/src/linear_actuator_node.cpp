@@ -1,6 +1,7 @@
 #include "ros/ros.h"
 #include "std_msgs/builtin_int16.h"
 #include "motor_controller/I2CGeneric.h"
+#include "hardware_interface/GPIO.h"
 
 ros::Subscriber sub;
 ros::Publisher pub;
@@ -17,6 +18,28 @@ motor_controller::I2CGeneric GenerateMSG(int setpoint)
     return msg;
 }
 
+
+//Function that controls the direction of the motors using the GPIO pins on the O-Droid
+void setMotorDirection(std_msgs::Int16 input)
+{
+	if(input.data == 0) //Brake to GND, write 0 to every pin
+	{
+		setGPIOWrite(33,0);
+		setGPIOWrite(31,0);
+	}
+	else if(input.data > 0) //INA = GPIO pin 33, INB = GPIO pin 31, linear actuator moves up
+	{
+		setGPIOWrite(33,1); 
+		setGPIOWrite(31,0);
+	}
+	else //Linear actuator moves down
+	{
+		setGPIOWrite(33,0);
+		setGPIOWrite(31,1);
+	}
+	
+}
+
 motor_controller::I2CGeneric LinearActuatorPID(int setpoint)
 {
     /*
@@ -28,6 +51,7 @@ motor_controller::I2CGeneric LinearActuatorPID(int setpoint)
 
 void SetSetpoint(const std_msgs::Int16& msg)
 {
+    setMotorDirection(msg);
     pub.publish(LinearActuatorPID(msg.data));   //Generate and publish an I2C msg
 }
 
