@@ -12,7 +12,11 @@
 int running_avg = 0;
 double left_motors(0.0), right_motors(0.0);
 double bucket_motor(0.0), linear_actuator(0.0);
-unsigned short int bucket_motor_dir(1), linear_actuator_dir(1);
+short int bucket_motor_dir(1), linear_actuator_dir(1);
+
+//Keep track of button presses (to find button releases)
+bool left_bumper_pressed = false;
+bool right_bumper_pressed = false;
 
 //Timing variables
 ros::Time last_time, current_time;
@@ -105,7 +109,7 @@ void WriteMotorValue()
          *          value /= -2
          *          value *= 32767
          *
-         *          Subtract one from the scale factor so that we do not go over(-126383)
+         *          Subtract one from the scale factor so that we do not go over(-16383)
          *
          *      Make positive or negative based on booleans:
          *          value *= direction
@@ -136,7 +140,7 @@ void WriteMotorValue()
 void AvgMotorInput(float left, float right, float bucket, float actuator)
 {
     /*
-     * Set up mapping
+     * Set up mapping (Quite easy since values are already scaled to -1 to 1)
      * linear
      *      No change required
      * Quadratic:
@@ -145,18 +149,25 @@ void AvgMotorInput(float left, float right, float bucket, float actuator)
      * Cubic:
      *      value = value^3
      */
-    switch(mapping)
+    if(mapping % 2)
     {
-    case 2:         //Fancy short hand for an if statment
-        left *= left * ((left >= 0) ? 1 : -1);
-
-
-        break;
-    default:
-        //do nothing
-        break;
-
+        left        = pow(left, mapping);
+        right       = pow(right, mapping);
+        bucket      = pow(bucket, mapping);
+        actuator    = pow(actuator, mapping);
     }
+    else
+    {
+        left        = pow(left, mapping)     * ((left >= 0) ? 1 : -1);
+        right       = pow(right, mapping)    * ((right >= 0) ? 1 : -1);
+        bucket      = pow(bucket, mapping)   * ((bucket >= 0) ? 1 : -1);
+        actuator    = pow(actuator, mapping) * ((actuator >= 0) ? 1 : -1);
+    }
+
+    /*
+     *Take a running Avg
+     * NewAvg = ((count - 1) * lastAvg + newValue) / count
+     */
 
     if(running_avg)
     {
@@ -178,13 +189,28 @@ void AvgMotorInput(float left, float right, float bucket, float actuator)
 
 void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
-    //Check for button presses
-    if(joy->buttons[LB])
+    //Check for button releases
+    if(right_bumper_pressed & !joy->buttons[RB])
+    {
         linear_actuator_dir *= -1;
+        right_bumper_pressed = false;
+    }
+    else if(joy->buttons[RB])
+    {
+        right_bumper_pressed = true;
+    }
 
-    if(joy->buttons[RB])
+    if(left_bumper_pressed & !joy->buttons[LB])
+    {
         bucket_motor_dir *= -1;
+        left_bumper_pressed = false;
+    }
+    else if(joy->buttons[LB])
+    {
+        left_bumper_pressed = true;
+    }
 
+    //average the inputs
     AvgMotorInput(joy->axes[UD_LEFT], joy->axes[UD_RIGHT], joy->axes[LT], joy->axes[RT]);
 }
 
@@ -234,7 +260,6 @@ int main(int argc, char** argv)
     /*
      * Main loop
      */
-
     while (ros::ok())
     {
         WriteMotorValue();
