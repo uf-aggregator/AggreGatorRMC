@@ -4,6 +4,7 @@
 #include <std_msgs/builtin_int16.h>
 #include "ros/time.h"
 #include "ros/duration.h"
+#include <string.h>
 
 /*
  * Variables
@@ -21,6 +22,12 @@ ros::Duration send_time(0.1);       //time in seconds between sends
 ros::Publisher wheel_motor_pub;
 ros::Publisher linear_actuator_pub;
 ros::Publisher bucket_motor_pub;
+
+/*
+ * Int for mapping
+ * 1 is linear, 2 is quadratic, 3 cubic (anything else defaults to linear
+ */
+int32_t mapping;
 
 //Buttons on the Xbox Controller
 enum XboxButtons
@@ -94,16 +101,18 @@ void WriteMotorValue()
          *          half = 16384
          *          full pressed = 32767
          *      Math:
-         *          value += 1
-         *          value /= 2
+         *          value -= 1
+         *          value /= -2
          *          value *= 32767
+         *
+         *          Subtract one from the scale factor so that we do not go over(-126383)
          *
          *      Make positive or negative based on booleans:
          *          value *= direction
          *          direction = 1 or -1 based on LB and RB
          */
-        int actuator = (linear_actuator + 1) * 16384 * linear_actuator_dir;
-        int bucket = (bucket_motor + 1) * 16384 * bucket_motor_dir;
+        int actuator = (linear_actuator - 1) * -16383 * linear_actuator_dir;
+        int bucket = (bucket_motor - 1) * -16383 * bucket_motor_dir;
 
         std_msgs::Int16 actuator_msg, bucket_msg;
         actuator_msg.data = actuator;               //Float -> int
@@ -126,6 +135,29 @@ void WriteMotorValue()
  */
 void AvgMotorInput(float left, float right, float bucket, float actuator)
 {
+    /*
+     * Set up mapping
+     * linear
+     *      No change required
+     * Quadratic:
+     *      value *= value
+     *      for negative orignal values * -1
+     * Cubic:
+     *      value = value^3
+     */
+    switch(mapping)
+    {
+    case 2:         //Fancy short hand for an if statment
+        left *= left * ((left >= 0) ? 1 : -1);
+
+
+        break;
+    default:
+        //do nothing
+        break;
+
+    }
+
     if(running_avg)
     {
         left_motors = ((running_avg - 1) * left_motors + left) / running_avg;
@@ -169,10 +201,18 @@ int main(int argc, char** argv)
     ros::NodeHandle n;
 
     //Get the parameters
+    //Send frequence
     double temp;
-    n.param<double>("/remote_control_send_freq", temp, 0.1);
+    n.param<double>("/remote_control/send_freq", temp, 0.1);
     send_time.fromSec(1 / temp);
-    ROS_INFO("Setting send period to %f, %f", send_time.toSec(), temp);
+    ROS_INFO("Setting send period to %f, (frequency: %f)", send_time.toSec(), temp);
+
+    //mapping
+    n.param<int32_t>("/remote_control/xbox_controller/mapping", mapping, 1);
+    if(mapping < 1 || mapping > 3)
+        mapping = 1;
+
+    ROS_INFO("Xbox controller set to order %i mapping", mapping);
 
     //Set up subscriber, listens to joy topic, buffer only 10 messages, us XboxCallback
     ros::Subscriber joy_sub = n.subscribe<sensor_msgs::Joy>("joy", 1000, XboxCallback);
