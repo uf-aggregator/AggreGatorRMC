@@ -1,7 +1,7 @@
 ~$
 .swp$
 build/
-devel/
+devel/*
 bin/
 lib/
 msg_gen/
