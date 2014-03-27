@@ -17,11 +17,11 @@ float* getY(){
 int main(int argc, char **argv){
 	ros::init(argc, argv, "ladar_range_node");
 	
-	ros::NodeHandle n;
+	//ros::NodeHandle n;
 	
-	ros::Subscriber sub = n.subscribe("/scan", 1, getY);//change callback function
+	//ros::Subscriber sub = n.subscribe("/scan", 1, getY);//change callback function
 
-	ros::spin();
+	//ros::spin();
 	
 	return 0;
 }
