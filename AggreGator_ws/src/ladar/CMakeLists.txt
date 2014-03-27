@@ -19,13 +19,13 @@ catkin_package(
 	CATKIN_DEPENDS message_runtime
 )
 
-include_directories(${catkin_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS})
 
-add_executable(ladarRIData src/ladarRIData.cpp)
-add_dependencies(ladarRIData ladar_generate_messages_cpp)
-target_link_libraries(ladarRIData ${catkin_LIBRARIES})
+add_executable(ladar_print_node src/ladarPrintRange.cpp)
+add_dependencies(ladar_print_node ladar_generate_messages_cpp)
+target_link_libraries(ladar_print_node ${catkin_LIBRARIES})
 
-#add_executable(ladarVisualData src/ladarVisualData.cpp)
-#add_dependencies(ladarVisualData ladar_generate_messages_cpp)
-#target_link_libraries(ladarVisualData ${catkin_LIBRARIES})
+add_executable(ladar_range_node src/ladarRange.cpp)
+add_dependencies(ladar_range_node ladar_generate_messages_cpp)
+target_link_libraries(ladar_range_node ${catkin_LIBRARIES})
 
