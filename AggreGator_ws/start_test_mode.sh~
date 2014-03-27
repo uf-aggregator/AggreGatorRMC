@@ -1,0 +1,8 @@
+#!/bin/bash
+# A script to start all nodes on one computer
+# Usefull for testing
+
+roscore&
+rosrun& joy joy_node
+rosrun& remote_control xbox_controller_node
+rosrun& motor_controller ContDecNode

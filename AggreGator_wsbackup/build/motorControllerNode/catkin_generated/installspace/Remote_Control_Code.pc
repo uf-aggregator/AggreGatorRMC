@@ -1,8 +1,0 @@
-prefix=/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/install
-
-Name: Remote_Control_Code
-Description: Description of Remote_Control_Code
-Version: 0.0.0
-Cflags: -I/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/install/include
-Libs: -L/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/install/lib 
-Requires: message_runtime
