@@ -5,8 +5,6 @@
 #include "sensor_msgs/LaserScan.h"
 #include "ladar/ladar_data.h"
 
-
-	
 int main(int argc, char **argv){
 	ros::init(argc, argv, "ladar_range_node");
 	
