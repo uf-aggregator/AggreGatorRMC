@@ -21,6 +21,10 @@ catkin_package(
 
 include_directories(include ${catkin_INCLUDE_DIRS})
 
+add_executable(ladar_map_node src/ladarPrintMap.cpp)
+add_dependencies(ladar_map_node ladar_generate_messages_cpp)
+target_link_libraries(ladar_map_node ${catkin_LIBRARIES})
+
 add_executable(ladar_print_node src/ladarPrintRange.cpp)
 add_dependencies(ladar_print_node ladar_generate_messages_cpp)
 target_link_libraries(ladar_print_node ${catkin_LIBRARIES})

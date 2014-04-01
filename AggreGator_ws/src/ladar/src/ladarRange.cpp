@@ -3,14 +3,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "sensor_msgs/LaserScan.h"
-
-float* getX(){
-	
-	}//end getX
-
-float* getY(){
-	
-	}//end getY
+#include "ladar/ladar_data.h"
 
 
 	
