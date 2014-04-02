@@ -2,7 +2,7 @@
 #include "std_msgs/String.h"
 
 #include "i2c/I2CMSG.h"
-#include "i2c/ina226.h"
+#include "hardware_interface/i2c.h"
 
 //define functions for each topic here
 void PIDCallback(const i2c::I2CMSG& msg){
