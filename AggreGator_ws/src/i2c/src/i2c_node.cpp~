@@ -1,6 +1,12 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 
+#include "i2c/I2CMSG.h"
+<<<<<<< HEAD
+=======
+#include "hardware_interface/i2c.h"
+>>>>>>> 5ccf89ffea78794cb27f66de5bfd205c5b7a452c
+
 //define functions for each topic here
 void PIDCallback(const i2c::I2CMSG& msg){
 }
