@@ -17,7 +17,7 @@
 char* read_i2c(int address, int size) 
 {
 	int file; //the "file" that will be used to interface with the i2c bus
-	char read_buffer[max_read_bytes];
+    char* read_buffer = (char*) malloc(max_read_bytes);
 	read_buffer[0] = 1; //1 means data is not valid
 	
 	if (size > max_read_bytes)
@@ -65,7 +65,7 @@ char* read_i2c(int address, int size)
 char* readfromreg_i2c(int address, char reg_ptr_addr, int size)
 {
 	int file; //the "file" that will be used to interface with the i2c bus
-	char read_buffer[max_read_bytes];
+    char* read_buffer = (char*) malloc(max_read_bytes);
 	read_buffer[0] = 1; //1 means data is not valid
 	
 	if (size > max_read_bytes)

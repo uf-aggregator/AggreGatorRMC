@@ -12,10 +12,13 @@
 #define max_read_bytes 41;
 #define max_write_bytes 40;
 #define filename "/dev/i2c-1";
-//reads "size" bytes from the device at "address". 
+//reads "size" bytes from the device at "address".
+//User must free memory when complete
 char* read_i2c(int address, int size); 
 
-//reads "size" bytes from the register with address "reg_ptr_address" on the device at "address". Returns a pointer, with the first byte the dirty flag(1 for dirty, 0 for clean). The data will begin from the next byte. 
+//reads "size" bytes from the register with address "reg_ptr_address" on the device at "address".
+//Returns a pointer, with the first byte the dirty flag(1 for dirty, 0 for clean). The data will begin from the next byte.
+//User must free memory when complete
 char* readfromreg_i2c(int address, char reg_ptr_addr, int size);
 
 //writes "size" bytes (pointed to by "data") to the device at "address". Returns 1 on failure, 0 on success
