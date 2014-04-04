@@ -182,7 +182,7 @@ int write_i2c(int address, int size, char* data)
 	return 0;
 }
 
-
+//Initializes I2C by setting things to their default states and setting the logic level from the O-Droid
 int init_i2c(void)
 {
 	//Turn on lv output pin for all logic level converters
@@ -190,3 +190,11 @@ int init_i2c(void)
 	return 0;
 }
 
+//Performs a software reset on all devices on the I2C bus
+int softwareReset(void)
+{
+	char rst[] = {0x6};
+	write_i2c(0x0,1,rst); //Software reset command
+	
+	return 0;
+}
