@@ -9,5 +9,4 @@ std::vector<std::pair<float, float> > fivePointAverager(std::vector<std::pair<fl
 
 std::string coordinatesToString(std::vector<std::pair<float, float> > coordinates);
 
-
 #endif
