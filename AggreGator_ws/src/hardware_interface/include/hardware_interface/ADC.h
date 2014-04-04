@@ -59,6 +59,8 @@ enum ADC_REG
  *      Then read from the ADC as you would normally (write the address out)
  *
  * Digital output = [(Inx - GND) / VREF] * 2^12
+ *
+ * External VREF is 4.096
  */
 
 /*

@@ -7,7 +7,24 @@
  */
 bool isADCBusy(ADC adc)
 {
-    return readfromreg_i2c(adc, ADC_BUSY, 1);
+    char busy_reg[2] = readfromreg_i2c(adc, ADC_BUSY, 1);
+    if(busy_reg[0] == 1)
+    {
+        //Error handeling... Dirty bit set
+    }
+
+    if(busy_reg[1])
+    {
+        //Still busy
+        free(busy_reg);
+        return true;
+    }
+    else
+    {
+        //Free!!!!
+        free(busy_reg);
+        return false;
+    }
 }
 
 /*
@@ -18,10 +35,19 @@ bool isADCBusy(ADC adc)
 u_int16_t ReadADC(ADC adc, ADC_REG reg)
 {
     //Read 2 bytes from register reg on ADC adc
-    char[2] value = readfromreg_i2c(adc, reg, 2);
+    char value[3] = readfromreg_i2c(adc, reg, 2);
+
+    //Check dirty bit
+    if(value[0] == 1)
+    {
+        //Error handeling... Dirty bit set
+    }
 
     //convert to a unsigned 16 bit integer
-    u_int16_t output = value[0] + (value[1] << 8);
+    u_int16_t output = (value[1] << 8) + value[2];
+
+    //clean up and return
+    free(value);
     return output;
 }
 
@@ -48,11 +74,11 @@ bool InitADC()
     writetoreg_i2c(ADC_IR,            ADC_CONVERSION_RATE, 1, 0x01);
     writetoreg_i2c(ADC_CURRENT_SENSE, ADC_CONVERSION_RATE, 1, 0x01);
 
-    //Set channel conversions (WARNING: most be done in shutdown mode)
+    //Set channel disables (WARNING: most be done in shutdown mode)
     writetoreg_i2c(ADC_IR,            ADC_CHANNEL_DISABLE, 1, 0x00);        //Turn on all IR's
     writetoreg_i2c(ADC_CURRENT_SENSE, ADC_CHANNEL_DISABLE, 1, 0xFC);        //Turn on ch0 and 1
 
-    //Set the advance config, use internal 2.56 V ref, mode 0
+    //Set the advance config, use external board reference of 4.096 V ref, mode 0
     writetoreg_i2c(ADC_IR,            ADC_ADV_CONFIG, 1, 0x00);
     writetoreg_i2c(ADC_CURRENT_SENSE, ADC_ADV_CONFIG, 1, 0x00);
 
