@@ -100,22 +100,23 @@ include_directories(
 
 ## Declare a cpp library
  add_library(hardware_interface
+   src/i2c.c
    src/GPIO.cpp
    src/ADC.cpp
-   src/i2c.c
+   src/AdaFruit.cpp
  )
 
 ## Declare adafruit cpp executable
-add_executable(adafruit_node src/adafruit_node.cpp)
-target_link_libraries(adafruit_node ${catkin_LIBRARIES})
+##add_executable(adafruit_node src/adafruit_node.cpp)
+##target_link_libraries(adafruit_node ${catkin_LIBRARIES})
 
 ## Declare adc cpp executable
-add_executable(adc_node src/adc_node.cpp)
-target_link_libraries(adc_node ${catkin_LIBRARIES})
+##add_executable(adc_node src/adc_node.cpp)
+##target_link_libraries(adc_node ${catkin_LIBRARIES})
 
 ## Declare ina226 cpp executable
-add_executable(ina226_node src/ina226_node.cpp)
-target_link_libraries(ina226_node ${catkin_LIBRARIES})
+##add_executable(ina226_node src/ina226_node.cpp)
+##target_link_libraries(ina226_node ${catkin_LIBRARIES})
 
 
 ## Add cmake target dependencies of the executable/library

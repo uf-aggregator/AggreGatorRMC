@@ -1,3 +1,5 @@
+/*This file contains fucntion definitions that interface to the O-Droid's I2C headers*/
+
 #include "i2c.h"
 
 char* read_i2c(int address, int size) 

@@ -1,3 +1,7 @@
+#ifndef _I2C_H
+#define _I2C_H
+
+
 #include <errno.h>
 #include <string.h>
 #include <stdio.h>
@@ -29,7 +33,12 @@ int write_i2c(int address, int size, char* data);
 //writes "size" bytes (pointed to by "data") to the register at "reg_ptr_address" on the device at "address"
 int writetoreg_i2c(int address, char reg_ptr_addr, int size, char* data);
 
+#endif //_I2C_H
+
 //Init I2C, returns 0 if completed correctly
 int init_i2c(void);
+
+//Performs a software reset on the I2C bus
+int softwareReset(void);
 
 
