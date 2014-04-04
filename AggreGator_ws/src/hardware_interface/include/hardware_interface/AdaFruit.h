@@ -13,7 +13,7 @@ This header file contains declarations of the necessary functions to interface w
 #include "GPIO.h"
 #include "i2c.h"
 #include <unistd.h>
-s
+
 
 //List of register addresses
 enum regAddr
@@ -23,23 +23,23 @@ enum regAddr
  leftFrontMotorChannel_ON_HIGH,
  leftFrontMotorChannel_OFF_LOW,
  leftFrontMotorChannel_OFF_HIGH,
- leftRearMotorChannel_ON_LOW, 	= 0x06,
+ leftRearMotorChannel_ON_LOW 	= 0x06,
  leftRearMotorChannel_ON_HIGH,
  leftRearMotorChannel_OFF_LOW,
  leftRearMotorChannel_OFF_HIGH,
- rightRearMotorChannel_ON_LOW,  = 0x16
+ rightRearMotorChannel_ON_LOW  = 0x16,
  rightRearMotorChannel_ON_HIGH, 
  rightRearMotorChannel_OFF_LOW,
  rightRearMotorChannel_OFF_HIGH,
- rightFrontMotorChannel_ON_LOW, = 0x0A
+ rightFrontMotorChannel_ON_LOW = 0x0A,
  rightFrontMotorChannel_ON_HIGH,
  rightFrontMotorChannel_OFF_LOW, 
  rightFrontMotorChannel_OFF_HIGH,
- bucketDrumMotorChannel_ON_LOW, = 0x1A
+ bucketDrumMotorChannel_ON_LOW = 0x1A,
  bucketDrumMotorChannel_ON_HIGH,
  bucketDrumMotorChannel_OFF_LOW,
  bucketDrumMotorChannel_OFF_HIGH,
- linearActuatorMotorChannel_ON_LOW, =  0x0E
+ linearActuatorMotorChannel_ON_LOW =  0x0E,
  linearActuatorMotorChannel_ON_HIGH,
  linearActuatorMotorChannel_OFF_LOW,
  linearActuatorMotorChannel_OFF_HIGH

@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(hardware_interface_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include" STREQUAL "")
+if(NOT "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include;/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include" STREQUAL "")
   set(hardware_interface_INCLUDE_DIRS "")
-  set(_include_dirs "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include")
+  set(_include_dirs "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include;/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})

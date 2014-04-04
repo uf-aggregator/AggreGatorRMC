@@ -188,7 +188,7 @@ int write_i2c(int address, int size, char* data)
 int init_i2c(void)
 {
 	//Turn on lv output pin for all logic level converters
-	setGPIOWrite(17,1);
+//	setGPIOWrite(17,1);
 	return 0;
 }
 

@@ -1,5 +1,4 @@
 #include "ros/ros.h"
-#include "ADC.h"
 
 int main(int argc, char** argv)
 {
@@ -7,14 +6,11 @@ int main(int argc, char** argv)
      * Initilization
      */
 
-    //Initilize the adc node
-    ros::init(argc, argv, "adc_node");
+    //Initilize the adafruit node
+    ros::init(argc, argv, "adafruit_node");
 
     //Node handler this is how you work with ROS
     ros::NodeHandle n;
-
-    //Initilize the ADCs
-    //InitADC();
 
     /*
      * Main loop
