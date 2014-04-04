@@ -1,4 +1,5 @@
 #include "ros/ros.h"
+//#include "hardware_interface/ADC.h"
 
 int main(int argc, char** argv)
 {
@@ -11,6 +12,9 @@ int main(int argc, char** argv)
 
     //Node handler this is how you work with ROS
     ros::NodeHandle n;
+
+    //Initilize the ADCs
+    //InitADC();
 
     /*
      * Main loop

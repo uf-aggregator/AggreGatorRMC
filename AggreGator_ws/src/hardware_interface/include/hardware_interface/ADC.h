@@ -75,7 +75,7 @@ u_int16_t ReadADC(ADC adc, ADC_REG reg);
  *
  * Returns true if succsful false if unsuccesfull
  */
-bool InitADC(ADC adc);
+bool InitADC();
 
 /*
  * Check the busy flag

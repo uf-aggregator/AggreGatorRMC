@@ -101,6 +101,8 @@ include_directories(
 ## Declare a cpp library
  add_library(hardware_interface
    src/GPIO.cpp
+#   src/ADC.cpp
+#   src/i2c.c
  )
 
 ## Declare adafruit cpp executable
