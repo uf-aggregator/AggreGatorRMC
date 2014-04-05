@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  hardware_interface
 )
 
 ## System dependencies are found with CMake's conventions
@@ -82,7 +83,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES hardware_interface
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+#  CATKIN_DEPENDS roscpp rospy std_msgs hardware_interface
 #  DEPENDS system_lib
 )
 
@@ -101,8 +102,9 @@ include_directories(
 ## Declare a cpp library
  add_library(hardware_interface
    src/GPIO.cpp
-#   src/ADC.cpp
-#   src/i2c.c
+   src/i2c.cpp  
+   src/ADC.cpp
+   src/AdaFruit.cpp
  )
 
 ## Declare adafruit cpp executable
@@ -123,9 +125,9 @@ target_link_libraries(ina226_node ${catkin_LIBRARIES})
 # add_dependencies(hardware_interface_node hardware_interface_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(hardware_interface_node
-#   ${catkin_LIBRARIES}
-# )
+## target_link_libraries(hardware_interface
+##   ${catkin_LIBRARIES}
+## )
 
 #############
 ## Install ##

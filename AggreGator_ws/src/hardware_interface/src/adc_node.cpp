@@ -1,5 +1,5 @@
 #include "ros/ros.h"
-//#include "hardware_interface/ADC.h"
+#include "ADC.h"
 
 int main(int argc, char** argv)
 {

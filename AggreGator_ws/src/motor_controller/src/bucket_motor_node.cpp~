@@ -1,6 +1,7 @@
 #include "ros/ros.h"
 #include "std_msgs/builtin_int16.h"
 #include "motor_controller/I2CGeneric.h"
+#include <hardware_interface/GPIO.h>
 
 ros::Subscriber sub;
 ros::Publisher pub;
