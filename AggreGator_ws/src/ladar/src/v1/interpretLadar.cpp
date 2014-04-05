@@ -15,16 +15,28 @@
 using namespace std;
 
 /*
-	getCoordinates
-		  -	Uses laser.ranges[] array, along with other laser member variables, 
-			to convert the polar coordinates into cartesian coordinates	
-		  -	Returns as vector of pairs.  First element of pair is x, second element is y.
+    to_string not a function in roscpp, so using this because works
+*/
+string ghetto_to_string(float number){
+    ostringstream buffer;
+    buffer << number;
+    return buffer.str();
+}//end to_string
+
+Ladar::Ladar(int numOfSamples){
+}
+
+/*
+    getCoordinates
+          - Uses laser.ranges[] array, along with other laser member variables, 
+            to convert the polar coordinates into cartesian coordinates 
+          - Returns as vector of pairs.  First element of pair is x, second element is y.
 
 */
-vector<pair<float, float> > getCoordinates(	float* ranges, int numOfSamples, 
+vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSamples, 
 											float angle_min, float angle_increment,
                                             float min_range, float max_range){
-    
+
     vector<pair<float, float> > coordinates(numOfSamples);
     float theta;
     float x;
@@ -35,21 +47,24 @@ vector<pair<float, float> > getCoordinates(	float* ranges, int numOfSamples,
     
     
     for(int i = 0; i < numOfSamples; i++){
-        theta = i*angle_increment + angle_min; //calculate theta assuming LADAR as origin
+        theta = i*angle_increment + angle_min;
+
+         //calculate theta assuming LADAR as origin
         if(ranges[i] > min_range && ranges[i] < max_range){
             //if the range meets the range constraints, push coordinates to vector
             x = ranges[i]*cos(theta); //calculate x coordinate
             y = ranges[i]*sin(theta); //calculate y coordinate
             pair<float, float> curr(x,y);
             coordinates.push_back(curr); //push to coordinates vector
-            //cout << "theta: " << theta << ", ( " << x << ", " << y << ")" << endl;
+            coords.push_back(curr);
+            thetas.push_back(theta);
         }
         //else, do not push coordinates to vector; they are not accurate
         
     }
-    
+
     return coordinates;
-}
+}//end getcoordinates
 
 /*
 	fivePointAverager
@@ -58,7 +73,7 @@ vector<pair<float, float> > getCoordinates(	float* ranges, int numOfSamples,
 		-Push this averaged pair onto the filtered vector, reset the sums
 */
 
-vector<pair<float, float> > fivePointAverager(vector<pair<float, float> > original){
+vector<pair<float, float> > Ladar::fivePointAverager(vector<pair<float, float> > original){
     vector<pair<float, float> > filtered;
     float currXSum = 0;
     float currYSum = 0;
@@ -79,24 +94,17 @@ vector<pair<float, float> > fivePointAverager(vector<pair<float, float> > origin
     }
     
     return filtered;
-}
+}//end averager
 
 /*
 	coordinatesToString
 		-Creates a string out of a vector of pairs.
-		Format:
-		
+		Format:	
 		"(x, y) (x, y) (x, y) (x, y) (x, y) (x, y) (x, y) (x, y) (x, y) (x, y) 
 		 (x, y) (x, y) (x, y) (x, y) (x, y) (x, y) (x, y) (x, y) (x, y) (x, y) "...
-
 */
-string ghetto_to_string(float number){
-    ostringstream buffer;
-    buffer << number;
-    return buffer.str();
-}
 
-string coordinatesToString(vector<pair<float, float> > coordinates){
+string Ladar::coordinatesToString(vector<pair<float, float> > coordinates){
     string coordString;
     for(int i = 0; i < coordinates.size(); i++){
         coordString +=  string("(") + ghetto_to_string(coordinates.at(i).first) + string(", ")
@@ -109,5 +117,29 @@ string coordinatesToString(vector<pair<float, float> > coordinates){
     }
     
     return coordString;
+}//end coordinatestostring
+
+
+/*Prints out 
+*/
+void Ladar::print() const{
+    for(int i = 0; i < coords.size(); i++){
+        string pair = string("(") + ghetto_to_string(coords.at(i).first) + string(", ")
+                                    + ghetto_to_string(coords.at(i).second) + string(") ");
+        cout <<  thetas.at(i) << " : " << pair << endl;
+    }//end for
 }
+
+
+//NOTE: Any value < 0.1 is like literally touching the ladar
+
+bool Ladar::forwardCheck(){
+    //make check for forward facing ladar
+}
+
+bool Ladar::leftCheck(){}
+bool Ladar::rightCheck(){}
+
+//potentially create functions for determining actual degrees, not in radians
+//ladar scans counterclockwise, so mark with sticky note or something which way, during tests
 

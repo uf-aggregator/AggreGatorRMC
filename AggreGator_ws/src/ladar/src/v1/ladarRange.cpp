@@ -11,10 +11,14 @@ void printLadarData(const sensor_msgs::LaserScan laser) {
 	for(int i = 0; i < laser.ranges.size(); i++){
 		ranges[i] = laser.ranges[i];
 	}
-	//std::string toPrint = 
+	Ladar* ladar = new Ladar(laser.ranges.size());
+
+	std::string toPrint = ladar->coordinatesToString( ladar->
 	getCoordinates
 		(ranges, laser.ranges.size(),
-		laser.angle_min, laser.angle_increment, laser.range_min, laser.range_max);
+		laser.angle_min, laser.angle_increment, laser.range_min, laser.range_max)
+	)
+	;
 	//std::cout << toPrint << std::endl;
 
 	usleep(10000000);
@@ -26,8 +30,7 @@ int main(int argc, char **argv){
 	ros::NodeHandle n;
 	
 	ros::Subscriber sub = n.subscribe("/scan", 1, printLadarData);//change callback function
-
 	ros::spin();
-	
+
 	return 0;
 }
