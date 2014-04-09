@@ -67,14 +67,14 @@ set(hardware_interface_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(hardware_interface_SOURCE_PREFIX /home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface)
-  set(hardware_interface_DEVEL_PREFIX /home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel)
+  set(hardware_interface_SOURCE_PREFIX /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface)
+  set(hardware_interface_DEVEL_PREFIX /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel)
   set(hardware_interface_INSTALL_PREFIX "")
   set(hardware_interface_PREFIX ${hardware_interface_DEVEL_PREFIX})
 else()
   set(hardware_interface_SOURCE_PREFIX "")
   set(hardware_interface_DEVEL_PREFIX "")
-  set(hardware_interface_INSTALL_PREFIX /home/viki/GIThub/NASAboticsCode/AggreGator_ws/install)
+  set(hardware_interface_INSTALL_PREFIX /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/install)
   set(hardware_interface_PREFIX ${hardware_interface_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(hardware_interface_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include;/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include" STREQUAL "")
+if(NOT "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include;/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include" STREQUAL "")
   set(hardware_interface_INCLUDE_DIRS "")
-  set(_include_dirs "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include;/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include")
+  set(_include_dirs "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include;/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
@@ -103,7 +103,7 @@ if(NOT "/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface/in
         message(FATAL_ERROR "Project 'hardware_interface' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  Ask the maintainer 'viki <viki@todo.todo>' to fix it.")
       endif()
     else()
-      message(FATAL_ERROR "Project 'hardware_interface' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/viki/GIThub/NASAboticsCode/AggreGator_ws/src/hardware_interface/${idir}'.  Ask the maintainer 'viki <viki@todo.todo>' to fix it.")
+      message(FATAL_ERROR "Project 'hardware_interface' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface/${idir}'.  Ask the maintainer 'viki <viki@todo.todo>' to fix it.")
     endif()
     _list_append_unique(hardware_interface_INCLUDE_DIRS ${include})
   endforeach()
@@ -122,7 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/viki/GIThub/NASAboticsCode/AggreGator_ws/devel/lib;/opt/ros/hydro/lib)
+    foreach(path /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib;/opt/ros/hydro/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
