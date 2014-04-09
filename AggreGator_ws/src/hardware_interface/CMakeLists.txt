@@ -107,16 +107,19 @@ include_directories(
 
 ## Declare adafruit cpp executable
 add_executable(adafruit_node src/adafruit_node.cpp)
-target_link_libraries(adafruit_node ${catkin_LIBRARIES})
+target_link_libraries(adafruit_node ${catkin_LIBRARIES} hardware_utils)
 
 ## Declare adc cpp executable
 add_executable(adc_node src/adc_node.cpp)
-target_link_libraries(adc_node ${catkin_LIBRARIES})
+target_link_libraries(adc_node ${catkin_LIBRARIES} hardware_utils)
 
 ## Declare ina226 cpp executable
 add_executable(ina226_node src/ina226_node.cpp)
-target_link_libraries(ina226_node ${catkin_LIBRARIES})
+target_link_libraries(ina226_node ${catkin_LIBRARIES} hardware_utils)
 
+## Declare a i2c cpp executable
+add_executable(i2c_node src/i2c_node.cpp)
+target_link_libraries(i2c_node ${catkin_LIBRARIES} hardware_utils)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes

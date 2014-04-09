@@ -117,6 +117,9 @@ target_link_libraries(adc_node ${catkin_LIBRARIES})
 add_executable(ina226_node src/ina226_node.cpp)
 target_link_libraries(ina226_node ${catkin_LIBRARIES})
 
+## Declare a i2c cpp executable
+add_executable(i2c_node src/i2c_node.cpp)
+target_link_libraries(i2c_node ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -142,7 +145,7 @@ target_link_libraries(ina226_node ${catkin_LIBRARIES})
 # )
 
 ## Mark executables and/or libraries for installation
- install(TARGETS hardware_interface 
+ install(TARGETS hardware_utils 
    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
