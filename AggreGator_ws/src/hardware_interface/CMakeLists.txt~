@@ -8,7 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  hardware_interface
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -45,18 +45,16 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+ add_message_files(
+   FILES
+   WriteI2C.msg
+ )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+ add_service_files(
+   FILES
+   ReadI2C.srv
+ )
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -66,10 +64,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   std_msgs
+ )
 
 ###################################
 ## catkin specific configuration ##
@@ -82,8 +80,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES hardware_interface
-#  CATKIN_DEPENDS roscpp rospy std_msgs hardware_interface
+  LIBRARIES hardware_utils
+  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
 #  DEPENDS system_lib
 )
 
@@ -96,11 +94,11 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
-  include/hardware_interface
+  include/${PROJECT_NAME}
 )
 
 ## Declare a cpp library
- add_library(hardware_interface
+ add_library(hardware_utils
    src/GPIO.cpp
    src/i2c.cpp  
    src/ADC.cpp
@@ -108,16 +106,16 @@ include_directories(
  )
 
 ## Declare adafruit cpp executable
-##add_executable(adafruit_node src/adafruit_node.cpp)
-##target_link_libraries(adafruit_node ${catkin_LIBRARIES})
+add_executable(adafruit_node src/adafruit_node.cpp)
+target_link_libraries(adafruit_node ${catkin_LIBRARIES})
 
 ## Declare adc cpp executable
-##add_executable(adc_node src/adc_node.cpp)
-##target_link_libraries(adc_node ${catkin_LIBRARIES})
+add_executable(adc_node src/adc_node.cpp)
+target_link_libraries(adc_node ${catkin_LIBRARIES})
 
 ## Declare ina226 cpp executable
-##add_executable(ina226_node src/ina226_node.cpp)
-##target_link_libraries(ina226_node ${catkin_LIBRARIES})
+add_executable(ina226_node src/ina226_node.cpp)
+target_link_libraries(ina226_node ${catkin_LIBRARIES})
 
 
 ## Add cmake target dependencies of the executable/library

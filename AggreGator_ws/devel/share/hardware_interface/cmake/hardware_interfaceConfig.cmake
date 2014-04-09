@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(hardware_interface_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include;/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include" STREQUAL "")
+if(NOT "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/include;/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include" STREQUAL "")
   set(hardware_interface_INCLUDE_DIRS "")
-  set(_include_dirs "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include;/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include")
+  set(_include_dirs "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/include;/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
@@ -109,7 +109,7 @@ if(NOT "/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/src/hardware_interface
   endforeach()
 endif()
 
-set(libraries "hardware_interface")
+set(libraries "hardware_utils")
 foreach(library ${libraries})
   # keep build configuration keywords, target names and absolute libraries as-is
   if("${library}" MATCHES "^debug|optimized|general$")
@@ -122,7 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib;/opt/ros/hydro/lib)
+    foreach(path /home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib;/home/fnivek/git_hub/NASAboticsCode/AggreGator_ws/devel/lib;/opt/ros/hydro/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -145,7 +145,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(hardware_interface_EXPORTED_TARGETS "")
+set(hardware_interface_EXPORTED_TARGETS "hardware_interface_generate_messages_cpp;hardware_interface_generate_messages_lisp;hardware_interface_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${hardware_interface_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -153,7 +153,7 @@ foreach(t ${hardware_interface_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "")
+set(depends "roscpp;rospy;std_msgs;message_runtime")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls
@@ -182,7 +182,7 @@ foreach(depend ${depends})
   list(APPEND hardware_interface_EXPORTED_TARGETS ${${hardware_interface_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "hardware_interface-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${hardware_interface_DIR}/${extra})
