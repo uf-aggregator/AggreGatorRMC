@@ -4,33 +4,30 @@
 #include "std_msgs/String.h"
 #include "sensor_msgs/LaserScan.h"
 #include "ladar/ladar_data.h"
-#include <unistd.h>
 
-void printLadarData(const sensor_msgs::LaserScan laser) {
-	float ranges[laser.ranges.size()];
-	for(int i = 0; i < laser.ranges.size(); i++){
+void scanCallback(const sensor_msgs::LaserScan laser){
+	
+	int numSample = laser.ranges.size();
+	float ranges[numSample];
+	for(int i = 0; i < numSample; i++){
 		ranges[i] = laser.ranges[i];
 	}
-	Ladar* ladar = new Ladar(laser.ranges.size());
-
-	std::string toPrint = ladar->coordinatesToString( ladar->
-	getCoordinates
-		(ranges, laser.ranges.size(),
-		laser.angle_min, laser.angle_increment, laser.range_min, laser.range_max)
-	)
-	;
-	//std::cout << toPrint << std::endl;
-
-	usleep(10000000);
+	float angle_min = laser.angle_min;
+	float angle_increment = laser.angle_increment;
+	float min_range = laser.range_min;
+	float max_range = laser.range_max;
+	Ladar *ladar = new Ladar(numSample);
+	ladar->getCoordinates(ranges, numSample, angle_min, angle_increment, min_range, max_range);
+	ladar->print(1);
+	usleep(1000000);
 }
 
 int main(int argc, char **argv){
 	ros::init(argc, argv, "ladar_range_node");
-	
 	ros::NodeHandle n;
-	
-	ros::Subscriber sub = n.subscribe("/scan", 1, printLadarData);//change callback function
-	ros::spin();
+	ros::Subscriber sub = n.subscribe("/scan", 1, scanCallback);//change callback function
 
+	ros::spin();
+	
 	return 0;
 }
