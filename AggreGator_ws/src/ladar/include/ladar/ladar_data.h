@@ -5,6 +5,7 @@ class Ladar {
 protected:
 	std::vector<float> thetas;
 	std::vector<std::pair<float, float> > coords;
+	std::vector<float> degrees;
 			
 public:
 	Ladar(){}
@@ -21,7 +22,8 @@ public:
 	std::vector<std::pair<float, float> > getCoordinates() const{
 		return coords;
 	}
-	void print() const;
+	void print(std::vector<float> choice, std::string type);
+	void print(int choice);
 	bool forwardCheck();
 	bool leftCheck();
 	bool rightCheck();

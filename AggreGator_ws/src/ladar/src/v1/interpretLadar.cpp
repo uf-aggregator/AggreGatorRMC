@@ -23,7 +23,10 @@ string ghetto_to_string(float number){
     return buffer.str();
 }//end to_string
 
-Ladar::Ladar(int numOfSamples){
+Ladar::Ladar(int numOfSamples): thetas(numOfSamples),
+    degrees(numOfSamples),
+    coords(numOfSamples){
+    
 }
 
 /*
@@ -48,7 +51,7 @@ vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSampl
     
     for(int i = 0; i < numOfSamples; i++){
         theta = i*angle_increment + angle_min;
-
+        this->degrees.push_back(theta*57.296);
          //calculate theta assuming LADAR as origin
         if(ranges[i] > min_range && ranges[i] < max_range){
             //if the range meets the range constraints, push coordinates to vector
@@ -56,8 +59,8 @@ vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSampl
             y = ranges[i]*sin(theta); //calculate y coordinate
             pair<float, float> curr(x,y);
             coordinates.push_back(curr); //push to coordinates vector
-            coords.push_back(curr);
-            thetas.push_back(theta);
+            this->coords.push_back(curr);
+            this->thetas.push_back(theta);
         }
         //else, do not push coordinates to vector; they are not accurate
         
@@ -122,12 +125,26 @@ string Ladar::coordinatesToString(vector<pair<float, float> > coordinates){
 
 /*Prints out 
 */
-void Ladar::print() const{
-    for(int i = 0; i < coords.size(); i++){
-        string pair = string("(") + ghetto_to_string(coords.at(i).first) + string(", ")
-                                    + ghetto_to_string(coords.at(i).second) + string(") ");
-        cout <<  thetas.at(i) << " : " << pair << endl;
-    }//end for
+void Ladar::print(vector<float> choice, string type){
+    for(int i = 0; i < choice.size() && i < coords.size(); i++){
+        string coord = string("(") + ghetto_to_string(coords.at(i).first) + string(", ")
+                                    + ghetto_to_string(coords.at(i).second) + string(") m,m");
+        cout << choice.at(i) << " " << type << " :  " << coord << endl;
+    }
+}
+
+void Ladar::print(int choice){
+    switch(choice){
+        case 0:{
+            print(this->thetas, "radians");
+            break;
+        }
+        case 1:{
+            print(this->degrees, "degrees");
+            break;
+        }
+        default: break;
+    }
 }
 
 
