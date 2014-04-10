@@ -1,67 +1,97 @@
 #include "ros/ros.h"
 #include "std_msgs/builtin_int16.h"
-#include "motor_controller/I2CGeneric.h"
-
+#include "motor_controller/AdaCmd.h"
+#include "hardware_interface/GPIO.h"
+#include "controller.h"
 ros::Subscriber sub;
 ros::Publisher pub;
+int motorInput;
 
-motor_controller::I2CGeneric GenerateMSG(int setpoint)
+
+
+float controlFunction() //WARNING: CONTROL USED BELOW WERE DESIGNED FOR WHEEL MOTORS, THIS IS JUST HERE FOR PLACE HOLDER UNTIL LINEAR 				ACTUATOR DESIGN IS DEVELOPED
 {
-    motor_controller::I2CGeneric msg;
-    //Set msg addr
-    //msg.addr = ???;           //Use an enumerated type from the I2C node
+	//Linear actuator controller goes here!!!!
+	float J = 3.456*(10^(-6)); //kg*m^2
+	float L = 0.00054; // H
+	float R = 0.8; // Ohms
+	float K = 0.034; //    V/(rad/s)
+	float changeI = 0.3;  //     Amps/s
+	float maxMotorSpeed = (24 - L*changeI - R)/(K); //Max control output value using the highest voltage of 24 V
+	
+	
+	float controlInput = (abs(motorInput) - L*changeI - R)/K; //Scales input to be an equivalent voltage input to motor controller
 
-    //Set the msg data
-    msg.data = setpoint;
+		
+	SSController linearActuator; //create controller object for the linear actuator
+	
+	linearActuator.setU(controlInput);
+	
+	int iterations = 0; //Number of iterations to update control outputs
+	
+	while(iterations < 100) //Updates 100 times before accepting new values to update on and then sends out updated values on 					controlOutput
+	{
+		linearActuator.update();
+		
+	  float controlOutput = 100 - (linearActuator.getY()[0][0])/(maxMotorSpeed)*100; //Does some scaling on the control output values to get PWM value for AdaFruit downstream
+
+
+		iterations++; //Increments iterations variable
+	}
+	return controlOutput;
+}
+
+//Function that controls the direction of the motors using the GPIO pins on the O-Droid
+void setMotorDirection()
+{
+	if(motorInput == 0) //Brake to GND, write 0 to every pin
+	{
+		setGPIOWrite(40,0);
+		setGPIOWrite(42,0);
+	}
+	else if(motorInput > 0) //INA = GPIO pin 40, INB = GPIO pin 42, linear actuator moves up
+	{
+		setGPIOWrite(40,1); 
+		setGPIOWrite(42,0);
+	}
+	else //Linear actuator moves down
+	{
+		setGPIOWrite(40,0);
+		setGPIOWrite(42,1);
+	}
+	
+}
+
+
+motor_controller::AdaCmd generateMessage()
+{
+    motor_controller::AdaCmd msg;
+    
+    msg.device = motor_controller::AdaCmd::linearActuator;
+
+    msg.value.push_back(controlFunction());
 
     return msg;
 }
 
 
-//Function that controls the direction of the motors using the GPIO pins on the O-Droid
-void setMotorDirection(std_msgs::Int16 input)
+void callBack(const std_msgs::Int16& msg)
 {
-	if(input.data == 0) //Brake to GND, write 0 to every pin
-	{
-		setGPIOWrite(33,0);
-		setGPIOWrite(31,0);
-	}
-	else if(input.data > 0) //INA = GPIO pin 33, INB = GPIO pin 31, linear actuator moves up
-	{
-		setGPIOWrite(33,1); 
-		setGPIOWrite(31,0);
-	}
-	else //Linear actuator moves down
-	{
-		setGPIOWrite(33,0);
-		setGPIOWrite(31,1);
-	}
+    motorInput = msg.data;
 	
-}
+    setMotorDirection();
 
-motor_controller::I2CGeneric LinearActuatorPID(int setpoint)
-{
-    /*
-     * This is where the pid controller goes
-     */
-
-    return GenerateMSG(setpoint);               //Output the msg NOTE: change the passed parameter do not use setpoint directly
-}
-
-void SetSetpoint(const std_msgs::Int16& msg)
-{
-    setMotorDirection(msg);
-    pub.publish(LinearActuatorPID(msg.data));   //Generate and publish an I2C msg
+    pub.publish(generateMessage());   //Generate and publish an I2C msg
 }
 
 //MAIN
 int main(int argc, char** argv)
 {
-    ros::init(argc, argv, "linear_actuator_node");                              //Initialize node
-    ros::NodeHandle n;                                                          //Create nodehandle object
+    ros::init(argc, argv, "linear_actuator_node");                     //Initialize node
+    ros::NodeHandle n;                                                 //Create nodehandle object
 
-    sub = n.subscribe("linear_actuator_rc", 1000, SetSetpoint);                 //Create object to subscribe to topic "linear_actuator_rc"
-    pub = n.advertise<motor_controller::I2CGeneric>("I2C",1000);                    //Create object to publish to topic "I2C"
+    sub = n.subscribe("linear_actuator_rc", 1000, callBack);           //Create object to subscribe to topic "linear_actuator_rc"
+    pub = n.advertise<motor_controller::AdaCmd>("adaFruit",1000);      //Create object to publish to topic "adaFruit"
 	
     //Loop as long as ros system is ok
     ros::spin();

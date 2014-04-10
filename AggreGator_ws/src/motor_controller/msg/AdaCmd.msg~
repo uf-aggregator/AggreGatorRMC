@@ -1,0 +1,6 @@
+uint8 device
+uint16[] value
+
+uint8 wheelMotors=1
+uint8 bucketDrum=2
+uint8 linearActuator=3
