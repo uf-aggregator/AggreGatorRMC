@@ -73,7 +73,7 @@ template<>
 struct MD5Sum< ::hardware_interface::ReadI2C > {
   static const char* value()
   {
-    return "6daf164ce229d457420d176f82100267";
+    return "22e5f5eaf6ee0bc3b5bf519623591445";
   }
 
   static const char* value(const ::hardware_interface::ReadI2C&) { return value(); }

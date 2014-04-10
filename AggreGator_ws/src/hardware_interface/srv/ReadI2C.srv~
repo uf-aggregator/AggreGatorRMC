@@ -1,0 +1,4 @@
+int8 addr
+int8 amount_to_read
+---
+uint8[] data
