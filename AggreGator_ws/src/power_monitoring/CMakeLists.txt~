@@ -6,7 +6,7 @@ project(power_monitoring)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
-  hardware_interface
+#  hardware_interface
 )
 
 ################################################

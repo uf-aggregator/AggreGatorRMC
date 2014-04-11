@@ -35,6 +35,7 @@ bool ReadRegisterI2CCallback(hardware_interface::ReadI2CRegister::Request&  requ
     if(buf[0])  //Dirty bit set
     {
         free(buf);
+        ROS_WARN("Failed to read from I2C");
         return false;
     }
 

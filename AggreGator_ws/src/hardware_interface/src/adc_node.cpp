@@ -142,10 +142,15 @@ u_int16_t ReadADC(ADC adc, ADC_REG reg)
     read.request.addr = adc;
     read.request.reg = reg;
     read.request.size = 2;
-    read_register_svr.call(read);
+    if(!read_register_svr.call(read))
+    {
+        //Error handleing
+        ROS_WARN("Failed to read from register %i at address %i", reg, adc);
+        return 0;
+    }
 
     //convert to a unsigned 16 bit integer
-    return (((u_int16_t) read.response.data[1]) << 8) + (u_int16_t) (read.response.data[0]);
+    return ((((u_int16_t) read.response.data[1]) << 8) + (u_int16_t) (read.response.data[0]));
 }
 
 /*
@@ -224,9 +229,9 @@ void PublishIRData()
     hardware_interface::RawIRData ir_data;
 
     //Loop through all IR's
-    for(int iii = ADC_CH0; iii <= ADC_CH7; ++iii)
+    for(int iii = ADC_CH0, jjj = 0; iii <= ADC_CH7; ++iii, ++jjj)
     {
-        ir_data.data[iii] = ReadADC(ADC_IR, static_cast<ADC_REG>(iii));
+        ir_data.data[jjj] = ReadADC(ADC_IR, static_cast<ADC_REG>(iii));
     }
 
     //Publish the msg
