@@ -48,12 +48,15 @@ find_package(catkin REQUIRED COMPONENTS
  add_message_files(
    FILES
    WriteI2C.msg
+   WriteI2CRegister.msg
+   RawIRData.msg
  )
 
 ## Generate services in the 'srv' folder
  add_service_files(
    FILES
    ReadI2C.srv
+   ReadI2CRegister.srv
  )
 
 ## Generate actions in the 'action' folder
@@ -100,8 +103,7 @@ include_directories(
 ## Declare a cpp library
  add_library(hardware_utils
    src/GPIO.cpp
-   src/i2c.cpp  
-   src/ADC.cpp
+   src/i2c.cpp
    src/AdaFruit.cpp
  )
 
