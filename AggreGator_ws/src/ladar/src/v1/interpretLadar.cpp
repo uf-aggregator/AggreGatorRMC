@@ -78,21 +78,54 @@ vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSampl
 
 vector<pair<float, float> > Ladar::fivePointAverager(vector<pair<float, float> > original){
     vector<pair<float, float> > filtered;
-    float currXSum = 0;
-    float currYSum = 0;
+    float currXs[5];
+    float currYs[5];
+    int j = 0;
     
     for(int i = 0; i < original.size(); i++){
-        currXSum = currXSum + original[i].first; //add together every five x values
-        currYSum = currXSum + original[i].second; //add together every five y values
-        if((i+1)%5 == 0){
-            //if the next index is a multiple of five
-            //save the averaged pair in the filtered vector, and reset the current sums
-            pair<float, float> curr(currXSum/5, currYSum/5);
-            filtered.push_back(curr);
-            currXSum = 0;
-            currYSum = 0;
-            
-        }
+        currXs[j] = original[i].first; //record every five xs
+        currYs[j] = original[i].second; //record every five ys
+        j++;
+        
+        if(j == 5){
+        	//after collecting five terms, do a bubble sort
+			int temp, length;
+			int length = 5; 
+			bool swapped = true;
+			//first sort X values
+			while(swapped){
+				swapped = false;
+				//keep iterating through the list, until no values need swapping
+    	   		for(int k = 0; k < length - 1; k++){
+    	        	if(currXs[k] > currXs[k+1]){
+						temp = currXs[k+1];
+						currXs[k+1] = currXs[k];
+						currXs[k] = temp;
+                		swapped = true;
+					}
+				}
+				
+			}
+			swapped = true;
+			while(swapped){
+				swapped = false;
+				//keep iterating through the list, until no values need swapping
+    	   		for(int k = 0; k < length - 1; k++){
+    	        	if(currYs[k] > currYs[k+1]){
+						temp = currYs[k+1];
+						currYs[k+1] = currYs[k];
+						currYs[k] = temp;
+                		swapped = true;
+					}
+				}
+				
+			}
+		
+        	pair<float, float> curr(currXs[length/2], currYs[length/2]);
+        	filtered.push_back(curr);
+        	j = 0;
+		}
+        
         
     }
     

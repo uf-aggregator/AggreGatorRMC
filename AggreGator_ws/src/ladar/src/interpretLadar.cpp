@@ -74,8 +74,10 @@ vector<pair<float, float> > fivePointAverager(vector<pair<float, float> > origin
 			int temp, length;
 			int length = 5; 
 			bool swapped = true;
+			//first sort X values
 			while(swapped){
 				swapped = false;
+				//keep iterating through the list, until no values need swapping
     	   		for(int k = 0; k < length - 1; k++){
     	        	if(currXs[k] > currXs[k+1]){
 						temp = currXs[k+1];
@@ -86,8 +88,10 @@ vector<pair<float, float> > fivePointAverager(vector<pair<float, float> > origin
 				}
 				
 			}
+			swapped = true;
 			while(swapped){
 				swapped = false;
+				//keep iterating through the list, until no values need swapping
     	   		for(int k = 0; k < length - 1; k++){
     	        	if(currYs[k] > currYs[k+1]){
 						temp = currYs[k+1];
@@ -101,12 +105,14 @@ vector<pair<float, float> > fivePointAverager(vector<pair<float, float> > origin
 		
         	pair<float, float> curr(currXs[length/2], currYs[length/2]);
         	filtered.push_back(curr);
+        	j = 0;
 		}
         
         
     }
     
     return filtered;
+}//end averager
 }
 
 /*
