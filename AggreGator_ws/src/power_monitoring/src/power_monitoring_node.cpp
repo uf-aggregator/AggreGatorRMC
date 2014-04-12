@@ -6,15 +6,23 @@
 
 #include "ros/ros.h"
 
-#include "hardware_interface/RawPowerData.h"
+#include "hardware_interface/RawMotorPowerData.h"
+#include "hardware_interface/ElectronicPowerData.h"
 
 //Global variables
-ros::Subscriber raw_power_sub;
+ros::Subscriber raw_motor_power_sub;
+ros::Subscriber electronic_power_sub;
 
 //Converts raw data from ADC into power
-void ConvertToPower(const hardware_interface::RawPowerData& data)
+void ConvertRawMotorToPower(const hardware_interface::RawMotorPowerData& data)
 {
     ROS_INFO("Raw data [Voltage: %i, Current: %i]", data.voltage, data.current);
+}
+
+//Tracks the electronic power battery
+void TrackElectronicPower(const hardware_interface::ElectronicPowerData& data)
+{
+
 }
 
 /*
@@ -33,7 +41,8 @@ int main(int argc, char** argv)
     ros::NodeHandle n;
 
     //Initilize publishers, subscribers, and services
-    raw_power_sub = n.subscribe("raw_power", 1000, ConvertToPower);
+    raw_motor_power_sub = n.subscribe("raw_motor_power", 1000, ConvertRawMotorToPower);
+    electronic_power_sub = n.subscribe("electronic_power", 1000, TrackElectronicPower);
 
     /*
      * Main loop

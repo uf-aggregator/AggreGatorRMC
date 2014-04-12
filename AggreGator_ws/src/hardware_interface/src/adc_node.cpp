@@ -31,12 +31,12 @@
 #include "hardware_interface/WriteI2CRegister.h"
 #include "hardware_interface/ReadI2CRegister.h"
 #include "hardware_interface/RawIRData.h"
-#include "hardware_interface/RawPowerData.h"
+#include "hardware_interface/RawMotorPowerData.h"
 
 
 //Global varibles
 ros::Publisher ir_pub;                  //Publishes ir info
-ros::Publisher power_pub;               //Publishes power usage info
+ros::Publisher motor_power_pub;         //Publishes power usage info
 ros::Publisher write_register_pub;      //Writes to an I2C Register
 
 ros::ServiceClient read_register_svr;   //Reads I2C registers
@@ -241,17 +241,17 @@ void PublishIRData()
 /*
  * Read and publish voltage and current for power calculations
  */
-void PublishPowerData()
+void PublishMotorPowerData()
 {
     //Generate the msg
-    hardware_interface::RawPowerData power_data;
+    hardware_interface::RawMotorPowerData power_data;
 
     //Read the data
     power_data.current = ReadADC(ADC_CURRENT_SENSE, ADC_CH0);
     power_data.voltage = ReadADC(ADC_CURRENT_SENSE, ADC_CH1);
 
     //Publish the msg
-    power_pub.publish(power_data);
+    motor_power_pub.publish(power_data);
 }
 
 /*
@@ -271,7 +271,7 @@ int main(int argc, char** argv)
 
     //Initilize publishers, subscribers, and services
     write_register_pub = n.advertise<hardware_interface::WriteI2CRegister>("write_register_i2c", 1000);
-    power_pub = n.advertise<hardware_interface::RawPowerData>("raw_power", 1000);
+    motor_power_pub = n.advertise<hardware_interface::RawMotorPowerData>("raw_motor_power", 1000);
     ir_pub = n.advertise<hardware_interface::RawIRData>("raw_ir", 1000);
 
     read_register_svr = n.serviceClient<hardware_interface::ReadI2CRegister>("read_register_i2c");
@@ -293,7 +293,7 @@ int main(int argc, char** argv)
     while (ros::ok())
     {
         PublishIRData();
-        PublishPowerData();
+        PublishMotorPowerData();
         ros::spinOnce();
     }
 }

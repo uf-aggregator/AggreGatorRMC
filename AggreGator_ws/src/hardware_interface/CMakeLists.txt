@@ -50,7 +50,8 @@ find_package(catkin REQUIRED COMPONENTS
    WriteI2C.msg
    WriteI2CRegister.msg
    RawIRData.msg
-   RawPowerData.msg
+   RawMotorPowerData.msg
+   ElectronicPowerData.msg
  )
 
 ## Generate services in the 'srv' folder
