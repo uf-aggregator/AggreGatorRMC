@@ -14,7 +14,6 @@ This header file contains declarations of the necessary functions to interface w
 #include "i2c.h"
 #include <unistd.h>
 
-
 //List of register addresses
 enum regAddr
 {
@@ -45,16 +44,32 @@ enum regAddr
  linearActuatorMotorChannel_OFF_HIGH
 };
 
+//Structure which will be loaded with values that will be eventually written to the I2C bus
+//These values will set the PWM channels to certain values to help control the motors.
+struct pwmRegisterData
+{
+	int *lowRegOn;
+	int *highRegOn;
+	int *lowRegOff;
+	int *highRegOff;
+	int *initData;
+};
+
 //Initialize
-void AdaFruitInit();
+pwmRegisterData AdaFruitInit();
 //Set relevant PWM channel for left front motor
-void setLeftFrontMotor(int);
+pwmRegisterData setLeftFrontMotor(float);
 //Set relevant PWM channel for left rear motor
-void setLeftRearMotor(int);
+pwmRegisterData setLeftRearMotor(float);
 //Set relevant PWM channel for right rear motor
-void setRightRearMotor(int);
+pwmRegisterData setRightRearMotor(float);
 //Set relevant PWM channel for right front motor
-void setRightFrontMotor(int);
+pwmRegisterData setRightFrontMotor(float);
+//Set relevant PWM channel for linear actuators
+pwmRegisterData setLinearActuator(float PWM);
+//Set relevant PWM channel for bucket drum
+pwmRegisterData setBucketDrum(float PWM);
 
 #endif //_ADAFRUIT_H_
+
 
