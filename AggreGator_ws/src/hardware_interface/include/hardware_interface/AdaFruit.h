@@ -11,7 +11,7 @@ This header file contains declarations of the necessary functions to interface w
 #include <fcntl.h>
 #include <iostream>
 #include "GPIO.h"
-#include "i2c.h"
+//#include "i2c.h"
 #include <unistd.h>
 
 //List of register addresses

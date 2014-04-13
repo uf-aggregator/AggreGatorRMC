@@ -44,6 +44,8 @@ enum regAddr
  linearActuatorMotorChannel_OFF_HIGH
 };
 
+//Structure which will be loaded with values that will be eventually written to the I2C bus
+//These values will set the PWM channels to certain values to help control the motors.
 struct pwmRegisterData
 {
 	int *lowRegOn;

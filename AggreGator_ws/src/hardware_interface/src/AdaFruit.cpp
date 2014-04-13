@@ -10,7 +10,7 @@ using namespace std;
 pwmRegisterData AdaFruitInit()
 {
 	pwmRegisterData initialize;
-	init_i2c(); //Initializes the I2C bus
+	//init_i2c(); //Initializes the I2C bus
 
 	int data[] = {0x0,0b00000001}; //Leave everything in MODE1 as default, except turn off SLEEP bit
 	initialize.initData = data;

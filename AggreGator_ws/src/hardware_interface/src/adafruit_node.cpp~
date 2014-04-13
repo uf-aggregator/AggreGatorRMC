@@ -124,7 +124,7 @@ void setBucketMotorI2C(const motor_controller::AdaCmd& msg)
 			write_pub.publish(bucketMotor);
 			
 		for(int i = 0; i < 2; i++) //iterates through LOW OFF register for the bucket drum motor and writes the data to the message, bucketMotor
-			bucketMotor.data.push_back(BD.lowRegOff[i])
+			bucketMotor.data.push_back(BD.lowRegOff[i]);
 			
 			write_pub.publish(bucketMotor);
 			
@@ -181,6 +181,8 @@ void initialize()
 //Callback function
 void adaFruitCallBack(const motor_controller::AdaCmd& msg)
 {
+
+		ROS_INFO("Receiving message: [%f] ",msg.device);
 		switch(msg.device) //Checks device marker in incoming message
 		{
 		case motor_controller::AdaCmd::wheelMotors: //If wheelMotors, publish data relating to the wheel motors

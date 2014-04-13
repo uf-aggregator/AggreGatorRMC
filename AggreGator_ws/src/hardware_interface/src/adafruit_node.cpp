@@ -181,6 +181,8 @@ void initialize()
 //Callback function
 void adaFruitCallBack(const motor_controller::AdaCmd& msg)
 {
+
+		ROS_INFO("Receiving message: [%i] ",msg.device);
 		switch(msg.device) //Checks device marker in incoming message
 		{
 		case motor_controller::AdaCmd::wheelMotors: //If wheelMotors, publish data relating to the wheel motors
