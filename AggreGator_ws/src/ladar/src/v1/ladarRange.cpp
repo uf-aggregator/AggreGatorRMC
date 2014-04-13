@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "ladar/SDL/SDL.h"
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "sensor_msgs/LaserScan.h"
@@ -19,6 +20,14 @@ void scanCallback(const sensor_msgs::LaserScan laser){
 	Ladar *ladar = new Ladar(numSample);
 	ladar->getCoordinates(ranges, numSample, angle_min, angle_increment, min_range, max_range);
 	ladar->print(1);
+	ladar->drawCoordinates();
+
+	/*//!!testing five point averager
+	std::cout << ladar->coordinatesToString(
+		ladar->fivePointAverager(
+			ladar->getCoordinates(ranges, numSample, angle_min, angle_increment, min_range, max_range))) 
+	<< std::endl;
+	*/
 	usleep(1000000);
 }
 

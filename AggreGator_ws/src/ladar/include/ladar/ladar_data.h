@@ -24,6 +24,7 @@ public:
 	}
 	void print(std::vector<float> choice, std::string type);
 	void print(int choice);
+	int drawCoordinates();
 	bool forwardCheck();
 	bool leftCheck();
 	bool rightCheck();
