@@ -162,7 +162,7 @@ vector<float> Ladar::getSlopes(vector<pair<float,float> > coordinates){
   vector<float> slopes(coordinates.size()-1);
   slopes.clear();
 
-  for(int i = 0; i < coordinate.size() - 1; i++){
+  for(int i = 0; i < coordinates.size() - 1; i++){
      float x1 = coordinates.at(i).first, y1 =  coordinates.at(i).second;
      float x2 = coordinates.at(i+1).first, y2 =  coordinates.at(i+1).second;
      float slope = (y2-y1)/(x2-x1);
