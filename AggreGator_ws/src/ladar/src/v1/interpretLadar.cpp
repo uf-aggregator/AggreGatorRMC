@@ -158,6 +158,25 @@ string Ladar::coordinatesToString(vector<pair<float, float> > coordinates){
     return coordString;
 }//end coordinatestostring
 
+vector<float> Ladar::getSlopes(vector<pair<float,float> > coordinates){
+  vector<float> slopes(coordinates.size()-1);
+  slopes.clear();
+
+  for(int i = 0; i < coordinate.size() - 1; i++){
+     float x1 = coordinates.at(i).first, y1 =  coordinates.at(i).second;
+     float x2 = coordinates.at(i+1).first, y2 =  coordinates.at(i+1).second;
+     float slope = (y2-y1)/(x2-x1);
+     slopes.push_back(slope);
+  }
+
+  return slopes;
+}//end getSlopes
+
+vector<float> Ladar::getAverageSlopes(vector<float> slopes){}
+
+//change return to walls values I guess
+void Ladar::processSlopes(){}
+
 
 /*Prints out 
 */

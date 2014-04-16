@@ -22,6 +22,9 @@ public:
 	std::vector<std::pair<float, float> > getCoordinates() const{
 		return coords;
 	}
+	std::vector<float> getSlopes(std::vector<pair<float,float> > coordinates);
+	std::vector<float> getAverageSlopes(std::vector<float> slopes);
+	void processSlopes();
 	void print(std::vector<float> choice, std::string type);
 	void print(int choice);
 	int drawCoordinates();
