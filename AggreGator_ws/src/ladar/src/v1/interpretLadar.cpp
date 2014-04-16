@@ -310,3 +310,29 @@ bool Ladar::rightCheck(){}
 //potentially create functions for determining actual degrees, not in radians
 //ladar scans counterclockwise, so mark with sticky note or something which way, during tests
 
+
+/*
+	Function for finding corners from vector of slopes
+*/
+vector<int> Ladar::findCorners(vector<float> slopes){
+    vector<int> corners;
+    float currSum = 0;
+    float currAvg = 0;
+    int currCount = 0;
+    for(int i = 0; i < slopes.size() - 1; i++){
+        currSum += slopes.at(i);
+        currCount++;
+        currAvg = currSum/((float)currCount);
+        
+        //if the next slope is off by the currAvg by more than 20%, assume this is a corner
+        if(abs(slopes.at(i+1)) > abs(currAvg*1.25) || abs(slopes.at(i+1)) < abs(currAvg*.75)){
+            corners.push_back(i+1);
+            currSum = 0;
+            currAvg = 0;
+            currCount = 0;
+        }
+    
+    }
+    return corners;
+}
+

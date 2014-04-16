@@ -28,6 +28,7 @@ public:
 	bool forwardCheck();
 	bool leftCheck();
 	bool rightCheck();
+    std::vector<int> findCorners(vector<float> slopes);
 };
 
 #endif
