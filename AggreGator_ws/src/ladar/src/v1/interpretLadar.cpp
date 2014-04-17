@@ -14,15 +14,19 @@
 
 using namespace std;
 
-/*
-    to_string not a function in roscpp, so using this because works
-*/
+/*********************************************************
+*General Methods
+**********************************************************/
+//to_string not a function in roscpp, so using this because works
 string ghetto_to_string(float number){
     ostringstream buffer;
     buffer << number;
     return buffer.str();
 }//end to_string
 
+/*********************************************************
+*Constructors
+**********************************************************/
 Ladar::Ladar(int numOfSamples): thetas(numOfSamples),
     degrees(numOfSamples),
     coords(numOfSamples){
@@ -31,13 +35,14 @@ Ladar::Ladar(int numOfSamples): thetas(numOfSamples),
     coords.clear();
 }
 
-/*
-    getCoordinates
+/*********************************************************
+*Coordinate Methods
+**********************************************************/
+/*getCoordinates
           - Uses laser.ranges[] array, along with other laser member variables, 
             to convert the polar coordinates into cartesian coordinates 
-          - Returns as vector of pairs.  First element of pair is x, second element is y.
+          - Returns as vector of pairs.  First element of pair is x, second element is y.*/
 
-*/
 vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSamples, 
 											float angle_min, float angle_increment,
                                             float min_range, float max_range){
@@ -71,13 +76,10 @@ vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSampl
     return coordinates;
 }//end getcoordinates
 
-/*
-	fivePointAverager
-		-Adds together every five x and y values into currXSum and currYSum
-		-On the fifth value, divide both currXSum and currYSum by 5
-		-Push this averaged pair onto the filtered vector, reset the sums
-*/
-
+  /*fivePointAverager
+  		-Adds together every five x and y values into currXSum and currYSum
+  		-On the fifth value, divide both currXSum and currYSum by 5
+  		-Push this averaged pair onto the filtered vector, reset the sums*/
 vector<pair<float, float> > Ladar::fivePointAverager(vector<pair<float, float> > original){
     vector<pair<float, float> > filtered;
     float currXs[5];
@@ -157,6 +159,9 @@ string Ladar::coordinatesToString(vector<pair<float, float> > coordinates){
     return coordString;
 }//end coordinatestostring
 
+/*********************************************************
+*Coordinate Processing Methods
+**********************************************************/
 vector<float> Ladar::getSlopes(vector<pair<float,float> > coordinates){
   vector<float> slopes(coordinates.size()-1);
   slopes.clear();
@@ -176,9 +181,32 @@ vector<float> Ladar::getAverageSlopes(vector<float> slopes){}
 //change return to walls values I guess
 void Ladar::processSlopes(){}
 
+/*Function for finding corners from vector of slopes*/
+vector<int> Ladar::findCorners(vector<float> slopes){
+    vector<int> corners;
+    float currSum = 0;
+    float currAvg = 0;
+    int currCount = 0;
+    for(int i = 0; i < slopes.size() - 1; i++){
+        currSum += slopes.at(i);
+        currCount++;
+        currAvg = currSum/((float)currCount);
+        
+        //if the next slope is off by the currAvg by more than 20%, assume this is a corner
+        if(abs(slopes.at(i+1)) > abs(currAvg*1.25) || abs(slopes.at(i+1)) < abs(currAvg*.75)){
+            corners.push_back(i+1);
+            currSum = 0;
+            currAvg = 0;
+            currCount = 0;
+        }
+    
+    }
+    return corners;
+}
 
-/*Prints out 
-*/
+/*********************************************************
+*Print Methods
+**********************************************************/
 void Ladar::print(vector<float> choice, string type){
     for(int i = 0; i < choice.size() && i < coords.size(); i++){
         string coord = string("(") + ghetto_to_string(coords.at(i).first) + string(", ")
@@ -201,43 +229,20 @@ void Ladar::print(int choice){
     }
 }
 
-/*GRAPHICS RENDERING*/
+/*********************************************************
+*Graphics
+**********************************************************/
 int Ladar::drawCoordinates(vector<pair<float, float> > coordinates)
 {
 }
-/*END GRAPHICS*/
 
 
+/*********************************************************
+*Thoughts, Concerns, Conundrums
+**********************************************************/
 //NOTE: Any value < 0.1 is like literally touching the ladar
-
-bool Ladar::forwardCheck(){
-    //make check for forward facing ladar
-}
+bool Ladar::forwardCheck(){} //make check for forward facing ladar
 bool Ladar::leftCheck(){}
 bool Ladar::rightCheck(){}
 
-/*
-	Function for finding corners from vector of slopes
-*/
-vector<int> Ladar::findCorners(vector<float> slopes){
-    vector<int> corners;
-    float currSum = 0;
-    float currAvg = 0;
-    int currCount = 0;
-    for(int i = 0; i < slopes.size() - 1; i++){
-        currSum += slopes.at(i);
-        currCount++;
-        currAvg = currSum/((float)currCount);
-        
-        //if the next slope is off by the currAvg by more than 20%, assume this is a corner
-        if(abs(slopes.at(i+1)) > abs(currAvg*1.25) || abs(slopes.at(i+1)) < abs(currAvg*.75)){
-            corners.push_back(i+1);
-            currSum = 0;
-            currAvg = 0;
-            currCount = 0;
-        }
-    
-    }
-    return corners;
-}
 
