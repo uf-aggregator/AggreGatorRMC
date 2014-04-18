@@ -11,6 +11,7 @@
 #include <sstream>
 #include "ladar/SDL/SDL.h"
 #include "ladar/ladar_data.h"
+#include "ladar/draw.h"
 
 using namespace std;
 
@@ -280,7 +281,8 @@ void Ladar::print(int choice){
 **********************************************************/
 int Ladar::drawCoordinates(vector<pair<float, float> > coordinates)
 {
-    
+    DrawSDL *draw = new DrawSDL();
+    draw->draw(coordinates);
 }
 
 

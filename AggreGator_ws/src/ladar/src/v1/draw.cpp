@@ -48,7 +48,7 @@ int DrawSDL::init(){
     return -1;
   }
 
-   screen = SDL_SetVideoMode(800, 600, 24, SDL_SWSURFACE | SDL_FULLSCREEN);
+   screen = SDL_SetVideoMode(800, 450, 32, SDL_SWSURFACE | SDL_FULLSCREEN);
    
   if ( screen == NULL )
   {
@@ -113,7 +113,19 @@ int DrawSDL::drawCore(vector<pair<int, int> > coordinates){
 }//end draw(<int, int>)
 
 void DrawSDL::draw(vector<pair<float, float> > coordinates){
-  vector<pair<int, int> > converted;
+  int height = screen->h/2;
+  int width = screen->w/2;
+  int x, y;
+  vector<pair<int, int> > converted(coordinates.size());
+  converted.clear();
+
+  //translate all coordinates relative to middle of screen
+  for(int i = 0; i < coordinates.size(); i++){
+    x = width + coordinates.at(i).first;
+    y = height + coordinates.at(i).second;
+    pair<int, int> coord(x, y);
+    converted.push_back(coord);
+  }
 
   drawCore(converted);
 }

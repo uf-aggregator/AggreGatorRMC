@@ -5,7 +5,6 @@
 #include "std_msgs/String.h"
 #include "sensor_msgs/LaserScan.h"
 #include "ladar/ladar_data.h"
-#include "ladar/draw.h"
 
 void scanCallback(const sensor_msgs::LaserScan laser){
 	
@@ -19,19 +18,24 @@ void scanCallback(const sensor_msgs::LaserScan laser){
 	float min_range = laser.range_min;
 	float max_range = laser.range_max;
 	Ladar *ladar = new Ladar(numSample);
-	std::vector<float> slopes = ladar->getSlopes(
-	ladar->fivePointAverager(
-	ladar->getCoordinates(ranges, numSample, angle_min, angle_increment, min_range, max_range)));
+	
+
+	std::vector<std::pair<float, float> > coordinates = 
+		ladar->getCoordinates(ranges, numSample, angle_min, angle_increment, min_range, max_range);
 	//  /*
 	ladar->print(1);
 	std::cout << "---------------------------------------------------------------------" << 
 	"\n\n\n\n\n\n\n\n\n\n\n" << std::endl;
 	// */
+
+	//Graphics Test
+	ladar->drawCoordinates(coordinates);
+
 	/*for(int i = 0; i < slopes.size(); i++){
 		std::cout << i << ": \t" << slopes.at(i) << std::endl;
 	}*/
 
-	//ladar->drawCoordinates();
+	
 	
 	usleep(1000000);
 }
