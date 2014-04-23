@@ -18,21 +18,30 @@ void scanCallback(const sensor_msgs::LaserScan laser){
 	float min_range = laser.range_min;
 	float max_range = laser.range_max;
 	Ladar *ladar = new Ladar(numSample);
-	ladar->getCoordinates(ranges, numSample, angle_min, angle_increment, min_range, max_range);
-	ladar->print(1);
-	ladar->drawCoordinates();
+	
 
-	/*//!!testing five point averager
-	std::cout << ladar->coordinatesToString(
-		ladar->fivePointAverager(
-			ladar->getCoordinates(ranges, numSample, angle_min, angle_increment, min_range, max_range))) 
-	<< std::endl;
-	*/
+	std::vector<std::pair<float, float> > coordinates = 
+		ladar->getCoordinates(ranges, numSample, angle_min, angle_increment, min_range, max_range);
+	//  /*
+	ladar->print(1);
+	std::cout << "---------------------------------------------------------------------" << 
+	"\n\n\n\n\n\n\n\n\n\n\n" << std::endl;
+	// */
+
+	//Graphics Test
+	ladar->drawCoordinates(coordinates);
+
+	/*for(int i = 0; i < slopes.size(); i++){
+		std::cout << i << ": \t" << slopes.at(i) << std::endl;
+	}*/
+
+	
+	
 	usleep(1000000);
 }
 
 int main(int argc, char **argv){
-	ros::init(argc, argv, "ladar_range_node");
+	ros::init(argc, argv, "ladar_node");
 	ros::NodeHandle n;
 	ros::Subscriber sub = n.subscribe("/scan", 1, scanCallback);//change callback function
 

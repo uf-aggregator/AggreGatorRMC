@@ -11,6 +11,7 @@
 #include <sstream>
 #include "ladar/SDL/SDL.h"
 #include "ladar/ladar_data.h"
+#include "ladar/draw.h"
 
 using namespace std;
 
@@ -42,23 +43,37 @@ Ladar::Ladar(int numOfSamples): thetas(numOfSamples),
           - Uses laser.ranges[] array, along with other laser member variables, 
             to convert the polar coordinates into cartesian coordinates 
           - Returns as vector of pairs.  First element of pair is x, second element is y.*/
+float Ladar::adjustTheta(float theta){
+    float adjustedTheta, reference = this->angle_max;
+
+    adjustedTheta = theta;
+
+    return adjustedTheta;
+}
 
 vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSamples, 
 											float angle_min, float angle_increment,
                                             float min_range, float max_range){
     //empty out current coordinates
     thetas.clear(); degrees.clear(); coords.clear();
+    //set some data members
+    this->reference_angle = -angle_min;
 
     vector<pair<float, float> > coordinates(numOfSamples);
-    float theta, x, y;
+    float theta = angle_min, radians = 0, x, y;
     
     //converts index into theta based on angle_min and angle_increment
     //then converts polar (range, theta) into cartesian (x,y)
     
     
     for(int i = 0; i < numOfSamples; i++){
-        theta = i*angle_increment + angle_min;
-        this->degrees.push_back(theta*57.296);
+        if(i==0);
+        else {
+            radians += angle_increment;
+            theta += angle_increment; 
+        }
+
+        this->degrees.push_back(radians*57.296);
          //calculate theta assuming LADAR as origin
         if(ranges[i] > min_range && ranges[i] < max_range){
             //if the range meets the range constraints, push coordinates to vector
@@ -67,7 +82,7 @@ vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSampl
             pair<float, float> curr(x,y);
             coordinates.push_back(curr); //push to coordinates vector
             this->coords.push_back(curr);
-            this->thetas.push_back(theta);
+            this->thetas.push_back(radians);
         }
         //else, do not push coordinates to vector; they are not accurate
         
@@ -163,6 +178,7 @@ string Ladar::coordinatesToString(vector<pair<float, float> > coordinates){
 *Coordinate Processing Methods
 **********************************************************/
 vector<float> Ladar::getSlopes(vector<pair<float,float> > coordinates){
+  this->slopes.clear();
   vector<float> slopes(coordinates.size()-1);
   slopes.clear();
 
@@ -172,7 +188,7 @@ vector<float> Ladar::getSlopes(vector<pair<float,float> > coordinates){
      float slope = (y2-y1)/(x2-x1);
      slopes.push_back(slope);
   }
-
+  this->slopes = slopes;
   return slopes;
 }//end getSlopes
 
@@ -214,6 +230,25 @@ void Ladar::print(vector<float> choice, string type){
         cout << choice.at(i) << " " << type << " :  " << coord << endl;
     }
 }
+void Ladar::printDegreesOnly(){
+    for(int i = 0; i < this->degrees.size(); i++){
+        cout  << " -> " << this->degrees.at(i);
+        if(i%5==0 && i!=0) cout << endl;
+    }
+}
+void Ladar::printSlopesOnly(){
+    for(int i = 0; i < this->slopes.size(); i++){
+        cout  << " -> " << this->slopes.at(i);
+        if(i%5==0 && i!=0) cout << endl;
+    }
+}
+
+void Ladar::printRadiansOnly(){
+    for(int i = 0; i < this->thetas.size(); i++){
+        cout  << " -> " << this->thetas.at(i);
+        if(i%5==0 && i!=0) cout << endl;
+    }  
+}
 
 void Ladar::print(int choice){
     switch(choice){
@@ -225,6 +260,18 @@ void Ladar::print(int choice){
             print(this->degrees, "degrees");
             break;
         }
+        case 2:{
+            printDegreesOnly();
+            break;
+        }
+        case 3:{
+            printSlopesOnly();
+            break;
+        }
+        case 4:{
+            printRadiansOnly();
+            break;
+        }
         default: break;
     }
 }
@@ -234,6 +281,8 @@ void Ladar::print(int choice){
 **********************************************************/
 int Ladar::drawCoordinates(vector<pair<float, float> > coordinates)
 {
+    DrawSDL *draw = new DrawSDL();
+    draw->draw(coordinates);
 }
 
 

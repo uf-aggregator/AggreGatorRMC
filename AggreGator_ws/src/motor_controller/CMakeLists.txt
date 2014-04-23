@@ -175,3 +175,4 @@ target_link_libraries(bucket_motor_node ${catkin_LIBRARIES})
 
 add_executable(linear_actuator_node src/linear_actuator_node.cpp src/controller.cpp src/matrix.cpp)
 target_link_libraries(linear_actuator_node ${catkin_LIBRARIES})
+
