@@ -1,181 +1,167 @@
 #include "ros/ros.h"
-#include "AdaFruit.h"
+//#include "AdaFruit.h"
 #include "motor_controller/AdaCmd.h"
 #include "hardware_interface/WriteI2C.h"
-#define adafruitAddress 0x60
+#include "hardware_interface/WriteI2CRegister.h"
 
 ros::Subscriber sub;
 ros::Publisher write_pub;
+ros::Publisher write_reg_pub;
+
+//List of register addresses
+enum regAddr
+{
+    //AdaFruit i2c Address
+    AdaFruitAddr                        = 0x60,
+
+    //Important setup register
+    mode1                               = 0x00,
+    mode2                               = 0x01,
+
+    //Motor Control Channels
+    leftFrontMotorChannel_ON_LOW        = 0x13,
+    leftFrontMotorChannel_ON_HIGH,
+    leftFrontMotorChannel_OFF_LOW,
+    leftFrontMotorChannel_OFF_HIGH,
+
+    leftRearMotorChannel_ON_LOW         = 0x06,
+    leftRearMotorChannel_ON_HIGH,
+    leftRearMotorChannel_OFF_LOW,
+    leftRearMotorChannel_OFF_HIGH,
+
+    rightRearMotorChannel_ON_LOW        = 0x16,
+    rightRearMotorChannel_ON_HIGH,
+    rightRearMotorChannel_OFF_LOW,
+    rightRearMotorChannel_OFF_HIGH,
+
+    rightFrontMotorChannel_ON_LOW       = 0x0A,
+    rightFrontMotorChannel_ON_HIGH,
+    rightFrontMotorChannel_OFF_LOW,
+    rightFrontMotorChannel_OFF_HIGH,
+
+    bucketDrumMotorChannel_ON_LOW       = 0x1A,
+    bucketDrumMotorChannel_ON_HIGH,
+    bucketDrumMotorChannel_OFF_LOW,
+    bucketDrumMotorChannel_OFF_HIGH,
+
+    linearActuatorMotorChannel_ON_LOW   = 0x0E,
+    linearActuatorMotorChannel_ON_HIGH,
+    linearActuatorMotorChannel_OFF_LOW,
+    linearActuatorMotorChannel_OFF_HIGH
+};
+
+struct PWM_setting
+{
+    u_int8_t low;
+    u_int8_t high;
+};
+
+/*
+ *  Converts a value between 0.0 and 100.0 to an appropriate
+ *      setting on the ada fruit. It converts then
+ *  Conversion:
+ *       / 100         Scale to 0 to 1
+ *      * 4095         Scale to a 12bit number
+ */
+PWM_setting convertSetpointToPWM(float set_point)
+{
+    PWM_setting setting;
+
+    //Scale set_point
+    set_point *= 40.95;
+
+    setting.high = (int)(set_point / 256) & 0x0F;   //Right shift 8 bits (divide by 256) then convert to int8
+    setting.low = (int)(set_point) & 0xFF;          //Convert to int take lower 8 bits
+
+    return setting;
+}
+
+/*
+ *  Writes the pwm generater registers
+ *  Writes 0 to the on registers
+ *  Writes PWM_setting values to off registers
+ *
+ *  Inputs:
+ *      pwm is the pwm settings
+ *      base_addr is the addr of the low on register
+ */
+void WritePWMRegisters(PWM_setting pwm, regAddr base_addr)
+{
+    //Create and setup message object
+    hardware_interface::WriteI2CRegister msg;
+    msg.addr = AdaFruitAddr;
+    msg.reg = base_addr;
+
+    //Write 0 to on registers
+    msg.data.push_back(0);
+    write_reg_pub.publish(msg);
+
+    ++msg.reg;
+    write_reg_pub.publish(msg);
+
+    //Write to off registers
+    ++msg.reg;
+    msg.data[0] = pwm.low;
+    write_reg_pub.publish(msg);
+
+    ++msg.reg;
+    msg.data[0] = pwm.high;
+    write_reg_pub.publish(msg);
+}
+
+//Writes messages that initialize the AdaFruit hardware,
+//by clearing all PWM channels and setting the necessary modes.
+void adaInitialize()
+{
+    //Create init message
+    hardware_interface::WriteI2CRegister init;
+
+    //Sets the addr field as the AdaFruit's address on the I2C bus & set register to mode1
+    init.addr = AdaFruitAddr;
+    init.reg = mode1;
+
+    //Leave defaults turn off sleep
+    init.data.push_back(1);
+
+    //Publish the msg
+    write_reg_pub.publish(init);
+}
 
 //Function writes and sends out messages of WriteI2C type. Contains data that sets the PWM value on the Adafruit hardware
 void setWheelMotorI2C(const motor_controller::AdaCmd& msg)
-{
-		hardware_interface::WriteI2C wheelMotor; //Create message object
-		
-		pwmRegisterData LF = setLeftFrontMotor(msg.value[0]); //Declare structures containing data to be loaded into the relevant PWM channels
-		pwmRegisterData LR = setLeftRearMotor(msg.value[1]);
-		pwmRegisterData RR = setRightRearMotor(msg.value[2]);
-		pwmRegisterData RF = setRightRearMotor(msg.value[3]);
-		
-		wheelMotor.addr = adafruitAddress; //I2C Address of the AdaFruit PWM generator
-		
-		
-	//left front motor values
-	for(int i = 0; i < 2; i++)		//iterates through LOW ON register for the left front motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(LF.lowRegOn[i]);
+{  
+    //Some reusable variables
+    PWM_setting pwm;                                    //For holding PWM settings
 
-		write_pub.publish(wheelMotor); //Publish wheelMotor on accompanying topic
-		
-	for(int i = 0; i < 2; i++)	//iterates through HIGH ON register for the left front motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(LF.highRegOn[i]);
+    //Left Front motor
+    pwm = convertSetpointToPWM(msg.value[0]);
+    WritePWMRegisters(pwm, leftFrontMotorChannel_ON_LOW);
 
-		write_pub.publish(wheelMotor); //Publish wheelMotor on accompanying topic
-		
-	for(int i = 0; i < 2; i++)	//iterates through LOW OFF register for the left front motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(LF.lowRegOff[i]);
-			
-		write_pub.publish(wheelMotor); //Publish wheelMotor on accompanying topic
-	
-	for(int i = 0; i < 2; i++)	
-		wheelMotor.data.push_back(LF.highRegOff[i]); //iterates through HIGH OFF register for the left front motor and writes the data to the message, wheelMotor
-			
-		write_pub.publish(wheelMotor);//Publish wheelMotor on accompanying topic
-			
-	//left rear motor values
-	for(int i = 0; i < 2; i++) //iterates through LOW ON register for the left rear motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(LR.lowRegOn[i]);
-		
-		write_pub.publish(wheelMotor); //Publish wheelMotor on accompanying topic
-		
-	for(int i = 0; i < 2; i++) //iterates through HIGH ON register for the left rear motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(LR.highRegOn[i]);
-		
-		write_pub.publish(wheelMotor);
-		
-	for(int i = 0; i < 2; i++)	//iterates through LOW OFF register for the left rear motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(LR.lowRegOff[i]);
-		
-		write_pub.publish(wheelMotor);
-		
-	for(int i = 0; i < 2; i++) //iterates through HIGH OFF register for the left rear motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(LR.highRegOff[i]);
-		
-		write_pub.publish(wheelMotor);
-		
-	//right rear motor values
-	for(int i = 0; i < 2; i++)	//iterates through LOW ON register for the right rear motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(RR.lowRegOn[i]);
-			
-		write_pub.publish(wheelMotor);
-	
-	for(int i = 0; i < 2; i++)	//iterates through HIGH ON register for the right rear motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(RR.highRegOn[i]);
-			
-		write_pub.publish(wheelMotor);
-	
-	for(int i = 0; i < 2; i++)	//iterates through LOW OFF register for the right rear motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(RR.lowRegOff[i]);
-			
-		write_pub.publish(wheelMotor);
-			
-	for(int i = 0; i < 2; i++)	//iterates through HIGH OFF register for the right rear motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(RR.highRegOff[i]);
-			
-		write_pub.publish(wheelMotor);
-			
-	//right front motor values
-	for(int i = 0; i< 2; i++)	//iterates through LOW ON register for the right front motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(RF.lowRegOn[i]);
-			
-		write_pub.publish(wheelMotor);
-	
-	for(int i = 0; i < 2; i++)	//iterates through HIGH ON register for the right front motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(RF.highRegOn[i]);
-			
-		write_pub.publish(wheelMotor);
-				
-	for(int i = 0; i < 2; i++)	//iterates through LOW OFF register for the right front motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(RF.lowRegOff[i]);
-			
-		write_pub.publish(wheelMotor);
+    //Left rear motor
+    pwm = convertSetpointToPWM(msg.value[1]);
+    WritePWMRegisters(pwm, leftRearMotorChannel_ON_LOW);
 
-	for(int i = 0; i < 2; i++)	//iterates through HIGH OFF register for the right front motor and writes the data to the message, wheelMotor
-		wheelMotor.data.push_back(RF.highRegOff[i]);
-			
-		write_pub.publish(wheelMotor);
-		
+    //Right rear motor
+    pwm = convertSetpointToPWM(msg.value[2]);
+    WritePWMRegisters(pwm, rightRearMotorChannel_ON_LOW);
+
+    //Right Front motor
+    pwm = convertSetpointToPWM(msg.value[3]);
+    WritePWMRegisters(pwm, rightFrontMotorChannel_ON_LOW);
 }
+
 //Function that writes data to WriteI2C message, which will be used to set the PWM onthe AdaFruit hardware for the bucket drum motor
 void setBucketMotorI2C(const motor_controller::AdaCmd& msg)
 {
-		hardware_interface::WriteI2C bucketMotor; //Create bucketMotor message
-		bucketMotor.addr = adafruitAddress; //Sets the addr field as the AdaFruit's address on the I2C bus
-		pwmRegisterData BD = setBucketDrum(msg.value[0]); //Declare structure which contains data which will be sent to the AdaFruit hardware to configure the PWM for the bucket drum motor
-		
-		//bucket drum motor values
-		for(int i = 0; i < 2; i++)  //iterates through LOW ON register for the bucket drum motor and writes the data to the message, bucketMotor
-			bucketMotor.data.push_back(BD.lowRegOn[i]);
-			
-			write_pub.publish(bucketMotor);
-			
-		for(int i = 0; i < 2; i++) //iterates through HIGH ON register for the bucket drum motor and writes the data to the message, bucketMotor
-			bucketMotor.data.push_back(BD.highRegOn[i]);
-			
-			write_pub.publish(bucketMotor);
-			
-		for(int i = 0; i < 2; i++) //iterates through LOW OFF register for the bucket drum motor and writes the data to the message, bucketMotor
-			bucketMotor.data.push_back(BD.lowRegOff[i]);
-			
-			write_pub.publish(bucketMotor);
-			
-		for(int i = 0; i < 2; i++) //iterates through HIGH OFF register for the bucket drum motor and writes the data to the message, bucketMotor
-			bucketMotor.data.push_back(BD.highRegOff[i]);
-			
-			write_pub.publish(bucketMotor);
-				
+    PWM_setting pwm = convertSetpointToPWM(msg.value[0]);
+    WritePWMRegisters(pwm, bucketDrumMotorChannel_ON_LOW);
 }
+
 //Function that writes data to WriteI2C message, which will be used to set the PWM onthe AdaFruit hardware for the linear actuators
 void setLinearActuatorI2C(const motor_controller::AdaCmd& msg)
 {	
-		hardware_interface::WriteI2C linearActuator;//Create linearActuator message
-		linearActuator.addr = adafruitAddress; //Sets the addr field as the AdaFruit's address on the I2C bus
-		
-		pwmRegisterData LA = setLinearActuator(msg.value[0]); //Declare structure which contain data which will be sent to the AdaFruit hardware to configure the PWM for the linear actuators.
-		
-		//linear actuator motor values
-		for(int i = 0; i < 2; i++) //iterates through LOW ON register for the linear actuator and writes the data to the message, linearActuator
-			linearActuator.data.push_back(LA.lowRegOn[i]);
-			
-			write_pub.publish(linearActuator);
-			
-		for(int i = 0; i < 2; i++) //iterates through HIGH ON register for the linear actuator motor and writes the data to the message, linearActuator
-			linearActuator.data.push_back(LA.highRegOn[i]);
-			
-			write_pub.publish(linearActuator);
-			
-		for(int i = 0; i < 2; i++) //iterates through LOW OFF register for the linear actuator and writes the data to the message, linearActuator
-			linearActuator.data.push_back(LA.lowRegOff[i]);
-			
-			write_pub.publish(linearActuator);
-			
-		for(int i = 0; i < 2; i++) //iterates through HIGH OFF register for the linear actuator and writes the data to the message, linearActuator
-			linearActuator.data.push_back(LA.highRegOff[i]);
-			
-			write_pub.publish(linearActuator);
-}
-//Writes messages that initialize the AdaFruit hardware, by clearing all PWM channels and setting the necessary modes.
-void initialize()
-{
-		hardware_interface::WriteI2C init; //Create init message
-		
-		init.addr = adafruitAddress; //Sets the addr field as the AdaFruit's address on the I2C bus
-		
-		pwmRegisterData initialize = AdaFruitInit(); //Declare structure to load values into
-	
-	for(int i = 0; i < 2; i++) //iterates through initializing data and saves it to the init message
-		init.data.push_back(initialize.initData[i]);
-		
-		write_pub.publish(init);
+    PWM_setting pwm = convertSetpointToPWM(msg.value[0]);
+    WritePWMRegisters(pwm, linearActuatorMotorChannel_ON_LOW);
 }
 
 //Callback function
@@ -183,7 +169,9 @@ void adaFruitCallBack(const motor_controller::AdaCmd& msg)
 {
 
 		ROS_INFO("Receiving message: [%i] ",msg.device);
-		switch(msg.device) //Checks device marker in incoming message
+
+        //Checks device marker in incoming message
+        switch(msg.device)
 		{
 		case motor_controller::AdaCmd::wheelMotors: //If wheelMotors, publish data relating to the wheel motors
 			setWheelMotorI2C(msg);
@@ -195,24 +183,28 @@ void adaFruitCallBack(const motor_controller::AdaCmd& msg)
 			setLinearActuatorI2C(msg);
 			break;
 		default:
-			ROS_INFO("Received message does not contain a legitimate device parameter"); //If no known device is in incoming message, output an error message
+            ROS_ERROR("Received message does not contain a legitimate device parameter"); //If no known device is in incoming message, output an error message
 			break;
 		}
 }
 
 int main(int argc, char** argv)
-{
-    AdaFruitInit(); //Initialize the adafruit node
-    
+{    
+    //Initilize ros
     ros::init(argc, argv, "adafruit_node");
 
     //Node handler this is how you work with ROS
     ros::NodeHandle n;
 
+    //Setup publishers and subscribers
 	sub = n.subscribe("adaFruit", 1000, adaFruitCallBack);
 	write_pub = n.advertise<hardware_interface::WriteI2C>("write_i2c",1000);
 	//ros::Publisher write_register_pub = n.advertise<hardware_interface::WriteI2CRegister>("write_i2c_register",1000);
-	
+    write_reg_pub = n.advertise<hardware_interface::WriteI2CRegister>("write_i2c_register", 1000);
+
+    //Initialize the adafruit node
+    adaInitialize();
+
     ros::spin();
 	
 }

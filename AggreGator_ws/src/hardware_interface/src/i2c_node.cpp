@@ -94,11 +94,11 @@ int main(int argc, char** argv)
 
     //Initilize the subscribers
     ros::Subscriber write_sub = n.subscribe("write_i2c", 1000, WriteI2CCallback);
-    ros::Subscriber write_register_sub = n.subscribe("write_register_i2c", 1000, WriteRegisterI2C);
+    ros::Subscriber write_register_sub = n.subscribe("write_i2c_register", 1000, WriteRegisterI2C);
 
     //Initilize the services
     ros::ServiceServer read_srv = n.advertiseService("read_i2c", ReadI2CCallback);
-    ros::ServiceServer read_register_srv = n.advertiseService("read_register_i2c", ReadRegisterI2CCallback);
+    ros::ServiceServer read_register_srv = n.advertiseService("read_i2c_register", ReadRegisterI2CCallback);
 
     //Initilize the I2C bus
     init_i2c();

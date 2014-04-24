@@ -270,11 +270,11 @@ int main(int argc, char** argv)
     ros::NodeHandle n;
 
     //Initilize publishers, subscribers, and services
-    write_register_pub = n.advertise<hardware_interface::WriteI2CRegister>("write_register_i2c", 1000);
+    write_register_pub = n.advertise<hardware_interface::WriteI2CRegister>("write_i2c_register", 1000);
     motor_power_pub = n.advertise<hardware_interface::RawMotorPowerData>("raw_motor_power", 1000);
     ir_pub = n.advertise<hardware_interface::RawIRData>("raw_ir", 1000);
 
-    read_register_svr = n.serviceClient<hardware_interface::ReadI2CRegister>("read_register_i2c");
+    read_register_svr = n.serviceClient<hardware_interface::ReadI2CRegister>("read_i2c_register");
 
     //Initilize the ADCs
     ROS_INFO("Initilizing the ADC");
