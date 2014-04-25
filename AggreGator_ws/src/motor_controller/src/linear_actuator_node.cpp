@@ -14,7 +14,7 @@ float controlFunction() //WARNING: CONTROL USED BELOW WERE DESIGNED FOR WHEEL MO
 	//Linear actuator controller goes here!!!!
 	
 	
-	float controlInput = abs(motorInput)*24/32767//Scales input to be an equivalent voltage input to motor controller
+	float controlInput = abs(motorInput)*24/32767;//Scales input to be an equivalent voltage input to motor controller
 
 		
 	SSController linearActuator; //create controller object for the linear actuator
