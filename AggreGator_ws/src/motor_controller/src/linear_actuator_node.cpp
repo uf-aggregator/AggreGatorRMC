@@ -12,15 +12,9 @@ int motorInput;
 float controlFunction() //WARNING: CONTROL USED BELOW WERE DESIGNED FOR WHEEL MOTORS, THIS IS JUST HERE FOR PLACE HOLDER UNTIL LINEAR 				ACTUATOR DESIGN IS DEVELOPED
 {
 	//Linear actuator controller goes here!!!!
-	float J = 3.456*(10^(-6)); //kg*m^2
-	float L = 0.00054; // H
-	float R = 0.8; // Ohms
-	float K = 0.034; //    V/(rad/s)
-	float changeI = 0.3;  //     Amps/s
-	float maxMotorSpeed = (24 - L*changeI - R)/(K); //Max control output value using the highest voltage of 24 V
 	
 	
-	float controlInput = (abs(motorInput) - L*changeI - R)/K; //Scales input to be an equivalent voltage input to motor controller
+	float controlInput = abs(motorInput)*24/32767//Scales input to be an equivalent voltage input to motor controller
 
 		
 	SSController linearActuator; //create controller object for the linear actuator
@@ -34,7 +28,7 @@ float controlFunction() //WARNING: CONTROL USED BELOW WERE DESIGNED FOR WHEEL MO
 	{
 		linearActuator.update();
 		
-	  	controlOutput = 100 - (linearActuator.getY()[0][0])/(maxMotorSpeed)*100; //Does some scaling on the control output values to get PWM value for AdaFruit downstream
+	  	controlOutput = (linearActuator.getY()[0][0]/24)*100; //Does some scaling on the control output values to get PWM value for AdaFruit downstream
 
 
 		iterations++; //Increments iterations variable
