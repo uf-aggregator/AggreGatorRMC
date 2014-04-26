@@ -11,9 +11,11 @@
 #include <iostream>
 #include "controller.h"
 
+#define  FRENCH 5 //Smallest motor PWM before direction change
 
 
 using namespace std;
+
 //Global variables
 float* controllerArray = new float[4]; 	//Array used for performing controller operations on the motor data
 float* controlOutput = new float[4]; 	//Array used for organizing the data on i2c for each motor
@@ -30,6 +32,11 @@ SSController leftFrontWheel; 		//create controller object for left front wheel
 SSController leftRearWheel; 		//create controller object for left rear wheel
 SSController rightRearWheel; 		//create controller object for right rear wheel
 SSController rightFrontWheel; 		//create controller object for right front wheel
+
+int leftFrontMotorDir = 0; //1 is forward,0 is brake, -1 is backward
+int leftRearMotorDir = 0;
+int rightRearMotorDir = 0;
+int rightFrontMotorDir = 0;
 
 enum MotorPins
 {
@@ -52,16 +59,33 @@ void setMotorDirection(int lf, int lr, int rr, int rf)
 	{
 		setGPIOWrite(LF_A, 0);
 		setGPIOWrite(LF_B, 1);
+		if(leftFrontMotorDir == -1)
+		{
+			controllerArray[0] = 0.0;		
+			if(controlOutput[0] < FRENCH)
+				leftFrontMotorDir = 1;
+		}
+		else
+		  leftFrontMotorDir = 1;
 	}
 	else if(lf < 0)
 	{
 		setGPIOWrite(LF_A, 1);
 		setGPIOWrite(LF_B, 0);
+		if(leftFrontMotorDir == 1)
+		{
+			controllerArray[0] = 0.0;		
+			if(controlOutput[0] < FRENCH)
+				leftFrontMotorDir = -1;
+		}
+		else
+		  leftFrontMotorDir = -1;
 	}
 	else
 	{
 		setGPIOWrite(LF_A, 0);
 		setGPIOWrite(LF_B, 0);
+		leftFrontMotorDir = 0;
 	}
 
 	//Left rear motor
@@ -69,16 +93,33 @@ void setMotorDirection(int lf, int lr, int rr, int rf)
 	{
 		setGPIOWrite(LR_A, 0);
 		setGPIOWrite(LR_B, 1);
+		if(leftRearMotorDir == -1)
+		{
+			controllerArray[0] = 0.0;		
+			if(controlOutput[0] < FRENCH)
+				leftRearMotorDir = 1;
+		}
+		else
+		  leftRearMotorDir = 1;
 	}
-	else if(lf < 0)
+	else if(lr < 0)
 	{
 		setGPIOWrite(LR_A, 1);
 		setGPIOWrite(LR_B, 0);
+		if(leftRearMotorDir == -1)
+		{
+			controllerArray[0] = 0.0;		
+			if(controlOutput[0] < FRENCH)
+				leftRearMotorDir = 1;
+		}
+		else
+		  leftRearMotorDir = 1;
 	}
 	else
 	{
 		setGPIOWrite(LR_A, 0);
 		setGPIOWrite(LR_B, 0);
+		leftRearMotorDir = 0;
 	}
 
 	//Right rear motor
@@ -86,16 +127,33 @@ void setMotorDirection(int lf, int lr, int rr, int rf)
 	{
 		setGPIOWrite(RR_A, 0);
 		setGPIOWrite(RR_B, 1);
+		if(rightRearMotorDir == 1)
+		{
+			controllerArray[0] = 0.0;		
+			if(controlOutput[0] < FRENCH)
+				rightRearMotorDir = -1;
+		}
+		else
+		  rightRearMotorDir = -1;
 	}
 	else if(rr < 0)
 	{
 		setGPIOWrite(RR_A, 1);
 		setGPIOWrite(RR_B, 0);
+		if(rightRearMotorDir == -1)
+		{
+			controllerArray[0] = 0.0;		
+			if(controlOutput[0] < FRENCH)
+				rightRearMotorDir = 1;
+		}
+		else
+		  rightRearMotorDir = 1;
 	}
 	else
 	{
 		setGPIOWrite(RR_A, 0);
 		setGPIOWrite(RR_B, 0);
+		rightRearMotorDir = 0;
 	}
 
 	//Right front motor
@@ -103,57 +161,41 @@ void setMotorDirection(int lf, int lr, int rr, int rf)
 	{
 		setGPIOWrite(RF_A, 0);
 		setGPIOWrite(RF_B, 1);
+		if(rightFrontMotorDir == 1)
+		{
+			controllerArray[0] = 0.0;		
+			if(controlOutput[0] < FRENCH)
+				rightFrontMotorDir = -1;
+		}
+		else
+		  rightFrontMotorDir = -1;
 	}
 	else if(rf < 0)
 	{
 		setGPIOWrite(RF_A, 1);
 		setGPIOWrite(RF_B, 0);
+		if(rightFrontMotorDir == -1)
+		{
+			controllerArray[0] = 0.0;		
+			if(controlOutput[0] < FRENCH)
+				rightFrontMotorDir = 1;
+		}
+		else
+		  rightFrontMotorDir = 1;
 	}
 	else
 	{
 		setGPIOWrite(RF_A, 0);
 		setGPIOWrite(RF_B, 0);
+		rightFrontMotorDir = 0;
 	}
 	
 }
 
-bool setGPIOFlag(int pin)
-{	
-	setGPIORead(pin);
-	current_time = ros::Time::now();
-	int gpioPrevVal  =  readGPIO(pin);
-	int gpioCurrentVal;
-	if(current_time - last_time > update_rate)
-		 gpioCurrentVal = readGPIO(pin);
-
-	if(gpioPrevVal != gpioCurrentVal)
-		return true;
-	else
-		return false;
-}
 
 //Controller logic and math is implemented here.
 void controlFunction() 
 {		
-	if(setGPIOFlag(LF_A) == true && setGPIOFlag(LF_B) == true)
-		leftFrontWheel.setU(0.0);
-	else
-		leftFrontWheel.setU(controllerArray[0]); 	//Set input for left front wheel motor controller
-
-	if(setGPIOFlag(LR_A) == true && setGPIOFlag(LR_B) == true)
-		leftRearWheel.setU(0.0); 
-	else
-		leftRearWheel.setU(controllerArray[1]); //set input for left rear wheel motor controller
-	
-	if(setGPIOFlag(RR_A) == true && setGPIOFlag(RR_B) == true)
-		rightRearWheel.setU(0.0); 
-	else
-		rightRearWheel.setU(controllerArray[2]); //set input for right rear wheel motor controller
-						
-	if(setGPIOFlag(RF_A) == true && setGPIOFlag(RF_B) == true)	
-		rightFrontWheel.setU(0.0); 
-	else	
-		rightFrontWheel.setU(controllerArray[3]); 	//set input for right ront wheel motor controller
 
 	leftFrontWheel.update();
 	leftRearWheel.update();
