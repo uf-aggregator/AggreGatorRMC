@@ -7,6 +7,8 @@ using namespace std;
 
 SSController::SSController()
 {	
+
+/*
 	float A_def[AR][AC] = 
 	{
 		{1.0000, 0.2620, 0},
@@ -27,6 +29,27 @@ SSController::SSController()
 	};
 
 	float D_def[DR][DC] = {{0.0049}};
+	*/
+	float A_def[AR][AC] = 
+	{
+		{1.0000, 0.4772, 0},
+		{0,    0.0000,    0.0000},
+		{0,   -0.000,   -0.0000}
+	};
+
+	float B_def[BR][BC] =
+	{
+		{0},
+		{2.9222},
+		{0.0}
+	};
+
+	float C_def[CR][CC] = 
+	{
+		{.4924, .1762, 0}
+	};
+
+	float D_def[DR][DC] = {{0.1717}};
 
 	float X_def[XR][XC] = {{0}};
 
