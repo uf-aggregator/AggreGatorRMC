@@ -121,11 +121,12 @@ void DrawSDL::draw(vector<pair<float, float> > coordinates){
 
   //translate all coordinates relative to middle of screen
   for(int i = 0; i < coordinates.size(); i++){
-    x = width + coordinates.at(i).first;
-    y = height + coordinates.at(i).second;
+    x = width + coordinates.at(i).first * 100;
+    y = height + coordinates.at(i).second * 100;
     pair<int, int> coord(x, y);
     converted.push_back(coord);
   }
 
   drawCore(converted);
+  cout << "Drawing" << endl;
 }

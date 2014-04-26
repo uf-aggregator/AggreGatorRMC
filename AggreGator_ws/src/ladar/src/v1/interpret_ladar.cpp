@@ -90,7 +90,12 @@ vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSampl
 
     return coordinates;
 }//end getcoordinates
+vector<pair<float, float> > Ladar::getMoreCoordinates(int iterations){
+    
+    for(int i = 0; i < iterations; i++){
 
+    }
+}//end getMoreCoordinates
   /*fivePointAverager
   		-Adds together every five x and y values into currXSum and currYSum
   		-On the fifth value, divide both currXSum and currYSum by 5
