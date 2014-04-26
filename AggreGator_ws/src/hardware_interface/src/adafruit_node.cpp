@@ -133,7 +133,8 @@ void adaInitialize()
     init.data.push_back(0b1);
 
     //Publish the msg
-    while(write_reg_pub.getNumSubscribers() == 0);
+    while(write_reg_pub.getNumSubscribers() == 0);//Prevents message from sending when publisher is not completely connected to subscriber.
+
     write_reg_pub.publish(init);
 
 	//Define and fill in a service request

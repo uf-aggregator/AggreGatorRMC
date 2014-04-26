@@ -128,6 +128,9 @@ void WriteMotorValue()
 		wheel_msg.LR_motorVal,
         	wheel_msg.RR_motorVal,
         	wheel_msg.RF_motorVal);
+
+	ROS_INFO("Linear_rc: %i", actuator_msg.data);
+	ROS_INFO("Bucket_rc: %i", bucket_msg.data);
 	
         //Send msg
         wheel_motor_pub.publish(wheel_msg);

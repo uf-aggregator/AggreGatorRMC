@@ -6,39 +6,44 @@
 
 ros::Subscriber sub;
 ros::Publisher pub;
-int motorInput;
+int controlInput;
 
+//Timing variables
+ros::Time last_time(0), current_time;
+ros::Duration update_rate(0.01);       //time in seconds between sends
+
+SSController bucketDrumMotor; //create controller object for the linear actuator
+
+enum
+{
+	BD_A = 38,
+	BD_B = 39
+};
 
 //Function that controls the direction of the motors using the GPIO pins on the O-Droid
-void setMotorDirection()
+void setMotorDirection(int bd)
 {
-	if(motorInput == 0) //Brake to GND, write 0 to every pin
+	if(bd == 0) //Brake to GND, write 0 to every pin
 	{
-		setGPIOWrite(38,0);
-		setGPIOWrite(39,0);
+		setGPIOWrite(BD_A,0);
+		setGPIOWrite(BD_B,0);
 	}
-	else if(motorInput > 0) //INA = GPIO pin 38, INB = GPIO pin 39, bucket drum digs
+	else if(bd > 0) //INA = GPIO pin 38, INB = GPIO pin 39, bucket drum digs
 	{
-		setGPIOWrite(38,1); 
-		setGPIOWrite(39,0);
+		setGPIOWrite(BD_A,1); 
+		setGPIOWrite(BD_B,0);
 	}
 	else //Bucket drum dumps
 	{
-		setGPIOWrite(38,0);
-		setGPIOWrite(39,1);
+		setGPIOWrite(BD_A,0);
+		setGPIOWrite(BD_B,1);
 	}
 	
 }
 
 float controlFunction() //WARNING: CONTROL USED BELOW WERE DESIGNED FOR WHEEL MOTORS, THIS IS JUST HERE FOR PLACE HOLDER UNTIL LINEAR 				ACTUATOR DESIGN IS DEVELOPED
 {
-	//Linear actuator controller goes here!!!!
-	
-	
-	float controlInput = abs(motorInput)*24/32767;//Scales input to be an equivalent voltage input to motor controller
-
-		
-	SSController bucketDrumMotor; //create controller object for the linear actuator
+	//Linear actuator controller goes here!
 	
 	bucketDrumMotor.setU(controlInput);
 	
@@ -70,11 +75,11 @@ motor_controller::AdaCmd generateMessage()
 
 void callBack(const std_msgs::Int16& msg)
 {
-    setMotorDirection();
+    controlInput = abs(msg.data)*24/32767;//Scales input to be an equivalent voltage input to motor controller
 
-    pub.publish(generateMessage());   //Generate and publish an I2C msg
+    setMotorDirection(msg.data);
+
 }
-
 //MAIN
 int main(int argc, char** argv)
 {
@@ -86,8 +91,25 @@ int main(int argc, char** argv)
 
     ros::Rate loop_rate(10); //Set frequency of looping. 10 Hz
 
-    //Loop as long as ros system is ok
-    ros::spin();
+     while(true)
+	{
+		//Update time
+		current_time = ros::Time::now();
+		//Check if interval has passed
+		if(current_time - last_time > update_rate)
+		{
+			//Reset time
+			last_time = current_time;
+			if(sub.getNumPublishers() == 0) //In case of loss of connection to publisher, set controller inputs to 0
+				controlInput = 0.0;
+			//motor_controller function
+			controlFunction();
+			while(pub.getNumSubscribers()==0);//Prevents message from sending when publisher is not completely connected to subscriber.
+			pub.publish(generateMessage());
+		}
+		ros::spinOnce();
+	}
+
 
     resetGPIO();
 

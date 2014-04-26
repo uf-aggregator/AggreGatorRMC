@@ -87,7 +87,7 @@ void setMotorDirection(int lf, int lr, int rr, int rf)
 		setGPIOWrite(RR_A, 0);
 		setGPIOWrite(RR_B, 1);
 	}
-	else if(lf < 0)
+	else if(rr < 0)
 	{
 		setGPIOWrite(RR_A, 1);
 		setGPIOWrite(RR_B, 0);
@@ -104,7 +104,7 @@ void setMotorDirection(int lf, int lr, int rr, int rf)
 		setGPIOWrite(RF_A, 0);
 		setGPIOWrite(RF_B, 1);
 	}
-	else if(lf < 0)
+	else if(rf < 0)
 	{
 		setGPIOWrite(RF_A, 1);
 		setGPIOWrite(RF_B, 0);
@@ -117,14 +117,44 @@ void setMotorDirection(int lf, int lr, int rr, int rf)
 	
 }
 
-//Controller logic and math will go here once it is implemented. This is just for motor_controllering
+bool setGPIOFlag(int pin)
+{	
+	setGPIORead(pin);
+	current_time = ros::Time::now();
+	int gpioPrevVal  =  readGPIO(pin);
+	int gpioCurrentVal;
+	if(current_time - last_time > update_rate)
+		 gpioCurrentVal = readGPIO(pin);
+
+	if(gpioPrevVal != gpioCurrentVal)
+		return true;
+	else
+		return false;
+}
+
+//Controller logic and math is implemented here.
 void controlFunction() 
 {		
-	leftFrontWheel.setU(controllerArray[0]); 	//Set input for left front wheel motor controller
-	leftRearWheel.setU(controllerArray[1]); 	//set input for left rear wheel motor controller
-	rightRearWheel.setU(controllerArray[2]); 	//set input for right rear wheel motor controller
-	rightFrontWheel.setU(controllerArray[3]); 	//set input for right ront wheel motor controller
+	if(setGPIOFlag(LF_A) == true && setGPIOFlag(LF_B) == true)
+		leftFrontWheel.setU(0.0);
+	else
+		leftFrontWheel.setU(controllerArray[0]); 	//Set input for left front wheel motor controller
+
+	if(setGPIOFlag(LR_A) == true && setGPIOFlag(LR_B) == true)
+		leftRearWheel.setU(0.0); 
+	else
+		leftRearWheel.setU(controllerArray[1]); //set input for left rear wheel motor controller
 	
+	if(setGPIOFlag(RR_A) == true && setGPIOFlag(RR_B) == true)
+		rightRearWheel.setU(0.0); 
+	else
+		rightRearWheel.setU(controllerArray[2]); //set input for right rear wheel motor controller
+						
+	if(setGPIOFlag(RF_A) == true && setGPIOFlag(RF_B) == true)	
+		rightFrontWheel.setU(0.0); 
+	else	
+		rightFrontWheel.setU(controllerArray[3]); 	//set input for right ront wheel motor controller
+
 	leftFrontWheel.update();
 	leftRearWheel.update();
 	rightRearWheel.update();
@@ -202,9 +232,11 @@ int main(int argc, char** argv)
 		{
 			//Reset time
 			last_time = current_time;
-			
+			if(sub.getNumPublishers() == 0) //In case of loss of connection to publisher, set controller inputs to 0
+				controllerArray[4] = {0.0};
 			//motor_controller function
 			controlFunction();
+			while(pub.getNumSubscribers()==0);//Prevents message from sending when publisher is not completely connected to subscriber.
 			pub.publish(generateMessage());
 		}
 		ros::spinOnce();
