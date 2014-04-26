@@ -86,7 +86,7 @@ char* readfromreg_i2c(int address, char reg_ptr_addr, int size)
         /* ERROR HANDLING: i2c transaction failed */
         printf("Failed to write to the i2c bus.\n\n");
    //     error_buffer = g_strerror(errno);
-//        printf(error_buffer);
+        printf("Errno: %i\n", errno);
 		close(file);
 		return read_buffer;
     }

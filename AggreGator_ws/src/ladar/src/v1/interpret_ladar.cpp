@@ -216,6 +216,7 @@ vector<int> Ladar::findCorners(vector<float> slopes){
         //if the next slope is off by the currAvg by more than 20%, assume this is a corner
         if(abs(slopes.at(i+1)) > abs(currAvg*1.25) || abs(slopes.at(i+1)) < abs(currAvg*.75)){
             corners.push_back(i+1);
+            //also reset the currSum, currAvg, and currCount for a new wall
             currSum = 0;
             currAvg = 0;
             currCount = 0;

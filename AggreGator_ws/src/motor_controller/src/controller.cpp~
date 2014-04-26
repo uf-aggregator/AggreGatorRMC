@@ -157,6 +157,7 @@ void SSController::setU(float U_def)
 {
 	U[0][0] = U_def;
 }
+
 vector<vector<float> > SSController::getU()
 {
 	return U;
