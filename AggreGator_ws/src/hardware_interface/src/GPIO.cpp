@@ -31,7 +31,7 @@ string gpioLookUp[29] =  {"112","115","93","100","108","91","90","99","111","103
 	int value = val; //sets inputted value
 	ofstream gpioFile; //file object to manipulate
 	
-	cout << "Exporting GPIO" << gpioExport << " which is physical pin " << pinNumber << " on the Odroid X2 header"<< endl;
+	//cout << "Exporting GPIO" << gpioExport << " which is physical pin " << pinNumber << " on the Odroid X2 header"<< endl;
 	
 	//Open export file to set which gpio to modify
 	gpioFile.open("/sys/class/gpio/export", ios::out);
@@ -123,7 +123,7 @@ void setGPIORead(int pinNumber)
 	string gpioExport = gpioLookUp[pinNumberIndex]; //Gets //gpio value to write to export file
 	ofstream gpioFile; //file object to manipulate
 	
-	cout << "Exporting GPIO" << gpioExport << " which is physical pin " << pinNumber << " on the Odroid X2 header"<< endl;
+	//cout << "Exporting GPIO" << gpioExport << " which is physical pin " << pinNumber << " on the Odroid X2 header"<< endl;
 	
 	//Open export file to set which gpio to modify
 	gpioFile.open("/sys/class/gpio/export", ios::out);
@@ -199,7 +199,7 @@ void setGPIORead(int pinNumber)
 	string gpioExport = gpioLookUp[pinNumberIndex]; //Gets //gpio value to write to export file
 	fstream gpioFile; //file object to manipulate
 	
-	cout << "Exporting GPIO" << gpioExport << " which is physical pin " << pinNumber << " on the Odroid X2 header"<< endl;
+	//cout << "Exporting GPIO" << gpioExport << " which is physical pin " << pinNumber << " on the Odroid X2 header"<< endl;
 	
 	//Open export file to set which gpio to modify
 	gpioFile.open("/sys/class/gpio/export", ios::out);

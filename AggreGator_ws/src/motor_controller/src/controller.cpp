@@ -103,6 +103,7 @@ SSController::SSController()
 
 SSController::SSController(vector<vector<float> > U_def)
 {
+	
 	float A_def[AR][AC] = 
 	{
 		{1.0000, 0.4772, 0},
@@ -122,7 +123,9 @@ SSController::SSController(vector<vector<float> > U_def)
 		{.5903, .2113, 0}
 	};
 
+
 	float D_def[DR][DC] = {{0.1029}};
+
 
 	float X_def[XR][XC] = {{0}};
 

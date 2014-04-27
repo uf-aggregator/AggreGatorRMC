@@ -11,13 +11,10 @@
 #include <iostream>
 #include "controller.h"
 
-#define  FRENCH 5 //Smallest motor PWM before direction change
-
-
 using namespace std;
 
 //Global variables
-float* controllerArray = new float[4]; 	//Array used for performing controller operations on the motor data
+//float* controllerArray = new float[4]; 	//Array used for performing controller operations on the motor data
 float* controlOutput = new float[4]; 	//Array used for organizing the data on i2c for each motor
 
 ros::Subscriber sub; 		//Subscriber object, used for accepting messages from the remote controller
@@ -26,17 +23,14 @@ ros::Publisher pub; 		//Publisher object, used for publishing messages to the I2
 
 //Timing variables
 ros::Time last_time(0), current_time;
-ros::Duration update_rate(0.01);       //time in seconds between sends
+ros::Duration update_rate(0.001);       //time in seconds between sends
 
 SSController leftFrontWheel; 		//create controller object for left front wheel
 SSController leftRearWheel; 		//create controller object for left rear wheel
 SSController rightRearWheel; 		//create controller object for right rear wheel
 SSController rightFrontWheel; 		//create controller object for right front wheel
 
-int leftFrontMotorDir = 0; //1 is forward,0 is brake, -1 is backward
-int leftRearMotorDir = 0;
-int rightRearMotorDir = 0;
-int rightFrontMotorDir = 0;
+int motorDir[4] = {0};
 
 enum MotorPins
 {
@@ -52,151 +46,105 @@ enum MotorPins
 
 
 	//Function that controls the direction of the motors using the GPIO pins on the O-Droid
-void setMotorDirection(int lf, int lr, int rr, int rf)
+void setMotorDirection()
 {
-	//Left front motor
-	if(lf > 0)
+	for(int i = 0; i < 4; ++i)
 	{
-		setGPIOWrite(LF_A, 0);
-		setGPIOWrite(LF_B, 1);
-		if(leftFrontMotorDir == -1)
-		{
-			controllerArray[0] = 0.0;		
-			if(controlOutput[0] < FRENCH)
-				leftFrontMotorDir = 1;
-		}
+		if(controlOutput[i] > 0)
+			motorDir[i] = 1;
+		else if(controlOutput[i] < 0)
+			motorDir[i] = -1;
 		else
-		  leftFrontMotorDir = 1;
-	}
-	else if(lf < 0)
-	{
-		setGPIOWrite(LF_A, 1);
-		setGPIOWrite(LF_B, 0);
-		if(leftFrontMotorDir == 1)
-		{
-			controllerArray[0] = 0.0;		
-			if(controlOutput[0] < FRENCH)
-				leftFrontMotorDir = -1;
-		}
-		else
-		  leftFrontMotorDir = -1;
-	}
-	else
-	{
-		setGPIOWrite(LF_A, 0);
-		setGPIOWrite(LF_B, 0);
-		leftMotorDir = 0;
-	}
-
-	//Left rear motor
-	if(lr > 0)
-	{
-		setGPIOWrite(LR_A, 0);
-		setGPIOWrite(LR_B, 1);
-		if(leftRearMotorDir == -1)
-		{
-			controllerArray[0] = 0.0;		
-			if(controlOutput[0] < FRENCH)
-				leftRearMotorDir = 1;
-		}
-		else
-		  leftRearMotorDir = 1;
-	}
-	else if(lr < 0)
-	{
-		setGPIOWrite(LR_A, 1);
-		setGPIOWrite(LR_B, 0);
-		if(leftRearMotorDir == -1)
-		{
-			controllerArray[0] = 0.0;		
-			if(controlOutput[0] < FRENCH)
-				leftRearMotorDir = 1;
-		}
-		else
-		  leftRearMotorDir = 1;
-	}
-	else
-	{
-		setGPIOWrite(LR_A, 0);
-		setGPIOWrite(LR_B, 0);
-		leftRearDir = 0;
-	}
-
-	//Right rear motor
-	if(rr > 0)
-	{
-		setGPIOWrite(RR_A, 0);
-		setGPIOWrite(RR_B, 1);
-		if(rightRearMotorDir == 1)
-		{
-			controllerArray[0] = 0.0;		
-			if(controlOutput[0] < FRENCH)
-				rightRearMotorDir = -1;
-		}
-		else
-		  rightRearMotorDir = -1;
-	}
-	else if(rr < 0)
-	{
-		setGPIOWrite(RR_A, 1);
-		setGPIOWrite(RR_B, 0);
-		if(rightRearMotorDir == -1)
-		{
-			controllerArray[0] = 0.0;		
-			if(controlOutput[0] < FRENCH)
-				rightRearMotorDir = 1;
-		}
-		else
-		  rightRearMotorDir = 1;
-	}
-	else
-	{
-		setGPIOWrite(RR_A, 0);
-		setGPIOWrite(RR_B, 0);
-		rightRearMotorDir = 0;
-	}
-
-	//Right front motor
-	if(rf > 0)
-	{
-		setGPIOWrite(RF_A, 0);
-		setGPIOWrite(RF_B, 1);
-		if(rightFrontMotorDir == 1)
-		{
-			controllerArray[0] = 0.0;		
-			if(controlOutput[0] < FRENCH)
-				rightFrontMotorDir = -1;
-		}
-		else
-		  rightFrontMotorDir = -1;
-	}
-	else if(rf < 0)
-	{
-		setGPIOWrite(RF_A, 1);
-		setGPIOWrite(RF_B, 0);
-		if(rightFrontMotorDir == -1)
-		{
-			controllerArray[0] = 0.0;		
-			if(controlOutput[0] < FRENCH)
-				rightFrontMotorDir = 1;
-		}
-		else
-		  rightFrontMotorDir = 1;
-	}
-	else
-	{
-		setGPIOWrite(RF_A, 0);
-		setGPIOWrite(RF_B, 0);
-		rightFrontMotorDir = 0;
+			motorDir[i] = 0;
 	}
 	
+	
+	//Set GPIOs
+	switch(motorDir[0])
+	{
+	//Forward
+	case 1:
+		setGPIOWrite(LF_A, 0);
+		setGPIOWrite(LF_B, 1);
+		break;
+	
+	//Reverse
+	case -1:
+		setGPIOWrite(LF_A, 1);
+		setGPIOWrite(LF_B, 0);
+		break;
+	//Stop
+	default:		
+		setGPIOWrite(LF_A, 0);
+		setGPIOWrite(LF_B, 0);
+	}
+
+	//Set GPIOs
+	switch(motorDir[1])
+	{
+	//Forward
+	case 1:
+		setGPIOWrite(LR_A, 0);
+		setGPIOWrite(LR_B, 1);
+		break;
+	
+	//Reverse
+	case -1:
+		setGPIOWrite(LR_A, 1);
+		setGPIOWrite(LR_B, 0);
+		break;
+	//Stop
+	default:		
+		setGPIOWrite(LR_A, 0);
+		setGPIOWrite(LR_B, 0);
+	}
+
+
+	//Set GPIOs
+	switch(motorDir[2])
+	{
+	//Forward
+	case 1:
+		setGPIOWrite(RR_A, 0);
+		setGPIOWrite(RR_B, 1);
+		break;
+	
+	//Reverse
+	case -1:
+		setGPIOWrite(RR_A, 1);
+		setGPIOWrite(RR_B, 0);
+		break;
+	//Stop
+	default:		
+		setGPIOWrite(RR_A, 0);
+		setGPIOWrite(RR_B, 0);
+	}
+
+	//Set GPIOs
+	switch(motorDir[3])
+	{
+	//Forward
+	case 1:
+		setGPIOWrite(RF_A, 0);
+		setGPIOWrite(RF_B, 1);
+		break;
+	
+	//Reverse
+	case -1:
+		setGPIOWrite(RF_A, 1);
+		setGPIOWrite(RF_B, 0);
+		break;
+	//Stop
+	default:		
+		setGPIOWrite(RF_A, 0);
+		setGPIOWrite(RF_B, 0);
+	}
 }
 
 
 //Controller logic and math is implemented here.
 void controlFunction() 
 {		
-
 	leftFrontWheel.update();
 	leftRearWheel.update();
 	rightRearWheel.update();
@@ -206,8 +154,10 @@ void controlFunction()
 	controlOutput[0] = (leftFrontWheel.getY()[0][0]) * 100 / 24; 
 	controlOutput[1] = (leftRearWheel.getY()[0][0]) * 100 / 24; 
 	controlOutput[2] = (rightRearWheel.getY()[0][0]) * 100 / 24; 
-	controlOutput[3] = (rightFrontWheel.getY()[0][0]) * 100 / 24; 
-	
+	controlOutput[3] = (rightFrontWheel.getY()[0][0]) * 100 / 24;
+
+	//Sets direction of motor using GPIO pins
+	setMotorDirection();	
 
 }
 
@@ -221,15 +171,15 @@ motor_controller::AdaCmd generateMessage()
 	
 	for(int i = 0; i < 4; i++)
 	{
-	    msg.value.push_back(controlOutput[i]);
+	    msg.value.push_back(abs(controlOutput[i]));
 	}
 	
 	//Debug
-	ROS_INFO("LF: %f, LB: %f, RB: %f, RF: %f", 
+	/*ROS_INFO("LF: %f, LB: %f, RB: %f, RF: %f", 
 		msg.value[0], 
 		msg.value[1], 
 		msg.value[2], 			
-		msg.value[3]);
+		msg.value[3]);*/
 
 	return msg;
 
@@ -238,14 +188,22 @@ motor_controller::AdaCmd generateMessage()
 //Callback function which fills motorArray with values from the message
 void callBack (const motor_controller::WheelMotor& msg)
 {
-	controllerArray[0] = (abs(msg.LF_motorVal) * 24.0 / 32768.0);
-	controllerArray[1] = (abs(msg.LR_motorVal) * 24.0 / 32768.0);
-	controllerArray[2] = (abs(msg.RR_motorVal) * 24.0 / 32768.0);
-	controllerArray[3] = (abs(msg.RF_motorVal) * 24.0 / 32768.0);
-	
-	//Sets direction of motor using GPIO pins
-	setMotorDirection(msg.LF_motorVal, msg.LR_motorVal, 
-			  msg.RR_motorVal, msg.RF_motorVal); 
+	leftFrontWheel.setU(msg.LF_motorVal * 24.0 / 32768.0);
+	leftRearWheel.setU(msg.LR_motorVal * 24.0 / 32768.0);
+	rightRearWheel.setU(msg.RR_motorVal * 24.0 / 32768.0);
+	rightFrontWheel.setU(msg.RF_motorVal * 24.0 / 32768.0);
+}
+
+void stopAllMotors()
+{
+	setGPIOWrite(LF_A, 0);
+	setGPIOWrite(LF_B, 0);
+	setGPIOWrite(LR_A, 0);
+	setGPIOWrite(LR_B, 0);
+	setGPIOWrite(RF_A, 0);
+	setGPIOWrite(RF_B, 0);
+	setGPIOWrite(RR_A, 0);
+	setGPIOWrite(RR_B, 0);
 }
 
 
@@ -260,12 +218,13 @@ int main(int argc, char** argv)
 	sub = n.subscribe("wheel_motor_rc", 1000, callBack); //Create object to subscribe to topic "wheel_motor_rc"
 	
 	pub = n.advertise<motor_controller::AdaCmd>("adaFruit",1000); //Create object to publish to topic "I2C"
+	while(pub.getNumSubscribers()==0);//Prevents message from sending when publisher is not completely connected to subscriber.
 	
 	ros::Rate loop_rate(10); //Set frequency of looping. 10 Hz
 	
 	setGPIOWrite(33,1); //Motor enable
 
-	while(true)
+	while(ros::ok())
 	{
 		//Update time
 		current_time = ros::Time::now();
@@ -275,17 +234,25 @@ int main(int argc, char** argv)
 			//Reset time
 			last_time = current_time;
 			if(sub.getNumPublishers() == 0) //In case of loss of connection to publisher, set controller inputs to 0
-				controllerArray[4] = {0.0};
-			//motor_controller function
-			controlFunction();
-			while(pub.getNumSubscribers()==0);//Prevents message from sending when publisher is not completely connected to subscriber.
+			{
+				for(int i = 0; i < 4; ++i)
+					controlOutput[i] = 0.0;
+			}
+			else
+			{	
+				//motor_controller function
+				controlFunction();
+			}
+
 			pub.publish(generateMessage());
 		}
-		ros::spinOnce();
+		
+			ros::spinOnce();
 	}
-	
-	resetGPIO();
-	
+
+
+	stopAllMotors();
+
 	return 0;
 }
 

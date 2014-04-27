@@ -294,14 +294,14 @@ void setGPIORead(int pinNumber)
 void resetGPIO()
 {
 	 
-	for(int i = 17; i <= 31, i++)
+	for(int i = 17; i <= 31; i++)
 	{
 		setGPIOWrite(i,0);
 	}
-	for(int k = 33, k <= 45, k++)
+	for(int k = 33; k <= 45; k++)
 	{
 		setGPIOWrite(k,0);
 	}
 }	
-}
+
 

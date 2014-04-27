@@ -21,6 +21,7 @@ enum regAddr
     //Important setup register
     mode1                               = 0x00,
     mode2                               = 0x01,
+    preScale				= 0xFE,
 
     //Motor Control Channels
     leftFrontMotorChannel_ON_LOW        = 0x12,
@@ -121,7 +122,7 @@ void WritePWMRegisters(PWM_setting pwm, regAddr base_addr)
 //by clearing all PWM channels and setting the necessary modes.
 void adaInitialize()
 {
-	ROS_INFO("PUBLISH");
+	//ROS_INFO("PUBLISH");
     //Create init message
     hardware_interface::WriteI2CRegister init;
 
@@ -133,9 +134,15 @@ void adaInitialize()
     init.data.push_back(0b1);
 
     //Publish the msg
-    while(write_reg_pub.getNumSubscribers() == 0);
+    while(write_reg_pub.getNumSubscribers() == 0);//Prevents message from sending when publisher is not completely connected to subscriber.
+
     write_reg_pub.publish(init);
 
+    //Sets prescale register to output PWM signal at 1.5 kHz
+    init.reg = preScale;
+    init.data.push_back(0x7);
+
+    write_reg_pub.publish(init);
 	//Define and fill in a service request
     hardware_interface::ReadI2CRegister read;
     read.request.addr = AdaFruitAddr;
@@ -148,7 +155,7 @@ void adaInitialize()
  		//Send request
 	    if(read_register_svr.call(read))
 	    {
-	       	ROS_INFO("Reg: %i, Value: %i", i, read.response.data[0]);
+	       //	ROS_INFO("Reg: %i, Value: %i", i, read.response.data[0]);
 	    }
 	    else
 	    {
@@ -199,7 +206,7 @@ void setLinearActuatorI2C(const motor_controller::AdaCmd& msg)
 void adaFruitCallBack(const motor_controller::AdaCmd& msg)
 {
 
-		ROS_INFO("Receiving message: [%i] ",msg.device);
+		//ROS_INFO("Receiving message: [%i] ",msg.device);
 
         //Checks device marker in incoming message
         switch(msg.device)
