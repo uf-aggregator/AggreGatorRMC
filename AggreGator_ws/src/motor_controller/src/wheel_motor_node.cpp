@@ -188,7 +188,7 @@ motor_controller::AdaCmd generateMessage()
 //Callback function which fills motorArray with values from the message
 void callBack (const motor_controller::WheelMotor& msg)
 {
-	leftFrontWheel.setU(msg.LF_motorVal * 24.0 / 32768.0);
+	leftFrontWheel.setU(msg.LF_motorVal * 24.0 / 32768.0); //Set controller inputs
 	leftRearWheel.setU(msg.LR_motorVal * 24.0 / 32768.0);
 	rightRearWheel.setU(msg.RR_motorVal * 24.0 / 32768.0);
 	rightFrontWheel.setU(msg.RF_motorVal * 24.0 / 32768.0);
@@ -233,7 +233,7 @@ int main(int argc, char** argv)
 		{
 			//Reset time
 			last_time = current_time;
-			if(sub.getNumPublishers() == 0) //In case of loss of connection to publisher, set controller inputs to 0
+			if(sub.getNumPublishers() == 0) //In case of loss of connection to publisher, set controller outputs to 0
 			{
 				for(int i = 0; i < 4; ++i)
 					controlOutput[i] = 0.0;
