@@ -132,12 +132,9 @@ void WriteMotorValue()
 	ROS_INFO("Linear_rc: %i", actuator_msg.data);
 	ROS_INFO("Bucket_rc: %i", bucket_msg.data);
 	
-	while(wheel_motor_pub.getNumSubscribers()==0);//Prevents message from sending when publisher is not completely connected to subscriber.
         //Send msg
         wheel_motor_pub.publish(wheel_msg);
-	while(linear_actuator_pub.getNumSubscribers()==0);//Prevents message from sending when publisher is not completely connected to subscriber.
         linear_actuator_pub.publish(actuator_msg);
-	while(bucket_motor_pub.getNumSubscribers()==0);//Prevents message from sending when publisher is not completely connected to subscriber.
         bucket_motor_pub.publish(bucket_msg);
     }
 }
@@ -244,14 +241,14 @@ int main(int argc, char** argv)
     double temp;
     n.param<double>("/remote_control/send_freq", temp, 0.1);
     send_time.fromSec(1 / temp);
-    ROS_INFO("Setting send period to %f, (frequency: %f)", send_time.toSec(), temp);
+    //ROS_INFO("Setting send period to %f, (frequency: %f)", send_time.toSec(), temp);
 
     //mapping
     n.param<int32_t>("/remote_control/xbox_controller/mapping", mapping, 1);
     if(mapping < 1 || mapping > 3)
         mapping = 1;
 
-    ROS_INFO("Xbox controller set to order %i mapping", mapping);
+    //ROS_INFO("Xbox controller set to order %i mapping", mapping);
 
     //Set up subscriber, listens to joy topic, buffer only 10 messages, us XboxCallback
     ros::Subscriber joy_sub = n.subscribe<sensor_msgs::Joy>("joy", 1000, XboxCallback);
