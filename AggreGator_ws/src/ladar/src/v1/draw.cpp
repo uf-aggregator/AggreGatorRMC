@@ -69,64 +69,61 @@ DrawSDL::DrawSDL(){
 }
 
 int DrawSDL::drawCore(vector<pair<int, int> > coordinates){
-   // Make the dot at the center of the screen
-   while( !quit )
-   {
-    // Poll for events
-      while( SDL_PollEvent( &event ) ){
-        switch( event.type ){
-            case SDL_KEYUP:
-              if(event.key.keysym.sym == SDLK_ESCAPE)
-              quit = 1;
-              break;
-              if(event.key.keysym.sym == SDLK_F1)
-              SDL_WM_ToggleFullScreen(screen); // Only on X11
-              break;
-            case SDL_QUIT:
-              quit = 1;
-              break;
-            default:
-              break;
+     // Make the dot at the center of the screen
+     while( !quit ) {
+        // Poll for events
+          while( SDL_PollEvent( &event ) ){
+            switch( event.type ){
+                case SDL_KEYUP:
+                    if(event.key.keysym.sym == SDLK_ESCAPE)
+                    quit = 1;
+                    break;
+                    if(event.key.keysym.sym == SDLK_F1)
+                    SDL_WM_ToggleFullScreen(screen); // Only on X11
+                    break;
+                case SDL_QUIT:
+                    quit = 1;
+                    break;
+                default: break;
+            }//end switch
+        }//end while
+
+        // Lock the screen for direct access to the pixels
+        if ( SDL_MUSTLOCK(screen) ){
+           if ( SDL_LockSurface(screen) < 0 ){
+              fprintf(stderr, "Can't lock screen: %s\n", SDL_GetError());
+              return -3;
+           }//endif
+        }//endif
+
+        // Plot the argument
+        for(int i = 0; i < coordinates.size(); i++){
+            putpixel(screen, coordinates.at(i).first, coordinates.at(i).second, yellow);
+            SDL_UpdateRect(screen, coordinates.at(i).first, coordinates.at(i).second, 1, 1);
         }
-    }
+        // Unlock Surface if necessary
+        if ( SDL_MUSTLOCK(screen) ) SDL_UnlockSurface(screen);
+    }//end while
 
-    // Lock the screen for direct access to the pixels
-    if ( SDL_MUSTLOCK(screen) ){
-     if ( SDL_LockSurface(screen) < 0 ){
-      fprintf(stderr, "Can't lock screen: %s\n", SDL_GetError());
-      return -3;
-     }//endif
-    }//endif
-
-    // Plot the argument
-    for(int i = 0; i < coordinates.size(); i++){
-        putpixel(screen, coordinates.at(i).first, coordinates.at(i).second, yellow);
-        SDL_UpdateRect(screen, coordinates.at(i).first, coordinates.at(i).second, 1, 1);
-    }
-    // Unlock Surface if necessary
-    if ( SDL_MUSTLOCK(screen) ){ SDL_UnlockSurface(screen); }
-  }//end while
-
-   //clean up
-   SDL_Quit();
+     //clean up
+     SDL_Quit();
  
 }//end draw(<int, int>)
 
 void DrawSDL::draw(vector<pair<float, float> > coordinates){
-  int height = screen->h/2;
-  int width = screen->w/2;
-  int x, y;
-  vector<pair<int, int> > converted(coordinates.size());
-  converted.clear();
+    int height = screen->h/2;
+    int width = screen->w/2;
+    int x, y;
+    vector<pair<int, int> > converted(coordinates.size());
+    converted.clear();
 
-  //translate all coordinates relative to middle of screen
-  for(int i = 0; i < coordinates.size(); i++){
-    x = width + coordinates.at(i).first * 100;
-    y = height + coordinates.at(i).second * 100;
-    pair<int, int> coord(x, y);
-    converted.push_back(coord);
-  }
+    //translate all coordinates relative to middle of screen
+    for(int i = 0; i < coordinates.size(); i++){
+      x = width + coordinates.at(i).first * 100;
+      y = height + coordinates.at(i).second * 100;
+      pair<int, int> coord(x, y);
+      converted.push_back(coord);
+    }
 
-  drawCore(converted);
-  cout << "Drawing" << endl;
+    drawCore(converted);
 }
