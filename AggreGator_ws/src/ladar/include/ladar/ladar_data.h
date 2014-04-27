@@ -1,5 +1,6 @@
 #ifndef _ladar_
 #define _ladar_
+#include <vector>
 
 class Ladar {
 protected:

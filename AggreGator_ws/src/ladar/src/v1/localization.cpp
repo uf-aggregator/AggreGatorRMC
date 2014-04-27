@@ -1,23 +1,24 @@
 #include <iostream>
-#include <math>
+#include <cmath>
+#include <math.h>
 #include <limits>
 #include "ladar/localization.h"
 
 using namespace std;
 
 Localize::Localize() {
-	Wall1 = {0, 0};
-	Wall2 = {0, 0};
-	Wall3 = {0, 0};
+	Wall1[0] = 0, Wall1[1] = 0;
+	Wall2[0] = 0, Wall2[1] = 0;
+	Wall3[0] = 0, Wall3[1] = 0;
 	ladarData = new Ladar();
 }
 
-float Localize::min(vector<float> array){
+float Localize::min(vector<float> array) const{
 	//ignores cases where array[i] = 0
 	int check = 0;
 	float min = array.at(check);
 
-	while(min == 0.0 && check < size) {
+	while(min == 0 && check < array.size()) {
 		min = array.at(check);
 		check++;
 	}//end while
@@ -27,18 +28,20 @@ float Localize::min(vector<float> array){
 	return min;
 }//end min
 
-float* Localize::unpolarize(<pair<float, float> > coordinates) const {
-	//will return unpolarized coordinates
-}//end unpolarize
+float Localize::polarize(pair<float, float> coordinates) const{
+	//will return polarized coordinates
 
-float* Localize::getWall(int number) const {
+	return 0;
+}//end polarize
+
+float* Localize::getWall(int number){
 	switch(number){
 		case 1: return Wall1;
 		case 2: return Wall2;
 		case 3: return Wall3;
 		default: {
 			cout << "GETWALL: Not a valid selection." << endl;
-			return 0.0;
+			return 0;
 		}
 	}
 }//end getWall
@@ -67,12 +70,13 @@ void Localize::setWall(float distance, float angle, int WallNumber){
 		}//end switch
 }
 void Localize::adjustWall(float distance, float distancePrime, float angle, float anglePrime, int WallNumber) {
-	/*storeTempDist[#] 		=>	distance
+	/*LEGEND
+	 *storeTempDist[#] 		=>	distance
 	 *storeTempAngle[#]		=>	angle
 	 *Wall#[0]				=>	distancePrime
 	 *Wall#[1]				=>	anglePrime
 	 */
-	if(getWall(WallNumber)[] == 0 || getWall(WallNumber)[] == 0) setWall(distance, angle, WallNumber);
+	if(getWall(WallNumber)[0] == 0 || getWall(WallNumber)[1] == 0) setWall(distance, angle, WallNumber);
 	else {	
 		if(abs(distance/distancePrime) < 0.05 && abs(angle/anglePrime) < 0.05){
 			setWall(distance, angle, WallNumber);
@@ -86,10 +90,10 @@ void Localize::update(vector<pair<float, float> > coordinates) {
 	//temporary data members
 	int size = coordinates.size()/5, offset2, offset3, decisionMaker;
 	vector<pair<float, float> > averagedPoints;
-	vector<float> noiselessSlopes, storeTempWall1(size), storeTempWall2(size),
+	vector<float> noiselessSlopes, noiselessPolar, storeTempWall1(size), storeTempWall2(size),
 								storeTempWall3(size);
 	float absurd;
-	float storeTempDist[3], storeTempAngle[3], unpolar[coordinates.size()]; 
+	float storeTempDist[3], storeTempAngle[3]; 
 
 	//init some of the temporary data members
 	offset2 = 0;
@@ -106,30 +110,32 @@ void Localize::update(vector<pair<float, float> > coordinates) {
 	storeTempWall1.clear();
 	storeTempWall2.clear();
 	storeTempWall3.clear();
+	noiselessSlopes.clear();
+	noiselessPolar.clear();
 
 	//To be processed
 	averagedPoints = ladarData->fivePointAverager(coordinates);
 	noiselessSlopes = ladarData->getSlopes(averagedPoints);
 		//unpolarize
 		for(int i = 0; i < coordinates.size(); i++){
-			//unpolar[i] = unpolarize(coordinates.at(i));
+			noiselessPolar.push_back(polarize(coordinates.at(i)));
 		}
 
 	//algo starts here****************************************************
-		decisionMaker = 1
+		decisionMaker = 1;
 		for(int i = 1; i < size; i++){
 			if(abs(noiselessSlopes.at(i)/noiselessSlopes.at(i-1)) < 0.05){
-				if(decisionMaker == 1) storeTempWall1.push_back(noiselessSlopes.at(i-1));
-				else if(decisionMaker == 2) storeTempWall2.push_back(noiselessSlopes.at(i-1));
-				else if(decisionMaker == 3) storeTempWall3.push_back(noiselessSlopes.at(i-1));
+				if(decisionMaker == 1) storeTempWall1.push_back(noiselessPolar.at(i-1));
+				else if(decisionMaker == 2) storeTempWall2.push_back(noiselessPolar.at(i-1));
+				else if(decisionMaker == 3) storeTempWall3.push_back(noiselessPolar.at(i-1));
 			}//endif
 			else {
 				decisionMaker++;
 				if(decisionMaker == 2) offset2 = i;
 				else if(decisionMaker == 3) offset3 = i;
 
-				if(decisionMaker == 2) storeTempWall2.push_back(noiselessSlopes.at(i-1));
-				if(decisionMaker == 3) storeTempWall3.push_back(noiselessSlopes.at(i-1));
+				if(decisionMaker == 2) storeTempWall2.push_back(noiselessPolar.at(i-1));
+				if(decisionMaker == 3) storeTempWall3.push_back(noiselessPolar.at(i-1));
 			}//end else
 		}//endfor
 
@@ -138,17 +144,17 @@ void Localize::update(vector<pair<float, float> > coordinates) {
 		switch(decisionMaker){
 			case 1: {
 				storeTempDist[decisionMaker] = min(storeTempWall1);
-				storeTempAngle[decisionMaker] = atan(ladarData->getAverageSlope(noiselessSlopes, 0, offset2 - 1)) * 180/PI;
+				storeTempAngle[decisionMaker] = atan(ladarData->getAverageSlope(noiselessSlopes, 0, offset2 - 1)) * 180/M_PI;
 				break;
 			}
 			case 2: {
 				storeTempDist[decisionMaker] = min(storeTempWall2);
-				storeTempAngle[decisionMaker] = atan(ladarData->getAverageSlope(noiselessSlopes, offset2, offset3 - 1)) * 180/PI;;
+				storeTempAngle[decisionMaker] = atan(ladarData->getAverageSlope(noiselessSlopes, offset2, offset3 - 1)) * 180/M_PI;;
 				break;
 			}
 			case 3: {
 				storeTempDist[decisionMaker] = min(storeTempWall3);
-				storeTempAngle[decisionMaker] = atan(ladarData->getAverageSlope(noiselessSlopes, offset3 - size - 1)) * 180/PI;;
+				storeTempAngle[decisionMaker] = atan(ladarData->getAverageSlope(noiselessSlopes, offset3, size - 1)) * 180/M_PI;;
 				break;
 			}
 			default: break;
