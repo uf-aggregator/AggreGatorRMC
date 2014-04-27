@@ -91,6 +91,7 @@ vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSampl
     return coordinates;
 }//end getcoordinates
 
+
   /*fivePointAverager
   		-Adds together every five x and y values into currXSum and currYSum
   		-On the fifth value, divide both currXSum and currYSum by 5
@@ -174,6 +175,7 @@ string Ladar::coordinatesToString(vector<pair<float, float> > coordinates){
     return coordString;
 }//end coordinatestostring
 
+
 /*********************************************************
 *Coordinate Processing Methods
 **********************************************************/
@@ -193,6 +195,26 @@ vector<float> Ladar::getSlopes(vector<pair<float,float> > coordinates){
 }//end getSlopes
 
 vector<float> Ladar::getAverageSlopes(vector<float> slopes){}
+
+float Ladar::getAverageSlope(vector<float> slopes){
+    float slopeSum = 0;
+    for(int i = 0; i < slopes.size(); i++){
+        slopeSum+=slopes.at(i);
+    }
+    //DEBUG
+    //cout << "GETAVERAGESLOPE: slopeSum = " << slopeSum << ", slopeSize = " << slopes.size() << endl;
+    return slopeSum/slopes.size();
+}//end getAverageSlope
+
+float Ladar::getAverageSlope(vector<float> slopes, int startIndex, int endIndex){
+    float slopeSum = 0;
+    for(int i = startIndex; i <= endIndex; i++){
+        slopeSum+=slopes.at(i);
+    }
+    //DEBUG
+    //cout << "GETAVERAGESLOPE: slopeSum = " << slopeSum << ", slopeSize = " << slopes.size() << endl;
+    return slopeSum/slopes.size();
+}//end getAverageSlope
 
 //change return to walls values I guess
 void Ladar::processSlopes(){}
@@ -215,9 +237,8 @@ vector<int> Ladar::findCorners(vector<float> slopes){
             currSum = 0;
             currAvg = 0;
             currCount = 0;
-        }
-    
-    }
+        }//endif
+    }//endfor
     return corners;
 }
 

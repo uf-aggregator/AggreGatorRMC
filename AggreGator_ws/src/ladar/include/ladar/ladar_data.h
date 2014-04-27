@@ -27,6 +27,8 @@ public:
 	}
 	std::vector<float> getSlopes(std::vector<std::pair<float,float> > coordinates);
 	std::vector<float> getAverageSlopes(std::vector<float> slopes);
+	float getAverageSlope(std::vector<float> slopes);
+	float getAverageSlope(std::vector<float> slopes, int startIndex, int endIndex);
 	std::vector<int> findCorners(std::vector<float> slopes);
 	void processSlopes();
 	void print(std::vector<float> choice, std::string type);
