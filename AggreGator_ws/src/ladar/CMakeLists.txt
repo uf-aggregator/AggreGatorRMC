@@ -6,6 +6,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   genmsg
+  message_generation
 )
 add_message_files (
 	FILES
@@ -19,7 +20,7 @@ generate_messages(
 
 catkin_package(
 	INCLUDE_DIRS include	#Not working on oDroid
-							#comment out
+							          #comment out
 	CATKIN_DEPENDS message_runtime
 )
 
@@ -29,6 +30,6 @@ add_executable(ladar_print_node src/v1/ladar_print_node.cpp)
 add_dependencies(ladar_print_node ladar_generate_messages_cpp)
 target_link_libraries(ladar_print_node ${catkin_LIBRARIES})
 
-#add_executable(ladar_node src/v1/ladar_node.cpp src/v1/interpret_ladar.cpp src/v1/draw.cpp src/v1/localization.cpp)
-#add_dependencies(ladar_node ladar_generate_messages_cpp)
-#target_link_libraries(ladar_node ${catkin_LIBRARIES} SDL)
+add_executable(ladar_node src/v1/ladar_node.cpp src/v1/interpret_ladar.cpp src/v1/draw.cpp src/v1/localization.cpp)
+add_dependencies(ladar_node ladar_generate_messages_cpp)
+target_link_libraries(ladar_node ${catkin_LIBRARIES} SDL)

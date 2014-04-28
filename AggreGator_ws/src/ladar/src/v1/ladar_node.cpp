@@ -5,6 +5,7 @@
 #include "std_msgs/String.h"
 #include "sensor_msgs/LaserScan.h"
 #include "ladar/ladar_data.h"
+#include "ladar/localization.h"
 
 void scanCallback(const sensor_msgs::LaserScan laser){
 	
@@ -37,9 +38,12 @@ void scanCallback(const sensor_msgs::LaserScan laser){
 
 	
 	ros::NodeHandle n;
-	ros::Publisher pub = n.advertise<>("ladar_data", 1);
+	ros::Publisher pub = n.advertise<ladar::ladar_data>("ladar_data", 1);
+	ros::Rate loop_rate(10);
+
 	while(ros::ok()) {
-		
+
+		//pub.publish();
 	}
 	usleep(1000000);
 }
@@ -47,7 +51,7 @@ void scanCallback(const sensor_msgs::LaserScan laser){
 int main(int argc, char **argv){
 	ros::init(argc, argv, "ladar_node");
 	ros::NodeHandle n;
-	ros::Subscriber sub = n.subscribe("/scan", 1, scanCallback);//change callback function
+	ros::Subscriber sub = n.subscribe("/scan", 1, scanCallback);
 
 	ros::spin();
 	

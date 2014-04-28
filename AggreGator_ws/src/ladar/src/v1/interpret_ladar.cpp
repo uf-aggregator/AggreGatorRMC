@@ -1,8 +1,8 @@
 //
-//  interpretRanges.cpp
+//  interpret_ladar.cpp
 //
 //  Created by Joey Siracusa on 3/25/14.
-//
+//  Modified by Andrew Vorakrajangthiti thereafter
 #include <iostream>
 #include <cstdlib>
 #include <utility>

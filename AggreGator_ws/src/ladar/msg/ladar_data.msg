@@ -1,0 +1,10 @@
+bool connection
+bool left
+bool right
+bool forward
+float32[] coordinates
+float32[] slopes
+float32[] wall1
+float32[] wall2
+float32[] wall3
+time timestamp
