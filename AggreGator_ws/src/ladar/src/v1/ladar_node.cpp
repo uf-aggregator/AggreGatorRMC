@@ -36,7 +36,11 @@ void scanCallback(const sensor_msgs::LaserScan laser){
 	}*/
 
 	
-	
+	ros::NodeHandle n;
+	ros::Publisher pub = n.advertise<>("ladar_data", 1);
+	while(ros::ok()) {
+		
+	}
 	usleep(1000000);
 }
 

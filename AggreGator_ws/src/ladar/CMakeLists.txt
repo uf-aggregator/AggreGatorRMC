@@ -7,6 +7,10 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   genmsg
 )
+add_message_files (
+	FILES
+	ladar_data.msg
+)
 
 generate_messages(
    DEPENDENCIES
@@ -14,8 +18,8 @@ generate_messages(
  )
 
 catkin_package(
-	
-	INCLUDE_DIRS include				#Not working for some reason
+	INCLUDE_DIRS include	#Not working on oDroid
+							#comment out
 	CATKIN_DEPENDS message_runtime
 )
 
