@@ -3,62 +3,73 @@
 #include "motor_controller/AdaCmd.h"
 #include "hardware_interface/GPIO.h"
 #include "controller.h"
+
+#define epsilon 0.001
+
 ros::Subscriber sub;
 ros::Publisher pub;
-int controlInput;
 
 //Timing variables
 ros::Time last_time(0), current_time;
 ros::Duration update_rate(0.01);       //time in seconds between sends
 
 SSController linearActuator; //create controller object for the linear actuator
+
+int last_dir = 0;
 	
-enum
+enum Pins
 {
 	LA_A = 40,
 	LA_B = 42
 };
 
 
-float controlFunction() //WARNING: CONTROL USED BELOW WERE DESIGNED FOR WHEEL MOTORS, THIS IS JUST HERE FOR PLACE HOLDER UNTIL LINEAR 				ACTUATOR DESIGN IS DEVELOPED
+void controlFunction() //WARNING: CONTROL USED BELOW WERE DESIGNED FOR WHEEL MOTORS, THIS IS JUST HERE FOR PLACE HOLDER UNTIL LINEAR 				ACTUATOR DESIGN IS DEVELOPED
 {
-	//Linear actuator controller goes here!!!!
+	linearActuator.update();
 
-	linearActuator.setU(controlInput);
-	
-	int iterations = 0; //Number of iterations to update control outputs
-	
-	float controlOutput;
-	while(iterations < 100) //Updates 100 times before accepting new values to update on and then sends out updated values on 					controlOutput
-	{
-		linearActuator.update();
-		
-	  	controlOutput = (linearActuator.getY()[0][0]/24)*100; //Does some scaling on the control output values to get PWM value for AdaFruit downstream
-
-
-		iterations++; //Increments iterations variable
-	}
-	return controlOutput;
+	//Sets direction of motor using GPIO pins
+	setMotorDirection();
 }
 
 //Function that controls the direction of the motors using the GPIO pins on the O-Droid
-void setMotorDirection(int la)
+void setMotorDirection()
 {
-	if(la == 0) //Brake to GND, write 0 to every pin
+	float mc_out = linearActuator.getY()[0][0];			//motorController_out
+	int dir = 0;
+
+	if (mc_out > epsilon)		 //Linear Actuator moves up
 	{
-		setGPIOWrite(LA_A,0);
-		setGPIOWrite(LA_B,0);
+		dir = 1;
 	}
-	else if(la > 0) //INA = GPIO pin 40, INB = GPIO pin 42, linear actuator moves up
+	else if (mc_out < -epsilon) //linear actuator moves down
 	{
-		setGPIOWrite(LA_A,1); 
-		setGPIOWrite(LA_B,0);
+		dir = -1;
 	}
-	else //Linear actuator moves down
+	else						//Linear actuator stops
 	{
-		setGPIOWrite(LA_A,0);
-		setGPIOWrite(LA_B,1);
+		dir = 0;
 	}
+
+	if (dir != last_dir)
+	{
+		switch (dir)
+		{
+		case 1:
+			setGPIOWrite(LA_A, 1);
+			setGPIOWrite(LA_B, 0);
+			break;
+		case -1:
+			setGPIOWrite(LA_A, 0);
+			setGPIOWrite(LA_B, 1);
+			break;
+		default:
+			setGPIOWrite(LA_A, 0);
+			setGPIOWrite(LA_B, 0);
+		}
+	}
+
+	last_dir = dir;
 	
 }
 
@@ -69,7 +80,8 @@ motor_controller::AdaCmd generateMessage()
     
     msg.device = motor_controller::AdaCmd::linearActuator;
 
-    msg.value.push_back(controlFunction());
+	//Scale and push_back msg
+	msg.value.push_back(abs(linearActuator.getY()[0][0] / 24 * 100));
 
     return msg;
 }
@@ -77,11 +89,14 @@ motor_controller::AdaCmd generateMessage()
 
 void callBack(const std_msgs::Int16& msg)
 {
-    controlInput = abs(msg.data)*24/32767;//Scales input to be an equivalent voltage input to motor controller
-	
-    setMotorDirection(msg.data);
+	//Scales input to be an equivalent voltage input to motor controller
+	linearActuator.setU(msg.data * 24.0 / 32768.0); 
+}
 
- 
+void stopLinearActuator()
+{
+	setGPIOWrite(LA_A, 0);
+	setGPIOWrite(LA_B, 0);
 }
 
 //MAIN
@@ -93,7 +108,7 @@ int main(int argc, char** argv)
     sub = n.subscribe("linear_actuator_rc", 1000, callBack);           //Create object to subscribe to topic "linear_actuator_rc"
     pub = n.advertise<motor_controller::AdaCmd>("adaFruit",1000);      //Create object to publish to topic "adaFruit"
 	
-   while(true)
+   while(ros::ok())
 	{
 		//Update time
 		current_time = ros::Time::now();
@@ -102,17 +117,22 @@ int main(int argc, char** argv)
 		{
 			//Reset time
 			last_time = current_time;
-			if(sub.getNumPublishers() == 0) //In case of loss of connection to publisher, set controller inputs to 0
-				controlInput = 0.0;
+			if (sub.getNumPublishers() == 0) //In case of loss of connection to publisher, set controller inputs to 0
+			{
+				//Stop Everything!!!!
+				ROS_WARN("Loss of Linear Actuator input!");
+				linearActuator.setU(0);
+			}
+
 			//motor_controller function
 			controlFunction();
-			while(pub.getNumSubscribers()==0);//Prevents message from sending when publisher is not completely connected to subscriber.
 			pub.publish(generateMessage());
+
 		}
 		ros::spinOnce();
 	}
 
-    resetGPIO();
+    stopLinearActuator();
 
     return 0;
 }
