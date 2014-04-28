@@ -13,18 +13,20 @@ ros::Publisher pub;
 ros::Time last_time(0), current_time;
 ros::Duration update_rate(0.01);       //time in seconds between sends
 
-SSController linearActuator; //create controller object for the linear actuator
+//create controller object for the linear actuator
+SSController linearActuator;
 
 int last_dir = 0;
 	
-enum Pins
+enum
 {
 	LA_A = 40,
 	LA_B = 42
 };
 
+void setMotorDirection(); //forward declaration
 
-void controlFunction() //WARNING: CONTROL USED BELOW WERE DESIGNED FOR WHEEL MOTORS, THIS IS JUST HERE FOR PLACE HOLDER UNTIL LINEAR 				ACTUATOR DESIGN IS DEVELOPED
+void controlFunction() //WARNING: CONTROL USED BELOW WERE DESIGNED FOR WHEEL MOTORS, THIS IS JUST HERE FOR PLACE HOLDER UNTIL LINEAR ACTUATOR DESIGN IS DEVELOPED
 {
 	linearActuator.update();
 

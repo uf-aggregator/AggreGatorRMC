@@ -26,7 +26,12 @@ enum
 //Function that controls the direction of the motors using the GPIO pins on the O-Droid
 void setMotorDirection()
 {
-	float mc_out = linearActuator.getY()[0][0];			//motorController_out
+	//!!!!!!!!PEDOPHILES eyecatch
+	//was this supposed to be bucketDrumMotor instead of linearAct?
+	//!!!!!!!!PEDOPHILES NECROPHILES ZOOPHILES
+
+	//float mc_out = linearAct.getY()[0][0];			//motorController_out
+	float mc_out = bucketDrumMotor.getY()[0][0];
 	int dir = 0;
 
 	if (mc_out > epsilon)		//Dig
@@ -80,7 +85,7 @@ motor_controller::AdaCmd generateMessage()
 
     msg.device = motor_controller::AdaCmd::bucketDrum;
 
-	msg.value.push_back(abs(bucketDrum.getY()[0][0] / 24 * 100));
+	msg.value.push_back(abs(bucketDrumMotor.getY()[0][0] / 24 * 100));
 
     return msg;
 }
@@ -88,7 +93,7 @@ motor_controller::AdaCmd generateMessage()
 void callBack(const std_msgs::Int16& msg)
 {
 	//Scales input to be an equivalent voltage input to motor controller
-	bucketDrum.setU(msg.data * 24.0 / 32768.0);
+	bucketDrumMotor.setU(msg.data * 24.0 / 32768.0);
 }
 
 //Stop the bucket motor
@@ -119,7 +124,7 @@ int main(int argc, char** argv)
 			{
 				//Stop Everything!!!!
 				ROS_WARN("Loss of bucket motor input!");
-				bucketDrum.setU(0);
+				bucketDrumMotor.setU(0);
 			}
 
 			//motor_controller function
