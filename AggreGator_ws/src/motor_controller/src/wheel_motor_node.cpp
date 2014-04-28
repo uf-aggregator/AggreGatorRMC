@@ -166,33 +166,15 @@ void controlFunction()
 	leftRearWheel.update();
 	rightRearWheel.update();
 	rightFrontWheel.update();
-	
-
-	
-	
+		
 	//Does some scaling on the control output values to get PWM value for AdaFruit downstream
 	controlOutput[0] = (leftFrontWheel.getY()[0][0]) * 100 / 24; 
 	controlOutput[1] = (leftRearWheel.getY()[0][0]) * 100 / 24; 
 	controlOutput[2] = (rightRearWheel.getY()[0][0]) * 100 / 24; 
 	controlOutput[3] = (rightFrontWheel.getY()[0][0]) * 100 / 24;
-	
-
-	//Debug
-	float lastDir[4];
-	for(int i = 0; i < 4; ++i)
-	{
-		lastDir[i] = motorDir[i];
-	}
 
 	//Sets direction of motor using GPIO pins
 	setMotorDirection();	
-
-	//Debug
-	for(int i = 0; i < 4; ++i)
-	{
-		if(lastDir[i] != motorDir[i])
-			ROS_INFO("Change in motor %i dir. ControlOutput %i is %f", i, i, controlOutput[i]);
-	}
 
 }
 
@@ -208,13 +190,6 @@ motor_controller::AdaCmd generateMessage()
 	{
 	    msg.value.push_back(abs(controlOutput[i]));
 	}
-	
-	//Debug
-	/*ROS_INFO("LF: %f, LB: %f, RB: %f, RF: %f", 
-		msg.value[0], 
-		msg.value[1], 
-		msg.value[2], 			
-		msg.value[3]);*/
 
 	return msg;
 
