@@ -10,9 +10,8 @@
 #include <cmath>
 #include <sstream>
 #include "ladar/SDL/SDL.h"
-#include "ladar/ladar_data.h"
 #include "ladar/draw.h"
-
+#include "ladar/ladar_data.h"
 using namespace std;
 
 /*********************************************************

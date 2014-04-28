@@ -8,10 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   genmsg
   message_generation
 )
-add_message_files (
-	FILES
-	ladar_data.msg
-)
+add_message_files (FILES	ladar_data.msg)
 
 generate_messages(
    DEPENDENCIES
@@ -32,4 +29,4 @@ target_link_libraries(ladar_print_node ${catkin_LIBRARIES})
 
 add_executable(ladar_node src/v1/ladar_node.cpp src/v1/interpret_ladar.cpp src/v1/draw.cpp src/v1/localization.cpp)
 add_dependencies(ladar_node ladar_generate_messages_cpp)
-target_link_libraries(ladar_node ${catkin_LIBRARIES} SDL)
+target_link_libraries(ladar_node ${catkin_LIBRARIES}, SDL)

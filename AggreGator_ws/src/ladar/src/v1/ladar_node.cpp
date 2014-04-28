@@ -5,7 +5,7 @@
 #include "std_msgs/String.h"
 #include "sensor_msgs/LaserScan.h"
 #include "ladar/ladar_data.h"
-#include "ladar/localization.h"
+//#include "ladar/localization.h"
 
 void scanCallback(const sensor_msgs::LaserScan laser){
 	

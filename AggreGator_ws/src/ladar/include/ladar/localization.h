@@ -1,7 +1,6 @@
 #ifndef _LOCALIZE_
 #define _LOCALIZE_
 #include "ladar/ladar_data.h"
-
 class Localize {
 	protected:
 		float Wall1[2], Wall2[2], Wall3[2];
