@@ -1,6 +1,6 @@
 
 #ifndef _LADAR_H_
-#define _LADAR_H_
+#define _LADAR_H_ 
 #include <vector>
 
 class Ladar {

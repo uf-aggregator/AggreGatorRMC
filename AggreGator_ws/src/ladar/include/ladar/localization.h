@@ -1,7 +1,7 @@
 #ifndef _LOCALIZE_
 #define _LOCALIZE_
 #include <vector>
-class Localize {
+class Localize { 
 	protected:
 		float Wall1[2], Wall2[2], Wall3[2];
 
