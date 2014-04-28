@@ -38,18 +38,17 @@ Ladar::Ladar(int numOfSamples): thetas(numOfSamples),
 /*********************************************************
 *Coordinate Methods
 **********************************************************/
+
+float Ladar::adjustTheta(float theta){
+    float adjustedTheta, reference = this->angle_max;
+    adjustedTheta = theta;
+    return adjustedTheta;
+}
+
 /*getCoordinates
           - Uses laser.ranges[] array, along with other laser member variables, 
             to convert the polar coordinates into cartesian coordinates 
           - Returns as vector of pairs.  First element of pair is x, second element is y.*/
-float Ladar::adjustTheta(float theta){
-    float adjustedTheta, reference = this->angle_max;
-
-    adjustedTheta = theta;
-
-    return adjustedTheta;
-}
-
 vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSamples, 
 											float angle_min, float angle_increment,
                                             float min_range, float max_range){
@@ -71,7 +70,6 @@ vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSampl
             radians += angle_increment;
             theta += angle_increment; 
         }
-
         this->degrees.push_back(radians*57.296);
          //calculate theta assuming LADAR as origin
         if(ranges[i] > min_range && ranges[i] < max_range){
@@ -84,9 +82,7 @@ vector<pair<float, float> > Ladar::getCoordinates(	float* ranges, int numOfSampl
             this->thetas.push_back(radians);
         }
         //else, do not push coordinates to vector; they are not accurate
-        
     }
-
     return coordinates;
 }//end getcoordinates
 
@@ -123,7 +119,6 @@ vector<pair<float, float> > Ladar::fivePointAverager(vector<pair<float, float> >
                 		swapped = true;
 					}
 				}
-				
 			}
 			swapped = true;
 			while(swapped){
@@ -137,15 +132,11 @@ vector<pair<float, float> > Ladar::fivePointAverager(vector<pair<float, float> >
                 		swapped = true;
 					}
 				}
-				
 			}
-		
         	pair<float, float> curr(currXs[length/2], currYs[length/2]);
         	filtered.push_back(curr);
         	j = 0;
 		}
-        
-        
     }
     
     return filtered;

@@ -7,9 +7,10 @@
 #include "ladar/ladar_data.h"
 #include "ladar/localization.h"
 #include "ladar/processed_data.h"
+#include "ladar/conversions.h"
 
 void scanCallback(const sensor_msgs::LaserScan laser){
-	
+	//Prep arguments from LaserScan message
 	int numSample = laser.ranges.size();
 	float ranges[numSample];
 	for(int i = 0; i < numSample; i++){
@@ -19,24 +20,45 @@ void scanCallback(const sensor_msgs::LaserScan laser){
 	float angle_increment = laser.angle_increment;
 	float min_range = laser.range_min;
 	float max_range = laser.range_max;
-	Ladar *ladar = new Ladar(numSample);
-	 
 
+	//instantiate classes
+	Ladar *ladar = new Ladar(numSample);
+	Conversions *convert = new Conversions();
+
+	//process Ladar data
 	std::vector<std::pair<float, float> > coordinates = 
 		ladar->getCoordinates(ranges, numSample, angle_min, angle_increment, min_range, max_range);
-	//  /*
+	
+	//print operations  /*
 	ladar->print(1);
 	std::cout << "---------------------------------------------------------------------" << 
 	"\n\n\n\n\n\n\n\n\n\n\n" << std::endl;
 	// */
 
-	//Graphics Test
+	//graphics test
 	//ladar->drawCoordinates(coordinates);
 
 	
-	//ros::NodeHandle n;
-	//ros::Publisher pub = n.advertise<ladar::processed_data>("ladar_info", 1);
-	//while(ros::ok()) {}
+	//publish data
+	ros::NodeHandle n;
+	ros::Publisher pub = n.advertise<ladar::processed_data>("ladar_info", 1);
+	ros::Rate loop_rate(10);
+	
+	std::cout << "Starting publishing..."<< std::endl;
+
+	while(ros::ok()) {
+		std::cout << "Publishing..." << std::endl;
+		
+		ladar::processed_data msg;
+		msg.connection = true;
+
+
+
+		pub.publish(msg);
+		ros::spinOnce();
+		
+		loop_rate.sleep();
+	}
 	usleep(1000000);
 }
 

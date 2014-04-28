@@ -1,8 +1,9 @@
 #include <iostream>
-#include "std_msgs/"
-#include "ros.h"
+#include "std_msgs/String.h"
+#include "ros/ros.h"
+#include "ladar/processed_data.h"
  
-void testCallback(const ladar::ladar_data data){
+void testCallback(const ladar::processed_data data){
 	ROS_INFO("Connection: ", data.connection);
 }
 int main(int argc, char **argv){
