@@ -3,6 +3,7 @@
 #include <math.h>
 #include <limits>
 #include "ladar/localization.h"
+#include "ladar/ladar_data.h"
 
 using namespace std;
 
@@ -10,7 +11,6 @@ Localize::Localize() {
 	Wall1[0] = 0, Wall1[1] = 0;
 	Wall2[0] = 0, Wall2[1] = 0;
 	Wall3[0] = 0, Wall3[1] = 0;
-	ladarData = new Ladar();
 }
 
 float Localize::min(vector<float> array) const{
@@ -94,6 +94,7 @@ void Localize::update(vector<pair<float, float> > coordinates) {
 								storeTempWall3(size);
 	float absurd;
 	float storeTempDist[3], storeTempAngle[3]; 
+	Ladar *ladarData = new Ladar();
 
 	//init some of the temporary data members
 	offset2 = 0;

@@ -1,11 +1,9 @@
 #ifndef _LOCALIZE_
 #define _LOCALIZE_
-#include "ladar/ladar_data.h"
-
+#include <vector>
 class Localize {
 	protected:
 		float Wall1[2], Wall2[2], Wall3[2];
-		Ladar *ladarData;
 
 	public:
 		Localize();
@@ -21,4 +19,5 @@ class Localize {
 		void adjustWall(float distance, float distancePrime, float angle, float anglePrime, int WallNumber);
 		void update(std::vector<std::pair<float, float> > coordinates);
 };
+
 #endif

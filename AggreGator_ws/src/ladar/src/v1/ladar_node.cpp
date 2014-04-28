@@ -5,6 +5,8 @@
 #include "std_msgs/String.h"
 #include "sensor_msgs/LaserScan.h"
 #include "ladar/ladar_data.h"
+#include "ladar/localization.h"
+#include "ladar/ladar.h"
 
 void scanCallback(const sensor_msgs::LaserScan laser){
 	
@@ -29,18 +31,12 @@ void scanCallback(const sensor_msgs::LaserScan laser){
 	// */
 
 	//Graphics Test
-	ladar->drawCoordinates(coordinates);
-
-	/*for(int i = 0; i < slopes.size(); i++){
-		std::cout << i << ": \t" << slopes.at(i) << std::endl;
-	}*/
+	//ladar->drawCoordinates(coordinates);
 
 	
-	ros::NodeHandle n;
-	ros::Publisher pub = n.advertise<>("ladar_data", 1);
-	while(ros::ok()) {
-		
-	}
+	//ros::NodeHandle n;
+	//ros::Publisher pub = n.advertise<ladar::ladar>("ladar_data", 1);
+	//while(ros::ok()) {}
 	usleep(1000000);
 }
 
