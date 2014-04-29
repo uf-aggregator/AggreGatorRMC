@@ -247,5 +247,7 @@ read_register_svr = n.serviceClient<hardware_interface::ReadI2CRegister>("read_i
 
 
     ros::spin();
+
+    return 0;
 	
 }

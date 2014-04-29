@@ -140,7 +140,7 @@ void adaInitialize()
 
     //Sets prescale register to output PWM signal at 1.5 kHz
     init.reg = preScale;
-    init.data.push_back(0x7);
+    init.data.push_back(0x3);
 
     write_reg_pub.publish(init);
 	//Define and fill in a service request
