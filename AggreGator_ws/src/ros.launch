@@ -5,9 +5,10 @@
 
 <launch>
 	<!--Hardware Interface nodes-->
+	<node name="i2c_node"      pkg="hardware_interface" type="i2c_node"/>
 	<node name="adafruit_node" pkg="hardware_interface" type="adafruit_node"/>
 	<node name="adc_node"      pkg="hardware_interface" type="adc_node"/>
-	<node name="i2c_node"      pkg="hardware_interface" type="i2c_node"/>
+	
 	<!--node name="ina226_node"   pkg="hardware_interface" type="ina266_node"/-->
 	
 	<!--Joy nodes-->
