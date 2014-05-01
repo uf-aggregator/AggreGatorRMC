@@ -328,7 +328,7 @@ int main(int argc, char** argv)
     current_time = last_time;
 
     //Wait for publishers to inti then turn everything off
-    while((bucket_motor_pub.getNumSubscribers() == 0 || linear_actuator_pub.getNumSubscribers() == 0 || wheel_motor_pub.getNumSubscribers() == 0) && ros::ok());
+    //while((bucket_motor_pub.getNumSubscribers() == 0 || linear_actuator_pub.getNumSubscribers() == 0 || wheel_motor_pub.getNumSubscribers() == 0) && ros::ok());
     StopEverything();
 
 
