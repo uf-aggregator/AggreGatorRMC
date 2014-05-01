@@ -81,12 +81,14 @@ void StopEverything();
  * Out: WheelMotor to wheel_motor_rc topic
  */
 void WriteMotorValue()
-{
-    if(motion_enable)
+{ 
+    current_time = ros::Time::now();
+    if(current_time - last_time > send_time)
     {
 	    //Update time
-	    current_time = ros::Time::now();
-	    if(current_time - last_time > send_time)
+	  // ROS_INFO("Motion enable : %i", motion_enable);
+
+	    if(motion_enable)
 	    {
 		//reset time
 		last_time = current_time;
@@ -146,11 +148,13 @@ void WriteMotorValue()
 		linear_actuator_pub.publish(actuator_msg);
 		bucket_motor_pub.publish(bucket_msg);
 	    }
+	    else	//If motion is not enabled stop everything
+        {
+		StopEverything();
+		last_time = current_time;
+	}
      }
-     else	//If motion is not enabled stop everything
-     {
-	StopEverything();
-     }
+    
 }
 
 /*
@@ -237,7 +241,7 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
     if(start_pressed & !joy->buttons[START])
     {
 	//Debug
-    	ROS_INFO("Start pressed");
+    	//ROS_INFO("Start pressed");
 
 	motion_enable = !motion_enable;
 	//If we disable input imediatly send a stop msg
@@ -324,7 +328,7 @@ int main(int argc, char** argv)
     current_time = last_time;
 
     //Wait for publishers to inti then turn everything off
-    while(bucket_motor_pub.getNumSubscribers() == 0 || linear_actuator_pub.getNumSubscribers() == 0 || wheel_motor_pub.getNumSubscribers() == 0);
+    while((bucket_motor_pub.getNumSubscribers() == 0 || linear_actuator_pub.getNumSubscribers() == 0 || wheel_motor_pub.getNumSubscribers() == 0) && ros::ok());
     StopEverything();
 
 
@@ -336,4 +340,6 @@ int main(int argc, char** argv)
         WriteMotorValue();
         ros::spinOnce();
     }
+
+   return 0;
 }
