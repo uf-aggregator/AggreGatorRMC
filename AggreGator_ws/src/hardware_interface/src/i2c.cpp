@@ -148,7 +148,7 @@ int writetoreg_i2c(int address, char reg_ptr_addr, int size, char* data)
 	
     if(write(file, write_buffer, size+1) != size+1) {
 		//ERROR HANDLING: i2c transaction failed
-           	//printf("Error number: %i\n",errno);
+           	printf("Error number: %i\n",errno);
 		close(file);
 		return 1;
     }  
@@ -188,6 +188,7 @@ int write_i2c(int address, int size, char* data)
     if(write(file, data, size) != size) {
 		//ERROR HANDLING: i2c transaction failed
 		printf("Failed to write to the i2c bus.\n\n");
+		printf("Error: %i", errno);
 		close(file);
 		return 1;
     }  
