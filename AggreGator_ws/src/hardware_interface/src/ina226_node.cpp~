@@ -40,6 +40,8 @@ void inaInitialize()
 	configure.data.push_back(0x27);
 	write_reg_pub.publish(configure); //Publish message containing information to write to the configuration register
 	
+	ROS_INFO("%f",currentLSB);
+	ROS_INFO("%f",powerLSB);
 	
 	//Set Calibration register
 	hardware_interface::WriteI2CRegister calibration;
@@ -76,7 +78,7 @@ int readElectronicPower()
 void publishElectronicPower()
 {
 	hardware_interface::ElectronicPowerData sendPowerData;
-	//ROS_INFO("POWER: %i",readElectronicPower());
+	ROS_INFO("POWER: %i",readElectronicPower());
 	sendPowerData.power = readElectronicPower(); //grab values from serice response, put them into 2 byres, and store into the message to be sent to power monitoring node for processing
 	sendPowerData.powerLSB = powerLSB;
 	

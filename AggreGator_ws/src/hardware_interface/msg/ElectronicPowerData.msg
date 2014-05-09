@@ -1,2 +1,2 @@
 uint16 power
-uint16 powerLSB
+float32 powerLSB

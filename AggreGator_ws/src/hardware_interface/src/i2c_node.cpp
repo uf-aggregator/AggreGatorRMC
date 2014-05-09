@@ -71,9 +71,8 @@ void WriteRegisterI2C(const hardware_interface::WriteI2CRegister& msg)
     for(int i = 0; i < msg.data.size(); ++i)
     {
         data[i] = msg.data[i];
+	ROS_INFO("%i",data[i]);
     }
-
-	
 
     writetoreg_i2c(msg.addr, msg.reg, msg.data.size(), data);
 
