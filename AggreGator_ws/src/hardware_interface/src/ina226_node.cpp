@@ -5,7 +5,7 @@
 #include "hardware_interface/ElectronicPowerData.h"
 
 #define	MAX_EXPECTED_CURRENT 	 2//Max expected currrent flowing through the shunt, in amps
-#define	RSHUNT			 1 //Shunt register value, in ohms
+#define	RSHUNT			 0.004 //Shunt register value, in ohms
 
 float currentLSB = MAX_EXPECTED_CURRENT/(pow(2,15)); //Current LSB to be used to find Power LSB which will be paired with the power raw data to be processed in power monitoring node. Units in Amps/bit
 float powerLSB = 25*currentLSB; //Power lsb to convert raw power data to a usable value. Units in Watts/bit
