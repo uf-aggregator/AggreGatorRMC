@@ -8,32 +8,8 @@ using namespace std;
 SSController::SSController()
 {	
 
-/*
-	float A_def[AR][AC] = 
-	{
-		{1.0000, 0.2620, 0},
-		{0,    0.2275,    0.0017},
-		{0,   -0.0397,   -0.0003}
-	};
 
-	float B_def[BR][BC] =
-	{
-		{0},
-		{1.0279},
-		{0.0528}
-	};
-
-	float C_def[CR][CC] = 
-	{
-		{.0721, .0152, 0}
-	};
-
-	float D_def[DR][DC] = {{0.0049}};
-	*/
-
-
-
-	float A_def[AR][AC] = 
+/*	float A_def[AR][AC] = 
 	{
 		{1.0000, 0.4772, 0},
 		{0,    0.0000,    0.0000},
@@ -52,7 +28,28 @@ SSController::SSController()
 		{.5903, .2113, 0}
 	};
 
-	float D_def[DR][DC] = {{0.1029}};
+	float D_def[DR][DC] = {{0.1029}};*/
+	
+	float A_def[AR][AC] = 
+	{
+		{0.0000, 0.0, 0},
+		{0,    -1130000,   -51000},
+		{0,   32800,   0.0000}
+	};
+
+	float B_def[BR][BC] =
+	{
+		{0},
+		{32}, 
+		{0.0}
+	};
+
+	float C_def[CR][CC] = 
+	{
+		{17950, 0, 0}
+	};
+
+	float D_def[DR][DC] = {{0}};
 
 	float X_def[XR][XC] = {{0}};
 
@@ -106,25 +103,24 @@ SSController::SSController(vector<vector<float> > U_def)
 	
 	float A_def[AR][AC] = 
 	{
-		{1.0000, 0.4772, 0},
-		{0,    0.0000,    0.0000},
-		{0,   -0.000,   -0.0000}
+		{0.0000, 0.0, 0},
+		{0,    -1130000,   -51000},
+		{0,   32800,   0.0000}
 	};
 
 	float B_def[BR][BC] =
 	{
 		{0},
-		{ 1.4611}, 
+		{32}, 
 		{0.0}
 	};
 
 	float C_def[CR][CC] = 
 	{
-		{.5903, .2113, 0}
+		{17950, 0, 0}
 	};
 
-
-	float D_def[DR][DC] = {{0.1029}};
+	float D_def[DR][DC] = {{0}};
 
 
 	float X_def[XR][XC] = {{0}};
