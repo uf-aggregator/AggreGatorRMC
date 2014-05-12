@@ -7,7 +7,7 @@
 	<!--Hardware Interface nodes-->
 	<node name="i2c_node"      pkg="hardware_interface" type="i2c_node"/>
 	<node name="adafruit_node" pkg="hardware_interface" type="adafruit_node"/>
-	<node name="adc_node"      pkg="hardware_interface" type="adc_node"/>
+	<node name="ina226_node"   pkg="hardware_interface" type="ina226_node"/>
 	
 	<!--node name="ina226_node"   pkg="hardware_interface" type="ina266_node"/-->
 	
@@ -25,7 +25,7 @@
 	<node name="wheel_motor_node" pkg="motor_controller" type="wheel_motor_node"/>
 	
 	<!--Power Monitering nodes-->
-	<!--node name="power_monitoring_node" pkg="power_monitoring" type="power_monitoring_node"/-->
+	<node name="power_monitoring_node" pkg="power_monitoring" type="power_monitoring_node"/>
 	
 	<!--Remote Control nodes-->
 	<node name="remote_control_node" pkg="remote_control" type="xbox_controller_node"/>
