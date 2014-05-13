@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--xml file for roslaunch
+	roslaunch will navigate through xml file launching all nodes automatically
+	This file is for the command computer
+-->
+
+<launch>
+	
+	<!--Joy nodes-->
+	<node name="joy_node" pkg="joy" type="joy_node"/>
+	<!--Joy parameters-->
+
+	<!--Remote Control nodes-->
+	<node name="remote_control_node" pkg="remote_control" type="xbox_controller_node"/>
+	<!--Remote Control Paramaters-->
+	<param name="remote_control/send_freq" value="10"/>
+	<param name="remote_control/xbox_controller/mapping" value="2"/>
+	
+	<!--Camera Feedback Node-->
+	<node name="camera_feedback_node" pkg="camera_feedback" type="camera_feedback_node"/>
+	
+	<!--Power Monitering nodes-->
+	<node name="power_monitoring_node" pkg="power_monitoring" type="power_monitoring_node"/>
+	
+</launch>
+

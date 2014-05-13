@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--xml file for roslaunch
+	roslaunch will navigate through xml file launching all nodes automatically
+	This will launch nodes meant to run on the O-Droid
+-->
+
+<launch>
+	<!--Hardware Interface nodes-->
+	<node name="i2c_node"      pkg="hardware_interface" type="i2c_node"/>
+	<node name="adafruit_node" pkg="hardware_interface" type="adafruit_node"/>
+	<node name="ina226_node"   pkg="hardware_interface" type="ina226_node"/>
+	
+	<!--LADAR Nodes-->
+	<!--<node name="urg_node" pkg="urg" type="?"/>-->
+	<!--node name="ladar_node" pkg="ladar" type="ladar_node"/-->
+	
+	<!--Motor Controller nodes-->
+	<node name="bucket_motor_node" pkg="motor_controller" type="bucket_motor_node"/>
+	<node name="linear_actuator_node" pkg="motor_controller" type="linear_actuator_node"/>
+	<node name="wheel_motor_node" pkg="motor_controller" type="wheel_motor_node"/>
+	
+	<!--USB Camera-->
+	<node name="usb_cam_node" pkg="usb_cam" type="usb_cam_node"/>
+	<node name
+	
+	
+</launch>
+
