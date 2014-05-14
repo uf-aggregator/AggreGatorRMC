@@ -11,7 +11,22 @@
 #include "cv_bridge/cv_bridge.h"
 */
 void imageCallback(const sensor_msgs::ImageConstPtr& img){
-
+	/*
+	sensor_msgs::CvBridge bridge; //needed to convert ROS images to OpenCV images
+	try
+	{	
+		//upon receiving a new image, show this image in OpenCV
+		cvShowImage("view", bridge.imgMsgToCv(msg, "bgr8"));
+		//TODO: Some code to save every x-th image to Command computer's HD
+		//OpenCV has functions for saving images, but we can write it
+			//once we get OpenCV working
+	}
+	catch (sensor_msgs::CvBridgeException& e)
+	{	
+		//if the image could not be converted to OpenCV, provide an error message
+		ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
+	}
+	*/
 }
 
 int main(int argc, char **argv){
