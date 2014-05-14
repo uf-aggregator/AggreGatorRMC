@@ -9,8 +9,6 @@
 	<node name="adafruit_node" pkg="hardware_interface" type="adafruit_node"/>
 	<node name="ina226_node"   pkg="hardware_interface" type="ina226_node"/>
 	
-	<!--node name="ina226_node"   pkg="hardware_interface" type="ina266_node"/-->
-	
 	<!--Joy nodes-->
 	<node name="joy_node" pkg="joy" type="joy_node"/>
 	<!--Joy parameters-->
@@ -24,14 +22,15 @@
 	<node name="linear_actuator_node" pkg="motor_controller" type="linear_actuator_node"/>
 	<node name="wheel_motor_node" pkg="motor_controller" type="wheel_motor_node"/>
 	
-	<!--Power Monitering nodes-->
-	<node name="power_monitoring_node" pkg="power_monitoring" type="power_monitoring_node"/>
-	
+
 	<!--Remote Control nodes-->
 	<node name="remote_control_node" pkg="remote_control" type="xbox_controller_node"/>
 	<!--Remote Control Paramaters-->
 	<param name="remote_control/send_freq" value="10"/>
 	<param name="remote_control/xbox_controller/mapping" value="2"/>
+
+	<!--Power Monitering nodes-->
+	<node name="power_monitoring_node" pkg="power_monitoring" type="power_monitoring_node"/>
 	
 	
 </launch>

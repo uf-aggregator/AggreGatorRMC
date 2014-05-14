@@ -31,8 +31,8 @@ void ConvertRawMotorToPower(const hardware_interface::RawMotorPowerData& data)
 void TrackElectronicPower(const hardware_interface::ElectronicPowerData& data)
 {
 	float calculatedPower = data.powerLSB*data.power; //Calculates power based on the digital value from the INA226 and the bit-to-Watt conversion ratio calculated in the ina226 node
-	ROS_INFO("%f",data.powerLSB);
-	ROS_INFO("%i",data.power);
+	//ROS_INFO("%f",data.powerLSB);
+	//ROS_INFO("%i",data.power);
 	powerReadings.push_back(calculatedPower); //Add reading to vector
 	
 	//ROS_INFO("actual power: %f",calculatedPower);
@@ -48,7 +48,7 @@ void UpdateElectronicPowerUsage()
 	powerReadings.resize(1); //resizes vector with new sum value
 	
 	ofstream powerFile;
-	powerFile.open("PowerUsageLog.txt", ios::out | ios::app);
+	powerFile.open("/home/odroid/PowerUsageLog.txt", ios::out | ios::app);
 	if(powerFile.is_open())
 	{
 		powerFile << current_time - start_time << "\t";
@@ -66,14 +66,14 @@ int main(int argc, char** argv)
      * Initilization
      */
 
-    //Initilize the adc node
+    //Initilize the power monitoring node
     ros::init(argc, argv, "power_monitoring_node");
 	
 	//Setup file for power logging
 	ofstream powerFile;
-	powerFile.open("PowerUsageLog.txt", ios::out | ios::trunc);
+	powerFile.open("/home/odroid/PowerUsageLog.txt", ios::out | ios::trunc);
 	if(powerFile.is_open())
-	{
+	{	
 		powerFile << "UF AggreGator Mining Team, Electronics Power Logged during a Competition Run. \n";
 		powerFile << "This file shows total power used up to the indicated time. \n";
 		powerFile << "Value on the left is time in seconds since the system was running. \n";

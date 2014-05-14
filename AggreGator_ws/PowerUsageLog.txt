@@ -1,5 +1,0 @@
-UF AggreGator Mining Team, Electronics Power Logged during a Competition Run. 
-This file shows total power used up to the indicated time. 
-Value on the left is time in seconds since the system was running. 
-Value on the right is the total power used up to the indicated time duration. 
-0.000005834	0 W

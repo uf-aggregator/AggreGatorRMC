@@ -65,7 +65,7 @@ int readElectronicPower()
 	
 	if(!read_register_srv.call(readPower))
 	{
-		ROS_ERROR("Error reading from the INA226 power register!");
+		//ROS_ERROR("Error reading from the INA226 power register!");
 		return -1;
 	}
 	else
