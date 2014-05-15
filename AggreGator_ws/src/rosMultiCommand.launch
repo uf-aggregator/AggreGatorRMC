@@ -31,6 +31,6 @@
 
 	<!--Power Monitering nodes-->
 	<node name="power_monitoring_node" pkg="power_monitoring" type="power_monitoring_node"/>
-	mas
+	
 </launch>
 
