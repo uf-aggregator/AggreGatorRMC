@@ -14,15 +14,31 @@
 	<!--<node name="urg_node" pkg="urg" type="?"/>-->
 	<!--node name="ladar_node" pkg="ladar" type="ladar_node"/-->
 	
+	<!--Remote Control Parameters-->
+	<param name="remote_control/send_freq" value="10"/>
+	<param name="remote_control/xbox_controller/mapping" value="2"/>
 	<!--Motor Controller nodes-->
 	<node name="bucket_motor_node" pkg="motor_controller" type="bucket_motor_node"/>
 	<node name="linear_actuator_node" pkg="motor_controller" type="linear_actuator_node"/>
 	<node name="wheel_motor_node" pkg="motor_controller" type="wheel_motor_node"/>
-	
+		
+	<!--USB Camera Parameters-->
+	<param name="image_rotater/target_frame_id" value=""/>
+	<param name="image_rotater/source_frame_id" value=""/>
+	<param name="image_rotater/target_x" value="-7.0"/>
+	<param name="image_rotater/target_y" value="-7.0"/>
+	<param name="image_rotater/source_x" value="-10.0"/>
+	<param name="image_rotater/source_y" value="10.0"/>
+	<param name="image_rotater/output_image_size" value="0.0"/>
+
 	<!--USB Camera-->
-	<node name="usb_cam_node" pkg="usb_cam" type="usb_cam_node"/>
-	<node name="image_rotate" pkg="image_rotate" type="image_rotate" args="image:=/usb_cam/image_raw \rotate/image:=rotated __name:=image_rotater _image_transport:=compressed"/>
-	
+	<node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" args="_image_transport:=compressed"/>
+	<!--node name="image_rotate" pkg="image_rotate" type="image_rotate" args="image:=/usb_cam/image_raw \rotated/image:=rotated __name:=image_rotater _image_transport:=compressed"/-->
+
+
+	<!--<param name="usb_cam/image_raw/compressed/jpeg_quality" value="50.0"/>-->
+	<!--<param name="usb_cam/image_width" value="400.0"/>
+	<param name="usb_cam/image_height" value="225.0"/>-->
 	
 </launch>
 
