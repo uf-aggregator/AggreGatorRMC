@@ -24,7 +24,7 @@
 	
 
 	<!--Remote Control nodes-->
-	<node name="remote_control_node" pkg="remote_control" type="xbox_controller_node"/>
+	<node name="remote_control_node" pkg="remote_control" type="xbox_controller_node" output="screen"/>
 	<!--Remote Control Paramaters-->
 	<param name="remote_control/send_freq" value="10"/>
 	<param name="remote_control/xbox_controller/mapping" value="2"/>
