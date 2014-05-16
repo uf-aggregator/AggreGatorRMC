@@ -53,7 +53,7 @@ bool readPercentage(){
 		batteryFile.close();
 		return true;
 	} else {
-		ROS_WARN("Battery log can't be opened assuming 0.");
+		ROS_WARN("Battery log can't be opened, assuming 0.");
 		return false;
 	}
 }
@@ -69,7 +69,7 @@ void ConvertRawMotorToPower(const hardware_interface::RawMotorPowerData& data)
 //Tracks the power used by the electronics
 void TrackElectronicPower(const hardware_interface::ElectronicPowerData& data)
 {
-	float calculatedPower = data.powerLSB*data.power; //Calculates power based on the digital value from the INA226 and the bit-to-Watt conversion ratio calculated in the ina226 node
+	float calculatedPower = data.power; //Calculates power based on the digital value from the INA226 and the bit-to-Watt conversion ratio. Calculated in the ina226 node
 	//ROS_INFO("%f",data.powerLSB);
 	//ROS_INFO("%i",data.power);
 	

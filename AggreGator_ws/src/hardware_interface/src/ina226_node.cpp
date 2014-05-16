@@ -78,8 +78,7 @@ void publishElectronicPower()
 {
 	hardware_interface::ElectronicPowerData sendPowerData;
 	//ROS_INFO("POWER: %i",readElectronicPower());
-	sendPowerData.power = readElectronicPower(); //grab values from serice response, put them into 2 byres, and store into the message to be sent to power monitoring node for processing
-	sendPowerData.powerLSB = powerLSB;
+	sendPowerData.power = readElectronicPower()*powerLSB; //grab power reading from service, multiply it by the powerLSB conversion ratio to get Watts, then publish to power monitoring node
 	
 	power_pub.publish(sendPowerData); //publish
 
