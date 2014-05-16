@@ -28,11 +28,12 @@ float multi_energy = 0.00;		//Stores energy over multiple runs
 float current_energy = 0.00; 		//store energy over one run
 
 /*Write percentage to file*/
-bool writePercentage(float percentage){
-	ofstream batteryFile("/home/fnivek/BatteryPercentage.txt", ios::out);
+bool writePercentage(float percentage_1, float percentage_2){
+	ofstream batteryFile("../../../../../BatteryPercentage.txt", ios::trunc | ios::out);
 	if(batteryFile.is_open())
 	{
-		batteryFile << percentage;
+		batteryFile << "Single Run: " << percentage_1 << "\t"; 
+		batteryFile << "Overall Total: " << percentage_2 << "\t";
 		batteryFile.close();
 		return true;
 	}
@@ -45,7 +46,7 @@ bool writePercentage(float percentage){
 /*Read percentage from file and then set global multi_energy to that value*/
 bool readPercentage(){
 	string percentage;
-	ifstream batteryFile("/home/fnivek/BatteryPercentage.txt", ios::in);
+	fstream batteryFile("../../../../../BatteryPercentage.txt", ios::in);
 	if(batteryFile.is_open()){
 		while(getline(batteryFile, percentage)){
 			multi_energy = (float)atof(percentage.c_str());
@@ -54,6 +55,7 @@ bool readPercentage(){
 		return true;
 	} else {
 		ROS_WARN("Battery log can't be opened, assuming 0.");
+		batteryFile << "UF AggreGator Mining Team, Percentage of Electronics Battery Used
 		return false;
 	}
 }
@@ -70,7 +72,6 @@ void ConvertRawMotorToPower(const hardware_interface::RawMotorPowerData& data)
 void TrackElectronicPower(const hardware_interface::ElectronicPowerData& data)
 {
 	float calculatedPower = data.power; //Calculates power based on the digital value from the INA226 and the bit-to-Watt conversion ratio. Calculated in the ina226 node
-	//ROS_INFO("%f",data.powerLSB);
 	//ROS_INFO("%i",data.power);
 	
 	current_time = ros::Time::now();
@@ -90,7 +91,7 @@ void UpdateElectronicPowerUsage()
 {
 	
 	ROS_INFO("Power used (this run : multiple runs) = %.2f%% : %.2f%%", current_energy, multi_energy);
-	writePercentage(multi_energy);
+	writePercentage(current_energy,multi_energy);
 	
 }
 int main(int argc, char** argv)
