@@ -29,6 +29,7 @@ enum regAddr
 	alertLimit
 };
 
+
 //Sets configuration and calibration registers
 void inaInitialize()
 {
@@ -65,8 +66,8 @@ int readElectronicPower()
 	
 	if(!read_register_srv.call(readPower))
 	{
-		//ROS_ERROR("Error reading from the INA226 power register!");
-		return -1;
+		ROS_ERROR("Error reading from the INA226 power register!");
+		return 0;
 	}
 	else
 		return (int)(readPower.response.data[0]<<8) + readPower.response.data[1];
@@ -77,12 +78,12 @@ void publishElectronicPower()
 {
 	hardware_interface::ElectronicPowerData sendPowerData;
 	//ROS_INFO("POWER: %i",readElectronicPower());
-	sendPowerData.power = readElectronicPower(); //grab values from serice response, put them into 2 byres, and store into the message to be sent to power monitoring node for processing
-	sendPowerData.powerLSB = powerLSB;
+	sendPowerData.power = readElectronicPower()*powerLSB; //grab power reading from service, multiply it by the powerLSB conversion ratio to get Watts, then publish to power monitoring node
 	
 	power_pub.publish(sendPowerData); //publish
 
 }
+
 
 int main(int argc, char** argv)
 {

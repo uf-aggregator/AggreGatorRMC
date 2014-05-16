@@ -57,21 +57,16 @@ struct ElectronicPowerData_
   typedef ElectronicPowerData_<ContainerAllocator> Type;
 
   ElectronicPowerData_()
-    : power(0)
-    , powerLSB(0.0)  {
+    : power(0.0)  {
     }
   ElectronicPowerData_(const ContainerAllocator& _alloc)
-    : power(0)
-    , powerLSB(0.0)  {
+    : power(0.0)  {
     }
 
 
 
-   typedef uint16_t _power_type;
+   typedef float _power_type;
   _power_type power;
-
-   typedef float _powerLSB_type;
-  _powerLSB_type powerLSB;
 
 
 
@@ -151,12 +146,12 @@ struct MD5Sum< ::hardware_interface::ElectronicPowerData_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "889a0da0221de131ecfdcf489dbb304d";
+    return "b75f3bcdec2dcafb6503e9b6316400b0";
   }
 
   static const char* value(const ::hardware_interface::ElectronicPowerData_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x889a0da0221de131ULL;
-  static const uint64_t static_value2 = 0xecfdcf489dbb304dULL;
+  static const uint64_t static_value1 = 0xb75f3bcdec2dcafbULL;
+  static const uint64_t static_value2 = 0x6503e9b6316400b0ULL;
 };
 
 template<class ContainerAllocator>
@@ -175,8 +170,7 @@ struct Definition< ::hardware_interface::ElectronicPowerData_<ContainerAllocator
 {
   static const char* value()
   {
-    return "uint16 power\n\
-float32 powerLSB\n\
+    return "float32 power\n\
 ";
   }
 
@@ -196,7 +190,6 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.power);
-      stream.next(m.powerLSB);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER;
@@ -216,9 +209,7 @@ struct Printer< ::hardware_interface::ElectronicPowerData_<ContainerAllocator> >
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::hardware_interface::ElectronicPowerData_<ContainerAllocator>& v)
   {
     s << indent << "power: ";
-    Printer<uint16_t>::stream(s, indent + "  ", v.power);
-    s << indent << "powerLSB: ";
-    Printer<float>::stream(s, indent + "  ", v.powerLSB);
+    Printer<float>::stream(s, indent + "  ", v.power);
   }
 };
 

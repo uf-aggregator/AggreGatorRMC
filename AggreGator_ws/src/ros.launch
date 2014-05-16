@@ -30,7 +30,7 @@
 	<param name="remote_control/xbox_controller/mapping" value="2"/>
 
 	<!--Power Monitering nodes-->
-	<node name="power_monitoring_node" pkg="power_monitoring" type="power_monitoring_node"/>
+	<node name="power_monitoring_node" pkg="power_monitoring" type="power_monitoring_node" output="screen"/>
 	
 	
 </launch>
