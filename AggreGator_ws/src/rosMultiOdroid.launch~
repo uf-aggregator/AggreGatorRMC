@@ -39,7 +39,6 @@
 	<!--node name="image_rotate" pkg="image_rotate" type="image_rotate" args="image:=/usb_cam/image_raw \rotated/image:=rotated __name:=image_rotater _image_transport:=compressed"/-->
 
 
-	<param name="usb_cam/image_raw/compressed/jpeg_quality" value="1.0"/>
 	<param name="usb_cam/image_raw/theora/quality" value="15.0"/>
 	<param name="usb_cam/image_raw/theora/target_bitrate" value="1000.0"/>
 	<!--<param name="usb_cam/image_width" value="400.0"/>
