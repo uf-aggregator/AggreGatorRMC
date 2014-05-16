@@ -212,6 +212,7 @@ void AvgMotorInput(float left, float right, float bucket, float actuator)
         bucket_motor = bucket;
         linear_actuator = actuator;
     }
+
     //Increment running_avg
     running_avg++;
 }
@@ -260,10 +261,10 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		if (gear >= 1.0f)
 		{
 			gear = 1.0f;
-			ROS_INFO("Speed not limited (100% of max)");
+			ROS_INFO("Speed not limited (100%% of max)");
 		}
 		else
-			ROS_INFO("Speed limited to %f%% of max", gear * 100.0f);
+			ROS_INFO("Speed limited to %.2f%% of max", gear * 100.0f);
 	}
 
 	//Gear down
@@ -273,10 +274,10 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		if (gear <= 0.1f)
 		{
 			gear = 0.1f;
-			ROS_INFO("Speed limited to minimum 10% of max");
+			ROS_INFO("Speed limited to minimum 10%% of max");
 		}
 		else
-			ROS_INFO("Speed limited to %f%% of max", gear * 100.0f);
+			ROS_INFO("Speed limited to %.2f%% of max", gear * 100.0f);
 	}
     //average the inputs
     AvgMotorInput(joy->axes[UD_LEFT], joy->axes[UD_RIGHT], joy->axes[LT], joy->axes[RT]);

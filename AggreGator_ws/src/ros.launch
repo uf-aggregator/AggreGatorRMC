@@ -24,13 +24,13 @@
 	
 
 	<!--Remote Control nodes-->
-	<node name="remote_control_node" pkg="remote_control" type="xbox_controller_node"/>
+	<node name="remote_control_node" pkg="remote_control" type="xbox_controller_node" output="screen"/>
 	<!--Remote Control Paramaters-->
 	<param name="remote_control/send_freq" value="10"/>
 	<param name="remote_control/xbox_controller/mapping" value="2"/>
 
 	<!--Power Monitering nodes-->
-	<node name="power_monitoring_node" pkg="power_monitoring" type="power_monitoring_node"/>
+	<node name="power_monitoring_node" pkg="power_monitoring" type="power_monitoring_node" output="screen"/>
 	
 	
 </launch>

@@ -29,6 +29,7 @@ enum regAddr
 	alertLimit
 };
 
+
 //Sets configuration and calibration registers
 void inaInitialize()
 {
@@ -83,6 +84,7 @@ void publishElectronicPower()
 	power_pub.publish(sendPowerData); //publish
 
 }
+
 
 int main(int argc, char** argv)
 {

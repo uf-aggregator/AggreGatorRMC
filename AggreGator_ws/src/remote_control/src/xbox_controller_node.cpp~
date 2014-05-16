@@ -6,6 +6,49 @@
 #include "ros/duration.h"
 #include <string.h>
 
+
+/*
+* Forward declarations
+*/
+void StopEverything();
+
+//Buttons on the Xbox Controller
+enum XboxButtons
+{
+	A,
+	B,
+	X,
+	Y,
+	LB,
+	RB,
+	BACK,
+	START,
+	POWER,
+	LEFT_STICK,
+	RIGHT_STICK,
+
+	NUM_BTNS
+};
+
+/*
+* LR = left right
+* UD = up down
+* Left = left stick
+* Right = right stick
+* RT = right trigger
+* LT = left trigger
+*/
+enum XboxAxis
+{
+	LR_LEFT,
+	UD_LEFT,
+	LT,
+	LR_RIGHT,
+	UD_RIGHT,
+	RT
+};
+
+
 /*
  * Variables
  */
@@ -14,11 +57,11 @@ double left_motors(0.0), right_motors(0.0);
 double bucket_motor(0.0), linear_actuator(0.0);
 short int bucket_motor_dir(1), linear_actuator_dir(1);
 bool motion_enable = false;			//If this is zero msgs will be published
+float gear = 0.7f;					//Multiplier to simulate gears (Default to 70%)
 
 //Keep track of button presses (to find button releases)
-bool left_bumper_pressed = false;
-bool right_bumper_pressed = false;
-bool start_pressed = false;
+bool btn_pressed[NUM_BTNS] = { false }; 
+bool btn_released[NUM_BTNS] = { false };
 
 //Timing variables
 ros::Time last_time, current_time;
@@ -35,44 +78,6 @@ ros::Publisher bucket_motor_pub;
  */
 int32_t mapping;
 
-//Buttons on the Xbox Controller
-enum XboxButtons
-{
-    A,
-    B,
-    X,
-    Y,
-    LB,
-    RB,
-    BACK,
-    START,
-    POWER,
-    LEFT_STICK,
-    RIGHT_STICK
-};
-
-/*
- * LR = left right
- * UD = up down
- * Left = left stick
- * Right = right stick
- * RT = right trigger
- * LT = left trigger
- */
-enum XboxAxis
-{
-    LR_LEFT,
-    UD_LEFT,
-    LT,
-    LR_RIGHT,
-    UD_RIGHT,
-    RT
-};
-
-/*
- * Forward declarations
- */
-void StopEverything();
 
 /*
  * Write the motor msg out
@@ -98,8 +103,8 @@ void WriteMotorValue()
 		//Format data
 		remote_control::WheelMotor wheel_msg;
 
-		int left = left_motors * 32767;       //Scale to signed 16 bit int
-		int right = right_motors * 32767;     //Scale to signed 16 bit int
+		int left = left_motors * 32767 * gear;       //Scale to signed 16 bit int
+		int right = right_motors * 32767 * gear;     //Scale to signed 16 bit int
 		wheel_msg.LF_motorVal = left;
 		wheel_msg.LR_motorVal = left;
 		wheel_msg.RR_motorVal = right;
@@ -181,15 +186,11 @@ void AvgMotorInput(float left, float right, float bucket, float actuator)
     {
         left        = pow(left, mapping);
         right       = pow(right, mapping);
-        //bucket      = pow(bucket, mapping);
-        //actuator    = pow(actuator, mapping);
     }
     else
     {
         left        = pow(left, mapping)     * ((left >= 0) ? 1 : -1);
         right       = pow(right, mapping)    * ((right >= 0) ? 1 : -1);
-        //bucket      = pow(bucket, mapping)   * ((bucket >= 0) ? 1 : -1);
-        //actuator    = pow(actuator, mapping) * ((actuator >= 0) ? 1 : -1);
     }
 
     /*
@@ -217,44 +218,66 @@ void AvgMotorInput(float left, float right, float bucket, float actuator)
 
 void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
-    //Check for button releases
-    if(right_bumper_pressed & !joy->buttons[RB])
-    {
-        linear_actuator_dir *= -1;
-        right_bumper_pressed = false;
-    }
-    else if(joy->buttons[RB])
-    {
-        right_bumper_pressed = true;
-    }
+	//Check for button releases
+	for (int iii = 0; iii < NUM_BTNS; ++iii)
+	{
+		if (btn_pressed[iii] & !joy->buttons[iii])
+			btn_released[iii] = true;
+		else
+			btn_released[iii] = false;
 
-    if(left_bumper_pressed & !joy->buttons[LB])
-    {
-        bucket_motor_dir *= -1;
-        left_bumper_pressed = false;
-    }
-    else if(joy->buttons[LB])
-    {
-        left_bumper_pressed = true;
-    }
+		btn_pressed[iii] = joy->buttons[iii];
+	}
 
-    if(start_pressed & !joy->buttons[START])
-    {
-	//Debug
-    	ROS_INFO("Start pressed");
+	//Linear Actuator toggle
+	if (btn_released[RB])
+		linear_actuator_dir *= -1;
 
-	motion_enable = !motion_enable;
-	//If we disable input imediatly send a stop msg
-	if(!motion_enable)
-		StopEverything();
-	
-	start_pressed = false;
-    }
-    else if(joy->buttons[START])
-    {
-	start_pressed = true;
-    }
+	//Bucket Drum toggle
+	if (btn_released[LB])
+		bucket_motor_dir *= -1;
+    
+	//Motion enable toggle
+	if (btn_released[START])
+	{
+		motion_enable = !motion_enable;
+		//If we disable input imediatly send a stop msg
+		if (!motion_enable)
+		{
+			StopEverything();
+			ROS_INFO("Motion disabled");
+		}
+		else
+		{
+			ROS_INFO("Motion enabled");
+		}
+	}
 
+	//Gear up
+	if (btn_released[B])
+	{
+		gear += 0.1f;
+		if (gear >= 1.0f)
+		{
+			gear = 1.0f;
+			ROS_INFO("Speed not limited (100% of max)");
+		}
+		else
+			ROS_INFO("Speed limited to %f%% of max", gear * 100.0f);
+	}
+
+	//Gear down
+	if (btn_released[A])
+	{
+		gear -= 0.1f;
+		if (gear <= 0.1f)
+		{
+			gear = 0.1f;
+			ROS_INFO("Speed limited to minimum 10% of max");
+		}
+		else
+			ROS_INFO("Speed limited to %f%% of max", gear * 100.0f);
+	}
     //average the inputs
     AvgMotorInput(joy->axes[UD_LEFT], joy->axes[UD_RIGHT], joy->axes[LT], joy->axes[RT]);
 }
