@@ -29,7 +29,7 @@ float current_energy = 0.00; 		//store energy over one run
 
 /*Write percentage to file*/
 bool writePercentage(float percentage){
-	ofstream batteryFile("/home/odroid/BatteryPercentage.txt", ios::app | ios::out);
+	ofstream batteryFile("/home/fnivek/BatteryPercentage.txt", ios::trunc | ios::out);
 	if(batteryFile.is_open())
 	{
 		batteryFile << percentage;
@@ -45,7 +45,7 @@ bool writePercentage(float percentage){
 /*Read percentage from file and then set global multi_energy to that value*/
 bool readPercentage(){
 	string percentage;
-	ifstream batteryFile("/home/odroid/BatteryPercentage.txt", ios::in);
+	ifstream batteryFile("/home/fnivek/BatteryPercentage.txt", ios::in);
 	if(batteryFile.is_open()){
 		while(getline(batteryFile, percentage)){
 			multi_energy = (float)atof(percentage.c_str());
