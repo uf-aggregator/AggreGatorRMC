@@ -16,20 +16,15 @@
 	<param name="remote_control/send_freq" value="10"/>
 	<param name="remote_control/xbox_controller/mapping" value="2"/>
 	
-	<!--Camera Node
-	<node name="camera_feedback_node" pkg="camera_feedback" type="camera_feedback_node"/>
-
-	<param name="image_rotater/target_frame_id" value=""/>
-	<param name="image_rotater/source_frame_id" value=""/>
-	<param name="image_rotater/target_x" value="0.0"/>
-	<param name="image_rotater/target_y" value="0.0"/>
-	<param name="image_rotater/source_x" value="0.0"/>
-	<param name="image_rotater/source_y" value="0.0"/>
-	<param name="image_rotater/output_image_size" value="0.0"/>
 	
-	<node name="image_rotate" pkg="image_rotate" type="image_rotate" args="image:=usb_cam/image_raw \rotated/image:=Boop __name:=image_rotater _image_transport:=compressed"/>-->
+	<!--
+	For quick command line input:
+	
 
-	<node name="image_view" pkg="image_view" type="image_view" args="image:=rotated/image"/>
+rosrun image_rotate image_rotate image:=/usb_cam/image_raw __name:=image_rotater _image_transport:=theora
+
+rosrun image_view image_view image:=rotated/image	
+	-->
 
 	<!--Power Monitering nodes-->
 	<node name="power_monitoring_node" pkg="power_monitoring" type="power_monitoring_node" output="screen" cwd="node"/>
