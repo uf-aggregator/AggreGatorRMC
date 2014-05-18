@@ -7,7 +7,7 @@
 <launch>
 	
 	<!--Joy nodes-->
-	<node name="joy_node" pkg="joy" type="joy_node"/>
+	<node name="joy_node" pkg="joy" type="joy_node" output="screen"/>
 	<!--Joy parameters-->
 
 	<!--Remote Control nodes-->
@@ -37,7 +37,7 @@ rosrun image_view image_view image:=rotated/image
 	<param name="image_rotate/source_y" value="10.0"/>
 	<param name="image_rotate/output_image_size" value="0.0"/>
 
-	<node name="image_view" pkg="image_view" type="image_view" args="image:=rotated/image"/>
+	<!--node name="image_view" pkg="image_view" type="image_view" args="image:=rotated/image"/-->
 
 
 	<!--Power Monitering nodes-->

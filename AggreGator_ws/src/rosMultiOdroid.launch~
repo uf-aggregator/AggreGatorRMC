@@ -14,9 +14,6 @@
 	<!--<node name="urg_node" pkg="urg" type="?"/>-->
 	<!--node name="ladar_node" pkg="ladar" type="ladar_node"/-->
 	
-	<!--Remote Control Parameters-->
-	<param name="remote_control/send_freq" value="10"/>
-	<param name="remote_control/xbox_controller/mapping" value="2"/>
 	<!--Motor Controller nodes-->
 	<node name="bucket_motor_node" pkg="motor_controller" type="bucket_motor_node"/>
 	<node name="linear_actuator_node" pkg="motor_controller" type="linear_actuator_node"/>
@@ -25,14 +22,14 @@
 	<!--USB Camera Parameters-->
 	<param name="usb_cam/framerate" value="5"/>	
 
-	<!--Image Rotate Parameters-->
+	<!--Image Rotate Parameters>
 	<param name="image_rotater/target_frame_id" value=""/>
 	<param name="image_rotater/source_frame_id" value=""/>
 	<param name="image_rotater/target_x" value="-7.0"/>
 	<param name="image_rotater/target_y" value="-7.0"/>
 	<param name="image_rotater/source_x" value="-10.0"/>
 	<param name="image_rotater/source_y" value="10.0"/>
-	<param name="image_rotater/output_image_size" value="0.0"/>
+	<param name="image_rotater/output_image_size" value="0.0"/-->
 
 	<!--USB Camera-->
 	<node name="usb_cam" pkg="usb_cam" type="usb_cam_node" args="_image_transport:=theora"/>
