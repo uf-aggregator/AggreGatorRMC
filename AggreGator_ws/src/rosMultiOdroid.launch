@@ -25,14 +25,14 @@
 	<!--USB Camera Parameters-->
 	<param name="usb_cam/framerate" value="5"/>	
 
-	<!--Image Rotate Parameters-->
+	<!--Image Rotate Parameters>
 	<param name="image_rotater/target_frame_id" value=""/>
 	<param name="image_rotater/source_frame_id" value=""/>
 	<param name="image_rotater/target_x" value="-7.0"/>
 	<param name="image_rotater/target_y" value="-7.0"/>
 	<param name="image_rotater/source_x" value="-10.0"/>
 	<param name="image_rotater/source_y" value="10.0"/>
-	<param name="image_rotater/output_image_size" value="0.0"/>
+	<param name="image_rotater/output_image_size" value="0.0"/-->
 
 	<!--USB Camera-->
 	<node name="usb_cam" pkg="usb_cam" type="usb_cam_node" args="_image_transport:=theora"/>

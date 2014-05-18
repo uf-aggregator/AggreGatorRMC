@@ -55,7 +55,7 @@ bool readPercentage(){
 		return true;
 	} else {
 		ROS_WARN("Battery log can't be opened, assuming 0.");
-		batteryFile << "UF AggreGator Mining Team, Percentage of Electronics Battery Used
+		batteryFile << "UF AggreGator Mining Team, Percentage of Electronics Battery Used \n";
 		return false;
 	}
 }
