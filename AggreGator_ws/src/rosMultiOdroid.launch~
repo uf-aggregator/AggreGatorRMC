@@ -8,15 +8,12 @@
 	<!--Hardware Interface nodes-->
 	<node name="i2c_node"      pkg="hardware_interface" type="i2c_node"/>
 	<node name="adafruit_node" pkg="hardware_interface" type="adafruit_node"/>
-	<!--node name="ina226_node"   pkg="hardware_interface" type="ina226_node"/-->
+	<node name="ina226_node"   pkg="hardware_interface" type="ina226_node"/>
 	
 	<!--LADAR Nodes-->
 	<!--<node name="urg_node" pkg="urg" type="?"/>-->
 	<!--node name="ladar_node" pkg="ladar" type="ladar_node"/-->
 	
-	<!--Remote Control Parameters-->
-	<param name="remote_control/send_freq" value="10"/>
-	<param name="remote_control/xbox_controller/mapping" value="2"/>
 	<!--Motor Controller nodes-->
 	<node name="bucket_motor_node" pkg="motor_controller" type="bucket_motor_node"/>
 	<node name="linear_actuator_node" pkg="motor_controller" type="linear_actuator_node"/>
@@ -25,6 +22,7 @@
 	<!--USB Camera Parameters-->
 	<param name="usb_cam/framerate" value="5"/>	
 
+<<<<<<< HEAD
 	<!--Image Rotate Parameters>
 	<param name="image_rotater/target_frame_id" value=""/>
 	<param name="image_rotater/source_frame_id" value=""/>
@@ -34,6 +32,8 @@
 	<param name="image_rotater/source_y" value="10.0"/>
 	<param name="image_rotater/output_image_size" value="0.0"/-->
 
+=======
+>>>>>>> 68e964c12fa6d037af1fb518526330b77cab388b
 	<!--USB Camera-->
 	<node name="usb_cam" pkg="usb_cam" type="usb_cam_node" args="_image_transport:=theora"/>
 	<!--node name="image_rotate" pkg="image_rotate" type="image_rotate" args="image:=/usb_cam/image_raw \rotated/image:=rotated __name:=image_rotater _image_transport:=compressed"/-->
