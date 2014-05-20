@@ -242,7 +242,7 @@ public:
               int old_size = joy_msg.axes.size();
               joy_msg.axes.resize(event.number+1);
 
-//Kevin's edit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+		//Kevin's edit!!!!!
               for(unsigned int i=old_size;i<joy_msg.axes.size();i++)
 	      {
                 if(i == 2 || i == 5)
@@ -252,7 +252,7 @@ public:
                 
 	      }
 
-//End of Kevin's edit!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//End of Kevin's edit!!!!!
             }
             if (!(event.type & JS_EVENT_INIT)) // Init event.value is wrong.
             {

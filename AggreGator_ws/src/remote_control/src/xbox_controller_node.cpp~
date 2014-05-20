@@ -230,9 +230,9 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 	{
 		linear_actuator_dir *= -1;
 		if(linear_actuator_dir)
-			ROS_INFO("Linear actuator set to retract");
-		else
 			ROS_INFO("Linear actuator set to extend");
+		else
+			ROS_INFO("Linear actuator set to retract");
 	}
 
 	//Bucket Drum toggle
@@ -308,8 +308,13 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
     //Set motors to current value
     left_motors = joy->axes[UD_LEFT];
     right_motors = joy->axes[UD_RIGHT];
+
+    
     bucket_motor = joy->axes[LT];
     linear_actuator = joy->axes[RT];
+
+    if(btn_released[BACK])
+   	ROS_INFO("Triger values B:L \t %.2f : %.2f", bucket_motor, linear_actuator);
 }
 
 //Stop wheels
