@@ -9,7 +9,6 @@
 	<!--Joy nodes-->
 	<node name="joy_node" pkg="joy" type="joy_node" output="screen"/>
 	<!--Joy parameters-->
-	<param name="joy_node/dev" val="/dev/input/js1"/>
 
 	<!--Remote Control nodes-->
 	<node name="remote_control_node" pkg="remote_control" type="xbox_controller_node" output="screen" />
