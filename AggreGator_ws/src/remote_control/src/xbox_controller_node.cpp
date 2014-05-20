@@ -54,7 +54,7 @@ enum XboxAxis
 /*
  * Variables
  */
-int running_avg = 0;
+//int running_avg = 0;
 double left_motors(0.0), right_motors(0.0);
 double bucket_motor(1.0), linear_actuator(1.0);		//One is stop due to controller input
 short int bucket_motor_dir(1), linear_actuator_dir(1);
@@ -95,12 +95,11 @@ void WriteMotorValue()
     {
 	    //Update time
 	last_time = current_time;
+	//reset running avg
+	//running_avg = 0;
 
 	    if(wheel_motion_enable)
 	    {
-		//reset running avg
-		running_avg = 0;
-
 		//Format data
 		remote_control::WheelMotor wheel_msg;
 
@@ -113,11 +112,8 @@ void WriteMotorValue()
 	
 		//Send msg
 		wheel_motor_pub.publish(wheel_msg);
+		
 	    }
-	    else	//If motion is not enabled stop everything
-        {
-		StopWheels();
-	}
 
 	if(mining_motion_enable)
 	{
@@ -154,10 +150,8 @@ void WriteMotorValue()
 		linear_actuator_pub.publish(actuator_msg);
 		bucket_motor_pub.publish(bucket_msg);
 	}
-	else
-	{
-		StopMining();
-	}
+
+	
      }
     
 }
@@ -169,7 +163,7 @@ void WriteMotorValue()
  * the count must be kept externaly
  * IN: left motor setpoint, right motor setpoint
  * Out: Sets global variables to the average
- */
+ *
 void AvgMotorInput(float left, float right, float bucket, float actuator)
 {
     /*
@@ -181,7 +175,7 @@ void AvgMotorInput(float left, float right, float bucket, float actuator)
      *      for negative orignal values * -1
      * Cubic:
      *      value = value^3
-     */
+     *
     if(mapping % 2)
     {
         left        = pow(left, mapping);
@@ -196,7 +190,7 @@ void AvgMotorInput(float left, float right, float bucket, float actuator)
     /*
      *Take a running Avg
      * NewAvg = ((count - 1) * lastAvg + newValue) / count
-     */
+     *
 
     if(running_avg)
     {
@@ -216,6 +210,7 @@ void AvgMotorInput(float left, float right, float bucket, float actuator)
     //Increment running_avg
     running_avg++;
 }
+*/
 
 void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
@@ -244,7 +239,7 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 	if (btn_released[LB])
 	{
 		bucket_motor_dir *= -1;
-		if(linear_actuator_dir)
+		if(bucket_motor_dir)
 			ROS_INFO("Bucket drum set to dump");
 		else
 			ROS_INFO("Bucket drum set to mine");
@@ -308,7 +303,13 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 			ROS_INFO("Speed limited to %.2f%% of max", gear * 100.0f);
 	}
     //average the inputs
-    AvgMotorInput(joy->axes[UD_LEFT], joy->axes[UD_RIGHT], joy->axes[LT], joy->axes[RT]);
+    //AvgMotorInput(joy->axes[UD_LEFT], joy->axes[UD_RIGHT], joy->axes[LT], joy->axes[RT]);
+
+    //Set motors to current value
+    left_motors = joy->axes[UD_LEFT];
+    right_motors = joy->axes[UD_RIGHT];
+    bucket_motor = joy->axes[LT];
+    linear_actuator = joy->axes[RT];
 }
 
 //Stop wheels
