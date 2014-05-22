@@ -26,9 +26,6 @@ enum
 //Function that controls the direction of the motors using the GPIO pins on the O-Droid
 void setMotorDirection()
 {
-	//!!!!!!!!PEDOPHILES eyecatch
-	//was this supposed to be bucketDrumMotor instead of linearAct?
-	//!!!!!!!!PEDOPHILES NECROPHILES ZOOPHILES
 
 	//float mc_out = linearAct.getY()[0][0];			//motorController_out
 	float mc_out = bucketDrumMotor.getY()[0][0];

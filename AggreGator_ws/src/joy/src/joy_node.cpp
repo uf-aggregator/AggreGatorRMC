@@ -241,8 +241,18 @@ public:
             {
               int old_size = joy_msg.axes.size();
               joy_msg.axes.resize(event.number+1);
+
+//Kevin's edit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
               for(unsigned int i=old_size;i<joy_msg.axes.size();i++)
-                joy_msg.axes[i] = 0.0;
+	      {
+                if(i == 2 || i == 5)
+			joy_msg.axes[i] = 1.0;
+		else
+			joy_msg.axes[i] = 0.0;
+                
+	      }
+
+//End of Kevin's edit!!!!!!!!!!!!!!!!!!!!!!!!!!!
             }
             if (!(event.type & JS_EVENT_INIT)) // Init event.value is wrong.
             {
