@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include "ros/ros.h"
 #include <sensor_msgs/Joy.h>
 #include "remote_control/WheelMotor.h"
@@ -5,6 +6,7 @@
 #include "ros/time.h"
 #include "ros/duration.h"
 #include <string.h>
+#include <queue>
 
 
 /*
@@ -13,6 +15,13 @@
 void StopEverything();
 void StopMining();
 void StopWheels();
+
+struct WheelMotorStruct{
+	int LF;
+	int RF;
+	int RR;
+	int LR;
+};
 
 //Buttons on the Xbox Controller
 enum XboxButtons
@@ -60,7 +69,17 @@ double bucket_motor(1.0), linear_actuator(1.0);		//One is stop due to controller
 short int bucket_motor_dir(1), linear_actuator_dir(1);
 bool wheel_motion_enable = false;			//If this is zero msgs will be published to wheels
 bool mining_motion_enable = false;			//If this is false bucket and actuators will be published 0
-float gear = 0.7f;					//Multiplier to simulate gears (Default to 70%)
+float wheel_gear = 0.7f;				//Multiplier to simulate wheel_gears (Default to 70%)
+double bucket_gear = 0.5f;
+bool simulation_delay = false;
+
+
+//Create a queue for each publisher
+unsigned int delay_queue_size = 0;		//Size of queue to get desired delay
+const double delay_time = 2;			//delay x seconds
+std::queue<WheelMotorStruct> wheel_queue;
+std::queue<int> linear_queue;
+std::queue<int> bucket_queue;
 
 //Keep track of button presses (to find button releases)
 bool btn_pressed[NUM_BTNS] = { false }; 
@@ -103,15 +122,35 @@ void WriteMotorValue()
 		//Format data
 		remote_control::WheelMotor wheel_msg;
 
-		int left = left_motors * 32767 * gear;       //Scale to signed 16 bit int
-		int right = right_motors * 32767 * gear;     //Scale to signed 16 bit int
+		int left = left_motors * 32767 * wheel_gear;       //Scale to signed 16 bit int
+		int right = right_motors * 32767 * wheel_gear;     //Scale to signed 16 bit int
 		wheel_msg.LF_motorVal = left;
 		wheel_msg.LR_motorVal = left;
 		wheel_msg.RR_motorVal = right;
 		wheel_msg.RF_motorVal = right;
+
+		if(simulation_delay)
+		{
+			WheelMotorStruct wheel_temp = {left, right, right, left};
+			wheel_queue.push(wheel_temp);
+			if(wheel_queue.size() >= delay_queue_size && (wheel_queue.size() > 0))
+			{
+				
+				WheelMotorStruct wheel_temp = wheel_queue.front();
+				wheel_queue.pop();				
+				wheel_msg.LF_motorVal = wheel_temp.LF;
+				wheel_msg.LR_motorVal = wheel_temp.LR;
+				wheel_msg.RR_motorVal = wheel_temp.RR;
+				wheel_msg.RF_motorVal = wheel_temp.RF;
+				wheel_motor_pub.publish(wheel_msg);
+			}
+		}
+		else
+		{
 	
 		//Send msg
 		wheel_motor_pub.publish(wheel_msg);
+		}
 		
 	    }
 
@@ -139,16 +178,46 @@ void WriteMotorValue()
 		 *          direction = 1 or -1 based on LB and RB
 		 */
 		int actuator = (linear_actuator - 1) * -16383 * linear_actuator_dir;
-		int bucket = (bucket_motor - 1) * -16383 * bucket_motor_dir;
+		float bucket = (bucket_motor - 1) * -16383 * bucket_motor_dir;
 
+		if(!btn_pressed[X]){
+			//bucket *= bucket_gear;
+			bucket *= (wheel_gear);
+		}
 		//Generate msgs
 		std_msgs::Int16 actuator_msg, bucket_msg;
-		actuator_msg.data = actuator;               //Float -> int
-		bucket_msg.data = bucket;                   //Float -> int
+		actuator_msg.data = actuator;
+		bucket_msg.data = (int)bucket;                   //Float -> int
 
-		//Publish msg
-		linear_actuator_pub.publish(actuator_msg);
-		bucket_motor_pub.publish(bucket_msg);
+		if(simulation_delay)
+		{
+			linear_queue.push(actuator);
+			if(linear_queue.size() >= delay_queue_size && (linear_queue.size() > 0))
+			{
+				
+				int linear_temp = linear_queue.front();
+				linear_queue.pop();				
+				actuator_msg.data = linear_temp;  
+				linear_actuator_pub.publish(actuator_msg);
+			}
+
+			bucket_queue.push((int)bucket);			
+			if(bucket_queue.size() >= delay_queue_size && (bucket_queue.size() > 0))
+			{
+				
+				int bucket_temp = bucket_queue.front();
+				bucket_queue.pop();				
+				bucket_msg.data = bucket_temp;  
+				bucket_motor_pub.publish(bucket_msg);
+			}
+		}
+		else
+		{
+
+			//Publish msg
+			linear_actuator_pub.publish(actuator_msg);
+			bucket_motor_pub.publish(bucket_msg);
+		}
 	}
 
 	
@@ -277,30 +346,30 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		}
 	}
 
-	//Gear up
+	//wheel_gear up
 	if (btn_released[B])
 	{
-		gear += 0.1f;
-		if (gear >= 1.0f)
+		wheel_gear += 0.1f;
+		if (wheel_gear >= 1.0f)
 		{
-			gear = 1.0f;
+			wheel_gear = 1.0f;
 			ROS_INFO("Speed not limited (100%% of max)");
 		}
 		else
-			ROS_INFO("Speed limited to %.2f%% of max", gear * 100.0f);
+			ROS_INFO("Speed limited to %.2f%% of max", wheel_gear * 100.0f);
 	}
 
-	//Gear down
+	//wheel_gear down
 	if (btn_released[A])
 	{
-		gear -= 0.1f;
-		if (gear <= 0.1f)
+		wheel_gear -= 0.1f;
+		if (wheel_gear <= 0.1f)
 		{
-			gear = 0.1f;
+			wheel_gear = 0.1f;
 			ROS_INFO("Speed limited to minimum 10%% of max");
 		}
 		else
-			ROS_INFO("Speed limited to %.2f%% of max", gear * 100.0f);
+			ROS_INFO("Speed limited to %.2f%% of max", wheel_gear * 100.0f);
 	}
     //average the inputs
     //AvgMotorInput(joy->axes[UD_LEFT], joy->axes[UD_RIGHT], joy->axes[LT], joy->axes[RT]);
@@ -329,6 +398,18 @@ void StopMining()
     linear_actuator_pub.publish(actuator_msg);
     bucket_motor_pub.publish(bucket_msg);
 
+    while(bucket_queue.size() > 0){
+	bucket_queue.pop();
+    }
+    bucket_queue.push(0);
+    bucket_queue.pop();
+
+    while(linear_queue.size() > 0){
+	linear_queue.pop();
+    }
+    bucket_queue.push(0);
+    bucket_queue.pop();
+
     left_motors = 0;
     right_motors = 0;
 }
@@ -347,7 +428,13 @@ void StopWheels()
 
     wheel_motor_pub.publish(wheel_msg);
     
-    
+    while(wheel_queue.size() > 0){
+	wheel_queue.pop();
+    }    
+    WheelMotorStruct temp = {0,0,0,0};
+    wheel_queue.push(temp);
+    wheel_queue.pop();
+
     bucket_motor = 1.0;
     linear_actuator = 1.0;
 }
@@ -378,15 +465,39 @@ int main(int argc, char** argv)
     send_time.fromSec(1 / temp);
     ROS_INFO("Setting send period to %f, (frequency: %f)", send_time.toSec(), temp);
 
+    //Calculate message size 
+    delay_queue_size = (int)(delay_time * temp);
+
     //mapping
     n.param<int32_t>("/remote_control/xbox_controller/mapping", mapping, 1);
     if(mapping < 1 || mapping > 3)
         mapping = 1;
 
+    //bucket_gear parameter
+    n.param<double>("/remote_control/bucket_gear", bucket_gear, .12f);
+    if(bucket_gear > 1.0f || bucket_gear < 0.0f)
+    {
+	bucket_gear = 1.0f;
+	ROS_ERROR("You set the bucket gear to %.2f%%, which is outside of bounds, you idiot.  Setting to 100%%", bucket_gear * 100);
+    }
+    else if(bucket_gear < 0.02f)
+    {
+	bucket_gear = 0.02f;
+	ROS_ERROR("You set the bucket gear to %.2f%%, which is outside of bounds, you idiot.  Setting to 2%%", bucket_gear * 100);
+    }
+    else
+    {
+	ROS_INFO("Bucket gear = %.2f%%", bucket_gear);
+    }
+
+    //parameter for simulating delay
+    n.param<bool>("/remote_control/sim", simulation_delay, false);
+
     ROS_INFO("Xbox controller set to order %i mapping", mapping);
 
     //Set up subscriber, listens to joy topic, buffer only 10 messages, us XboxCallback
     ros::Subscriber joy_sub = n.subscribe<sensor_msgs::Joy>("joy", 1000, XboxCallback);
+
 
     //Set up publisher on motor_rc, buffer up to 1000 msgs
     wheel_motor_pub = n.advertise<remote_control::WheelMotor>("wheel_motor_rc", 1000);

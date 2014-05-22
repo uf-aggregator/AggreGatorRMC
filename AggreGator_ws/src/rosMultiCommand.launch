@@ -15,6 +15,8 @@
 	<!--Remote Control Paramaters-->
 	<param name="remote_control/send_freq" value="10"/>
 	<param name="remote_control/xbox_controller/mapping" value="2"/>
+	<param name="remote_control/bucket_gear" value="0.5"/>
+	<param name="remote_control/sim" value="true"/>
 	
 	
 	<!--
