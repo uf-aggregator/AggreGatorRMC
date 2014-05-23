@@ -15,8 +15,8 @@
 	<!--Remote Control Paramaters-->
 	<param name="remote_control/send_freq" value="10"/>
 	<param name="remote_control/xbox_controller/mapping" value="2"/>
-	<param name="remote_control/bucket_gear" value="0.5"/>
-	<param name="remote_control/sim" value="true"/>
+	<param name="remote_control/bucket_gear" value="0.125"/>
+	<param name="remote_control/sim" value="false"/>
 	
 	
 	<!--
@@ -25,7 +25,7 @@
 
 rosrun image_rotate image_rotate image:=/usb_cam/image_raw __name:=image_rotater _image_transport:=theora
 
-rosrun image_view image_view image:=rotated/image	
+rosrun image_view image_view image:=rotated/image _image_transport:=theora	
 	-->
 
 	<node name="image_rotate" pkg="image_rotate" type="image_rotate" args="image:=/usb_cam/image_raw __name:=image_rotater _image_transport:=theora"/>

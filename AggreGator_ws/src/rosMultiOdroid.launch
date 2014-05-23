@@ -20,7 +20,7 @@
 	<node name="wheel_motor_node" pkg="motor_controller" type="wheel_motor_node"/>
 		
 	<!--USB Camera Parameters-->
-	<param name="usb_cam/framerate" value="5"/>	
+	<param name="usb_cam/framerate" value="10"/>	
 
 
 	<!--Image Rotate Parameters>
@@ -37,7 +37,7 @@
 	<!--node name="image_rotate" pkg="image_rotate" type="image_rotate" args="image:=/usb_cam/image_raw \rotated/image:=rotated __name:=image_rotater _image_transport:=compressed"/-->
 
 
-	<param name="usb_cam/image_raw/theora/quality" value="15.0"/>
+	<param name="usb_cam/image_raw/theora/quality" value="20.0"/>
 	<param name="usb_cam/image_raw/theora/target_bitrate" value="1000.0"/>
 	<!--<param name="usb_cam/image_width" value="400.0"/>
 	<param name="usb_cam/image_height" value="225.0"/>-->
