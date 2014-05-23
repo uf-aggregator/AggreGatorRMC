@@ -71,6 +71,7 @@ bool wheel_motion_enable = false;			//If this is zero msgs will be published to 
 bool mining_motion_enable = false;			//If this is false bucket and actuators will be published 0
 float wheel_gear = 0.7f;				//Multiplier to simulate wheel_gears (Default to 70%)
 double bucket_gear = 0.5f;
+bool simulation_delay = false;
 
 
 //Create a queue for each publisher
@@ -180,8 +181,8 @@ void WriteMotorValue()
 		float bucket = (bucket_motor - 1) * -16383 * bucket_motor_dir;
 
 		if(!btn_pressed[X]){
-			//bucket *= bucket_gear;
-			bucket *= (wheel_gear);
+			bucket *= bucket_gear;
+			//bucket *= (wheel_gear);
 		}
 		//Generate msgs
 		std_msgs::Int16 actuator_msg, bucket_msg;
@@ -369,6 +370,32 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		}
 		else
 			ROS_INFO("Speed limited to %.2f%% of max", wheel_gear * 100.0f);
+	}
+
+	//Bucket gear up
+	if(btn_released[Y])
+
+		bucket_gear += 0.1f;
+		if (bucket_gear >= 1.0f)
+		{
+			bucket_gear = 1.0f;
+			ROS_INFO("Mining speed not limited (100%% of max)");
+		}
+		else
+			ROS_INFO("Mining speed limited to %.2f%% of max", bucket_gear * 100.0f);
+	}
+
+	//bucket_gear down
+	if (btn_released[A])
+	{
+		bucket_gear -= 0.1f;
+		if (bucket_gear <= 0.1f)
+		{
+			bucket_gear = 0.1f;
+			ROS_INFO("Mining speed limited to minimum 10%% of max");
+		}
+		else
+			ROS_INFO("Mining speed limited to %.2f%% of max", bucket_gear * 100.0f);
 	}
     //average the inputs
     //AvgMotorInput(joy->axes[UD_LEFT], joy->axes[UD_RIGHT], joy->axes[LT], joy->axes[RT]);
