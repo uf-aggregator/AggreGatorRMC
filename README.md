@@ -2,9 +2,10 @@
 This is the root director.
 
 Keep up to date with non-code shenanigans at [our website](www.ufaggregator.com "UF Aggregator Official Homepage")
+
 ----------------------------------------------------------
 
-##Running the Aggregator
+###Running the Aggregator
 
 First, on the Odroid, navigate to the NASAboticsCode folder, and run the ODroid script:
 ```
@@ -24,7 +25,7 @@ rosrun image_view image_view image:=rotated/image
 ```
 ----------------------------------------------------------
 
-##Recovering from Crashes
+###Recovering from Crashes
 
 
 First, ssh into the Odroid:

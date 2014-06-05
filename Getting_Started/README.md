@@ -1,13 +1,13 @@
 #Getting Started
 
-##1.) Install Ubuntu
+###1.) Install Ubuntu
 
 ----------------------------------------------------------
-##2.) Install ROS
+###2.) Install ROS
 
 ----------------------------------------------------------
-##3.) Cloning the Repository
+###3.) Cloning the Repository
 
 ----------------------------------------------------------
-##4.) New? Learn More About AggreGator
+###4.) New? Learn More About AggreGator
 

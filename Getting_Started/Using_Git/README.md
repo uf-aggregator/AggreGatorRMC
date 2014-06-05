@@ -3,23 +3,23 @@
 
 All information was paraphrased from [here](www.github.com/getting-started "GitHub")
 
-##Introduction to Git and GitHub
+###Introduction to Git and GitHub
 
 
 ----------------------------------------------------------
-##Adding Files To Be Committed
+###Adding Files To Be Committed
 
 
 ----------------------------------------------------------
-##Committing and Pushing Your Code
+###Committing and Pushing Your Code
 
 
 ----------------------------------------------------------
-##Updating Your Repository
+###Updating Your Repository
 
 
 ----------------------------------------------------------
-##TL;DR
+###TL;DR
 ```
 // add some stuff to the repository
 git add . 		//prepares to add everything changed from the current directory
