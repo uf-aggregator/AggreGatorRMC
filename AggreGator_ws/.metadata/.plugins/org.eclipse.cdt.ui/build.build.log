@@ -1,0 +1,357 @@
+19:03:09 **** Incremental Build of project build ****
+/usr/bin/make all 
+/usr/bin/cmake -H/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src -B/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles/progress.marks
+/usr/bin/make -f CMakeFiles/Makefile2 all
+make[1]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f camera_feedback/CMakeFiles/camera_feedback_node.dir/build.make camera_feedback/CMakeFiles/camera_feedback_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/camera_feedback /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/camera_feedback /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/camera_feedback/CMakeFiles/camera_feedback_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f camera_feedback/CMakeFiles/camera_feedback_node.dir/build.make camera_feedback/CMakeFiles/camera_feedback_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `camera_feedback/CMakeFiles/camera_feedback_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  6 7
+[  3%] Built target camera_feedback_node
+/usr/bin/make -f hardware_interface/CMakeFiles/hardware_utils.dir/build.make hardware_interface/CMakeFiles/hardware_utils.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface/CMakeFiles/hardware_utils.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f hardware_interface/CMakeFiles/hardware_utils.dir/build.make hardware_interface/CMakeFiles/hardware_utils.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `hardware_interface/CMakeFiles/hardware_utils.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  34 35 36
+[  7%] Built target hardware_utils
+/usr/bin/make -f hardware_interface/CMakeFiles/adafruit_node.dir/build.make hardware_interface/CMakeFiles/adafruit_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface/CMakeFiles/adafruit_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f hardware_interface/CMakeFiles/adafruit_node.dir/build.make hardware_interface/CMakeFiles/adafruit_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `hardware_interface/CMakeFiles/adafruit_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  1
+[  9%] Built target adafruit_node
+/usr/bin/make -f hardware_interface/CMakeFiles/adc_node.dir/build.make hardware_interface/CMakeFiles/adc_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface/CMakeFiles/adc_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f hardware_interface/CMakeFiles/adc_node.dir/build.make hardware_interface/CMakeFiles/adc_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `hardware_interface/CMakeFiles/adc_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  2
+[ 10%] Built target adc_node
+/usr/bin/make -f camera_feedback/CMakeFiles/std_msgs_generate_messages_py.dir/build.make camera_feedback/CMakeFiles/std_msgs_generate_messages_py.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/camera_feedback /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/camera_feedback /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/camera_feedback/CMakeFiles/std_msgs_generate_messages_py.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f camera_feedback/CMakeFiles/std_msgs_generate_messages_py.dir/build.make camera_feedback/CMakeFiles/std_msgs_generate_messages_py.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `camera_feedback/CMakeFiles/std_msgs_generate_messages_py.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles 
+[ 10%] Built target std_msgs_generate_messages_py
+/usr/bin/make -f hardware_interface/CMakeFiles/hardware_interface_generate_messages_py.dir/build.make hardware_interface/CMakeFiles/hardware_interface_generate_messages_py.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface/CMakeFiles/hardware_interface_generate_messages_py.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f hardware_interface/CMakeFiles/hardware_interface_generate_messages_py.dir/build.make hardware_interface/CMakeFiles/hardware_interface_generate_messages_py.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `hardware_interface/CMakeFiles/hardware_interface_generate_messages_py.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  25 26 27 28 29 30 31 32 33
+[ 24%] Built target hardware_interface_generate_messages_py
+/usr/bin/make -f camera_feedback/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make camera_feedback/CMakeFiles/std_msgs_generate_messages_cpp.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/camera_feedback /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/camera_feedback /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/camera_feedback/CMakeFiles/std_msgs_generate_messages_cpp.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f camera_feedback/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make camera_feedback/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `camera_feedback/CMakeFiles/std_msgs_generate_messages_cpp.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles 
+[ 24%] Built target std_msgs_generate_messages_cpp
+/usr/bin/make -f hardware_interface/CMakeFiles/hardware_interface_generate_messages_cpp.dir/build.make hardware_interface/CMakeFiles/hardware_interface_generate_messages_cpp.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface/CMakeFiles/hardware_interface_generate_messages_cpp.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f hardware_interface/CMakeFiles/hardware_interface_generate_messages_cpp.dir/build.make hardware_interface/CMakeFiles/hardware_interface_generate_messages_cpp.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `hardware_interface/CMakeFiles/hardware_interface_generate_messages_cpp.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  11 12 13 14 15 16 17
+[ 34%] Built target hardware_interface_generate_messages_cpp
+/usr/bin/make -f camera_feedback/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make camera_feedback/CMakeFiles/std_msgs_generate_messages_lisp.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/camera_feedback /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/camera_feedback /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/camera_feedback/CMakeFiles/std_msgs_generate_messages_lisp.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f camera_feedback/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make camera_feedback/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `camera_feedback/CMakeFiles/std_msgs_generate_messages_lisp.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles 
+[ 34%] Built target std_msgs_generate_messages_lisp
+/usr/bin/make -f hardware_interface/CMakeFiles/hardware_interface_generate_messages_lisp.dir/build.make hardware_interface/CMakeFiles/hardware_interface_generate_messages_lisp.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface/CMakeFiles/hardware_interface_generate_messages_lisp.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f hardware_interface/CMakeFiles/hardware_interface_generate_messages_lisp.dir/build.make hardware_interface/CMakeFiles/hardware_interface_generate_messages_lisp.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `hardware_interface/CMakeFiles/hardware_interface_generate_messages_lisp.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  18 19 20 21 22 23 24
+[ 45%] Built target hardware_interface_generate_messages_lisp
+/usr/bin/make -f hardware_interface/CMakeFiles/hardware_interface_generate_messages.dir/build.make hardware_interface/CMakeFiles/hardware_interface_generate_messages.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface/CMakeFiles/hardware_interface_generate_messages.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f hardware_interface/CMakeFiles/hardware_interface_generate_messages.dir/build.make hardware_interface/CMakeFiles/hardware_interface_generate_messages.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `hardware_interface/CMakeFiles/hardware_interface_generate_messages.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles 
+[ 45%] Built target hardware_interface_generate_messages
+/usr/bin/make -f hardware_interface/CMakeFiles/i2c_node.dir/build.make hardware_interface/CMakeFiles/i2c_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface/CMakeFiles/i2c_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f hardware_interface/CMakeFiles/i2c_node.dir/build.make hardware_interface/CMakeFiles/i2c_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `hardware_interface/CMakeFiles/i2c_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  37
+[ 46%] Built target i2c_node
+/usr/bin/make -f hardware_interface/CMakeFiles/ina226_node.dir/build.make hardware_interface/CMakeFiles/ina226_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/hardware_interface/CMakeFiles/ina226_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f hardware_interface/CMakeFiles/ina226_node.dir/build.make hardware_interface/CMakeFiles/ina226_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `hardware_interface/CMakeFiles/ina226_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  38
+[ 48%] Built target ina226_node
+/usr/bin/make -f joy/CMakeFiles/joy_node.dir/build.make joy/CMakeFiles/joy_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/joy /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/joy /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/joy/CMakeFiles/joy_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f joy/CMakeFiles/joy_node.dir/build.make joy/CMakeFiles/joy_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `joy/CMakeFiles/joy_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  39
+[ 50%] Built target joy_node
+/usr/bin/make -f ladar/CMakeFiles/ladar_generate_messages_py.dir/build.make ladar/CMakeFiles/ladar_generate_messages_py.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar/CMakeFiles/ladar_generate_messages_py.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f ladar/CMakeFiles/ladar_generate_messages_py.dir/build.make ladar/CMakeFiles/ladar_generate_messages_py.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `ladar/CMakeFiles/ladar_generate_messages_py.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  42 43
+[ 53%] Built target ladar_generate_messages_py
+/usr/bin/make -f ladar/CMakeFiles/ladar_generate_messages_lisp.dir/build.make ladar/CMakeFiles/ladar_generate_messages_lisp.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar/CMakeFiles/ladar_generate_messages_lisp.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f ladar/CMakeFiles/ladar_generate_messages_lisp.dir/build.make ladar/CMakeFiles/ladar_generate_messages_lisp.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `ladar/CMakeFiles/ladar_generate_messages_lisp.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  41
+[ 54%] Built target ladar_generate_messages_lisp
+/usr/bin/make -f ladar/CMakeFiles/ladar_generate_messages_cpp.dir/build.make ladar/CMakeFiles/ladar_generate_messages_cpp.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar/CMakeFiles/ladar_generate_messages_cpp.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f ladar/CMakeFiles/ladar_generate_messages_cpp.dir/build.make ladar/CMakeFiles/ladar_generate_messages_cpp.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `ladar/CMakeFiles/ladar_generate_messages_cpp.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  40
+[ 56%] Built target ladar_generate_messages_cpp
+/usr/bin/make -f ladar/CMakeFiles/ladar_generate_messages.dir/build.make ladar/CMakeFiles/ladar_generate_messages.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar/CMakeFiles/ladar_generate_messages.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f ladar/CMakeFiles/ladar_generate_messages.dir/build.make ladar/CMakeFiles/ladar_generate_messages.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `ladar/CMakeFiles/ladar_generate_messages.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles 
+[ 56%] Built target ladar_generate_messages
+/usr/bin/make -f ladar/CMakeFiles/ladar_node.dir/build.make ladar/CMakeFiles/ladar_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar/CMakeFiles/ladar_node.dir/DependInfo.cmake --color=
+Scanning dependencies of target ladar_node
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f ladar/CMakeFiles/ladar_node.dir/build.make ladar/CMakeFiles/ladar_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles 44
+[ 57%] Building CXX object ladar/CMakeFiles/ladar_node.dir/src/ladar_node.cpp.o
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar && /usr/bin/c++   -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\"ladar\" -I/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/devel/include -I/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/ladar/include -I/opt/ros/hydro/include    -o CMakeFiles/ladar_node.dir/src/ladar_node.cpp.o -c /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/ladar/src/ladar_node.cpp
+Linking CXX executable /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/devel/lib/ladar/ladar_node
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar && /usr/bin/cmake -E cmake_link_script CMakeFiles/ladar_node.dir/link.txt --verbose=1
+/usr/bin/c++       CMakeFiles/ladar_node.dir/src/ladar_node.cpp.o CMakeFiles/ladar_node.dir/src/localization.cpp.o CMakeFiles/ladar_node.dir/src/draw.cpp.o CMakeFiles/ladar_node.dir/src/interpret_ladar.cpp.o CMakeFiles/ladar_node.dir/src/conversions.cpp.o  -o /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/devel/lib/ladar/ladar_node -rdynamic /opt/ros/hydro/lib/libroscpp.so -lboost_signals-mt -lboost_filesystem-mt /opt/ros/hydro/lib/librosconsole.so /opt/ros/hydro/lib/librosconsole_log4cxx.so /opt/ros/hydro/lib/librosconsole_backend_interface.so -llog4cxx -lboost_regex-mt /opt/ros/hydro/lib/libxmlrpcpp.so /opt/ros/hydro/lib/libroscpp_serialization.so /opt/ros/hydro/lib/librostime.so -lboost_date_time-mt -lboost_system-mt -lboost_thread-mt -lpthread /opt/ros/hydro/lib/libcpp_common.so /opt/ros/hydro/lib/libconsole_bridge.so -lSDL -Wl,-rpath,/opt/ros/hydro/lib 
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  44 45 46 47 48
+[ 63%] Built target ladar_node
+/usr/bin/make -f ladar/CMakeFiles/ladar_print_node.dir/build.make ladar/CMakeFiles/ladar_print_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar/CMakeFiles/ladar_print_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f ladar/CMakeFiles/ladar_print_node.dir/build.make ladar/CMakeFiles/ladar_print_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `ladar/CMakeFiles/ladar_print_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  49
+[ 65%] Built target ladar_print_node
+/usr/bin/make -f ladar/CMakeFiles/test_node.dir/build.make ladar/CMakeFiles/test_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/ladar/CMakeFiles/test_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f ladar/CMakeFiles/test_node.dir/build.make ladar/CMakeFiles/test_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `ladar/CMakeFiles/test_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  65
+[ 66%] Built target test_node
+/usr/bin/make -f motor_controller/CMakeFiles/motor_controller_generate_messages_cpp.dir/build.make motor_controller/CMakeFiles/motor_controller_generate_messages_cpp.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller/CMakeFiles/motor_controller_generate_messages_cpp.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f motor_controller/CMakeFiles/motor_controller_generate_messages_cpp.dir/build.make motor_controller/CMakeFiles/motor_controller_generate_messages_cpp.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `motor_controller/CMakeFiles/motor_controller_generate_messages_cpp.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  53 54
+[ 69%] Built target motor_controller_generate_messages_cpp
+/usr/bin/make -f motor_controller/CMakeFiles/bucket_motor_node.dir/build.make motor_controller/CMakeFiles/bucket_motor_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller/CMakeFiles/bucket_motor_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f motor_controller/CMakeFiles/bucket_motor_node.dir/build.make motor_controller/CMakeFiles/bucket_motor_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `motor_controller/CMakeFiles/bucket_motor_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  3 4 5
+[ 74%] Built target bucket_motor_node
+/usr/bin/make -f motor_controller/CMakeFiles/linear_actuator_node.dir/build.make motor_controller/CMakeFiles/linear_actuator_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller/CMakeFiles/linear_actuator_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f motor_controller/CMakeFiles/linear_actuator_node.dir/build.make motor_controller/CMakeFiles/linear_actuator_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `motor_controller/CMakeFiles/linear_actuator_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  50 51 52
+[ 78%] Built target linear_actuator_node
+/usr/bin/make -f motor_controller/CMakeFiles/motor_controller_generate_messages_py.dir/build.make motor_controller/CMakeFiles/motor_controller_generate_messages_py.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller/CMakeFiles/motor_controller_generate_messages_py.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f motor_controller/CMakeFiles/motor_controller_generate_messages_py.dir/build.make motor_controller/CMakeFiles/motor_controller_generate_messages_py.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `motor_controller/CMakeFiles/motor_controller_generate_messages_py.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  57 58 59
+[ 83%] Built target motor_controller_generate_messages_py
+/usr/bin/make -f motor_controller/CMakeFiles/motor_controller_generate_messages_lisp.dir/build.make motor_controller/CMakeFiles/motor_controller_generate_messages_lisp.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller/CMakeFiles/motor_controller_generate_messages_lisp.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f motor_controller/CMakeFiles/motor_controller_generate_messages_lisp.dir/build.make motor_controller/CMakeFiles/motor_controller_generate_messages_lisp.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `motor_controller/CMakeFiles/motor_controller_generate_messages_lisp.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  55 56
+[ 86%] Built target motor_controller_generate_messages_lisp
+/usr/bin/make -f motor_controller/CMakeFiles/motor_controller_generate_messages.dir/build.make motor_controller/CMakeFiles/motor_controller_generate_messages.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller/CMakeFiles/motor_controller_generate_messages.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f motor_controller/CMakeFiles/motor_controller_generate_messages.dir/build.make motor_controller/CMakeFiles/motor_controller_generate_messages.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `motor_controller/CMakeFiles/motor_controller_generate_messages.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles 
+[ 86%] Built target motor_controller_generate_messages
+/usr/bin/make -f motor_controller/CMakeFiles/wheel_motor_node.dir/build.make motor_controller/CMakeFiles/wheel_motor_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/motor_controller/CMakeFiles/wheel_motor_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f motor_controller/CMakeFiles/wheel_motor_node.dir/build.make motor_controller/CMakeFiles/wheel_motor_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `motor_controller/CMakeFiles/wheel_motor_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  66 67 68
+[ 90%] Built target wheel_motor_node
+/usr/bin/make -f power_monitoring/CMakeFiles/power_monitoring_node.dir/build.make power_monitoring/CMakeFiles/power_monitoring_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/power_monitoring /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/power_monitoring /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/power_monitoring/CMakeFiles/power_monitoring_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f power_monitoring/CMakeFiles/power_monitoring_node.dir/build.make power_monitoring/CMakeFiles/power_monitoring_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `power_monitoring/CMakeFiles/power_monitoring_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  60
+[ 92%] Built target power_monitoring_node
+/usr/bin/make -f remote_control/CMakeFiles/remote_control_generate_messages_lisp.dir/build.make remote_control/CMakeFiles/remote_control_generate_messages_lisp.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/remote_control /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/remote_control /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/remote_control/CMakeFiles/remote_control_generate_messages_lisp.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f remote_control/CMakeFiles/remote_control_generate_messages_lisp.dir/build.make remote_control/CMakeFiles/remote_control_generate_messages_lisp.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `remote_control/CMakeFiles/remote_control_generate_messages_lisp.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  62
+[ 93%] Built target remote_control_generate_messages_lisp
+/usr/bin/make -f remote_control/CMakeFiles/remote_control_generate_messages_py.dir/build.make remote_control/CMakeFiles/remote_control_generate_messages_py.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/remote_control /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/remote_control /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/remote_control/CMakeFiles/remote_control_generate_messages_py.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f remote_control/CMakeFiles/remote_control_generate_messages_py.dir/build.make remote_control/CMakeFiles/remote_control_generate_messages_py.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `remote_control/CMakeFiles/remote_control_generate_messages_py.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  63 64
+[ 96%] Built target remote_control_generate_messages_py
+/usr/bin/make -f remote_control/CMakeFiles/remote_control_generate_messages_cpp.dir/build.make remote_control/CMakeFiles/remote_control_generate_messages_cpp.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/remote_control /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/remote_control /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/remote_control/CMakeFiles/remote_control_generate_messages_cpp.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f remote_control/CMakeFiles/remote_control_generate_messages_cpp.dir/build.make remote_control/CMakeFiles/remote_control_generate_messages_cpp.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `remote_control/CMakeFiles/remote_control_generate_messages_cpp.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  61
+[ 98%] Built target remote_control_generate_messages_cpp
+/usr/bin/make -f remote_control/CMakeFiles/remote_control_generate_messages.dir/build.make remote_control/CMakeFiles/remote_control_generate_messages.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/remote_control /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/remote_control /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/remote_control/CMakeFiles/remote_control_generate_messages.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f remote_control/CMakeFiles/remote_control_generate_messages.dir/build.make remote_control/CMakeFiles/remote_control_generate_messages.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `remote_control/CMakeFiles/remote_control_generate_messages.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles 
+[ 98%] Built target remote_control_generate_messages
+/usr/bin/make -f remote_control/CMakeFiles/xbox_controller_node.dir/build.make remote_control/CMakeFiles/xbox_controller_node.dir/depend
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+cd /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/src/remote_control /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/remote_control /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/remote_control/CMakeFiles/xbox_controller_node.dir/DependInfo.cmake --color=
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/make -f remote_control/CMakeFiles/xbox_controller_node.dir/build.make remote_control/CMakeFiles/xbox_controller_node.dir/build
+make[2]: Entering directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+make[2]: Nothing to be done for `remote_control/CMakeFiles/xbox_controller_node.dir/build'.
+make[2]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_report /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles  69
+[100%] Built target xbox_controller_node
+make[1]: Leaving directory `/home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build'
+/usr/bin/cmake -E cmake_progress_start /home/fnivek/Code/NASABotics/NASAboticsCode/AggreGator_ws/build/CMakeFiles 0
+
+19:03:12 Build Finished (took 3s.165ms)
+
