@@ -1,2 +1,0 @@
-UF AggreGator, Percent of Electronics Battery Used. 
-Single Run: 1.883	Overall Total: 21.6233
