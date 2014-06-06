@@ -2,7 +2,7 @@
 
 Welcome to the UF AggreGator GitHub repository!
 
-Keep up to date with non-code shenanigans at [our website](https://www.ufaggregator.com "UF Aggregator Official Homepage")
+Keep up to date with non-code shenanigans at [our website](http://www.ufaggregator.com "UF Aggregator Official Homepage")
 
 ----------------------------------------------------------
 

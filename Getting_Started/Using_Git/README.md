@@ -1,7 +1,7 @@
 #Using Git
 *Go to "TL;DR" for a summary*
 
-All information was paraphrased from [here](www.github.com/getting-started "GitHub")
+All information was paraphrased from [here](http://www.github.com/getting-started "GitHub")
 
 ###Introduction to Git and GitHub
 	As a programmer or electrical engineer (who likes to program hardware), you'll find yourself using version control a lot.

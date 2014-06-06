@@ -83,5 +83,5 @@ There are two ways to go about this, choose one or both:
 ----------------------------------------------------------
 ###4.) New? Learn More About AggreGator
 	
-	Visit our [site](https://www.aggregator.com)
+	Visit our [site](http://www.aggregator.com)
 
