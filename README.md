@@ -1,7 +1,8 @@
-#NASAboticsCode - Splash Page (WIP)
-This is the root director.
+#NASAboticsCode
 
-Keep up to date with non-code shenanigans at [our website](www.ufaggregator.com "UF Aggregator Official Homepage")
+Welcome to the UF AggreGator GitHub repository!
+
+Keep up to date with non-code shenanigans at [our website](https://www.ufaggregator.com "UF Aggregator Official Homepage")
 
 ----------------------------------------------------------
 
@@ -44,7 +45,7 @@ roscore on the Odroid will now be running, and you can once again connect to it 
 
 ----------------------------------------------------------
 
-See our [style guide](www.github.com/fnivek/NASAboticsCode/Getting_Started/Style_Guide/ "UF Aggregator Style Guide") for our code and naming practices
+See our [style guide](https://www.github.com/fnivek/NASAboticsCode/Getting_Started/Style_Guide/ "UF Aggregator Style Guide") for our code and naming practices
 
 ----------------------------------------------------------
 
