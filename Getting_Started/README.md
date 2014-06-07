@@ -14,74 +14,86 @@ First, here are some *prequisites*:
 ###1.) Install Ubuntu
 *Recommended v13.04*
 
-There are two ways to go about this, choose one or both:
-	#####Using a Virtual Machine (VM) (not recommended)
-		This is the easier way to get Ubuntu up and running on your computer. However, it is not recommended for several reasons, this includes slower performance, miscellaneous hardware issues, and system dependencies. For coding and testing purposes, this option is fine.
+There are two ways to go about this, choose one or both
+####Using a Virtual Machine (VM) (not recommended)
 
-		1.) **Downloading Virtualization Software**
-			Once again, two options. Download and install either or.
-			* [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Oracle's freeware)
+This is the easier way to get Ubuntu up and running on your computer. However, it is not recommended for several reasons, this includes slower performance, miscellaneous hardware issues, and system dependencies. For coding and testing purposes, this option is fine.
 
-			* [VMWare](http://e5.onthehub.com/WebStore/ProductsByMajorVersionList.aspx?ws=c52673b4-58fe-e011-8e6c-f04da23e67f6&vsro=8) (premium, free at onthehub)
+1.) **Downloading Virtualization Software**
+Once again, two options. Download and install either or.
+* [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Oracle's freeware)
 
-		2.) **Setting Up the Environment**
-			TBA - elaborate on creating an Ubuntu VM with appropriate settings for ROS.
+* [VMWare](http://e5.onthehub.com/WebStore/ProductsByMajorVersionList.aspx?ws=c52673b4-58fe-e011-8e6c-f04da23e67f6&vsro=8) (premium, free at onthehub)
 
-		3.) **Using the Environment**
-			Start your machine and you're ready to go.
-			To get acquainted with Linux terminal commands, please see [this](http://cli.learncodethehardway.org/bash_cheat_sheet.pdf)
+2.) **Setting Up the Environment**
+TBA - elaborate on creating an Ubuntu VM with appropriate settings for ROS.
 
-	#####Dual-Booting A Partition (recommended)
-		This way is more low-level and can include unforseen complications that cannot be addressed generally. However, it is faster and is more stable than a VM.
+3.) **Using the Environment**
+Start your machine and you're ready to go.
+To get acquainted with Linux terminal commands, please see [this](http://cli.learncodethehardway.org/bash_cheat_sheet.pdf)
 
-		1.) **Follow These Instructions**
-		Instructions [here](https://help.ubuntu.com/community/Installation). Ask a team member if you're having trouble. Or Google.
+####Dual-Booting A Partition (recommended)
+This way is more low-level and can include unforseen complications that cannot be addressed generally. However, it is faster and is more stable than a VM.
 
-		2.) **Liberate**
-		Now that you have Ubuntu, enjoy the superior OS.
+1.) **Follow These Instructions**
+Instructions [here](https://help.ubuntu.com/community/Installation). Ask a team member if you're having trouble. Or Google.
+
+2.) **Liberate**
+Now that you have Ubuntu, enjoy the superior OS.
 
 ----------------------------------------------------------
 ###2.) Cloning the Repository
-	
-	All distros of Ubuntu have git pre-installed. If yours is bizarre or bootleg and doesn't have git, then run the following command
-	'sudo apt-get install git'
 
-	1.) **Create a directory to put the repo folder in.**
-		'mkdir <path where you want directory to be>\<new directory>'
+All distros of Ubuntu have git pre-installed. If yours is bizarre or bootleg and doesn't have git, then run the following command
+'sudo apt-get install git'
 
-		mkdir will make this directory if it doesn't already exist there.
+1.) **Create a directory to put the repo folder in.**
+	'mkdir <path where you want directory to be>\<new directory>'
 
-	2.) **Change Into That Directory.**
-		'cd <relative path to your directory>'
+	mkdir will make this directory if it doesn't already exist there.
 
-	3.) **Clone the Repo with Git**
-		'git clone https://github.com/fnivek/NASAboticsCode.git'
+2.) **Change Into That Directory.**
 
-		Since this repo is private, you will have to enter your login for GitHub.
-		For those of you who read GitHub's Getting-Started, yes you can just download the zip from the page, but c'mon :\.
+	`cd <relative path to your directory>`
+
+3.) **Clone the Repo with Git**
+
+	`git clone https://github.com/fnivek/NASAboticsCode.git`
+
+Since this repo is private, you will have to enter your login for GitHub.
+For those of you who read GitHub's Getting-Started, yes you can just download the zip from the page, but c'mon :\.
 
 ----------------------------------------------------------
 ###3.) Install ROS
-	*Current-distro: Hydro*
+*Current-distro: Hydro*
 
-	1.) **Follow These Instructions**
-	[Installing ROS](http://wiki.ros.org/hydro/Installation/Ubuntu). 
+1.) **Follow These Instructions**
 
-	2.) Install ROS Packages
-	ROS has a bunch of handy packages for simplifying robotics. Two ways to install the packages we use:
-	* Run the 'get_ros_started.bash' script after having cloned the repo to automatically install everything.
-	* Individually install these packages using
-		`sudo apt-get install ros-<distro>-<package name>`
-	*The following are the package names so just insert them at <package name>
-		*urg-node 
-		*usb-cam
-		*joy
-		*image-view
-		*image-transport
-		*gazebo-ros-pkgs
+[Installing ROS](http://wiki.ros.org/hydro/Installation/Ubuntu). 
+
+2.) **Install ROS Packages**
+
+ROS has a bunch of handy packages for simplifying robotics. The currently used libraries are in the repo and will be compiled automatically, but if you want to test a new package,
+
+**Individually install these packages**
+
+Using
+	
+`sudo apt-get install ros-<distro>-<package name>`
+
+
+The following are the package names so just insert them at <package name>
+
+* urg-node 
+* usb-cam
+* joy
+* image-view
+* image-transport
+* gazebo-ros-pkgs
+
 
 ----------------------------------------------------------
 ###4.) New? Learn More About AggreGator
 	
-	Visit our [site](http://www.aggregator.com)
+Visit our [site](http://www.ufaggregator.com)
 
