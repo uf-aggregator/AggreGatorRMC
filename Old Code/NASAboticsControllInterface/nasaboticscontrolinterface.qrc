@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/NASAboticsControlInterface">
-        <file>Resources/GR_Logo.jpg</file>
-    </qresource>
-</RCC>
