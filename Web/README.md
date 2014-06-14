@@ -7,3 +7,8 @@ Any media like graphics and such should be uploaded to the Google Drive.
 
 ----------------------------------------------------------
 
+###Web Hosting
+
+The basics of web hosting.
+
+
