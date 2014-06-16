@@ -64,3 +64,40 @@ Rather than specifying the absolute path, use
 `../../FileINeed.txt`
 
 In case /home/catkin_workspace is not the path to the workspace.
+
+---------------------------------------------------------
+###Comments
+Always leave comments in the following form or at least leave enough small comments so that someone can compile them into this form
+
+#####C++
+        /********************************************
+        *FunctionName(arg1, arg2)
+        *    Arguments:
+        *        arg1 - an int, preferably within (0,5)
+        *        arg2 - a string, no spaces
+        *    This function will take an int and a string and then output a death ray.
+        ********************************************/
+        
+        DeathRay FunctionName(int arg1, string arg2) {
+            ...//code here...
+        }
+        
+#####Python
+
+
+#####Scripts
+For batch files, bash files, script files, etc.
+
+        #Run the roslaunch file
+        roslaunch startScript.sh
+
+#####Other
+For files like the CMakeList, .launch, package.xml, HTML files, etc.
+
+        #CMakeList.txt               
+        #Add xx to the library
+        find_libraries(xx)
+        
+
+        <!--Run the xx node-->
+        <node></node>
