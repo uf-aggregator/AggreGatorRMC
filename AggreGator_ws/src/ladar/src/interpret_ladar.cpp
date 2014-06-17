@@ -14,9 +14,9 @@
 #include "ladar/draw.h"
 
 using namespace std;
-/*********************************************************
-*General Methods
-**********************************************************/
+/*================================================
+ *General Methods
+ *================================================*/
 //to_string not a function in roscpp, so using this because works
 string ghetto_to_string(float number){
     ostringstream buffer;
@@ -24,9 +24,9 @@ string ghetto_to_string(float number){
     return buffer.str();
 }//end to_string
 
-/*********************************************************
-*Constructors
-**********************************************************/
+/*================================================
+ *Constructors
+ *================================================*/
 Ladar::Ladar(int numOfSamples): thetas(numOfSamples),
     degrees(numOfSamples),
     coords(numOfSamples){
@@ -35,10 +35,14 @@ Ladar::Ladar(int numOfSamples): thetas(numOfSamples),
     coords.clear();
 }
 
-/*********************************************************
-*Coordinate Methods
-**********************************************************/
+/*================================================
+ *Coordinate Methods
+ *================================================*/
 
+/*---------------------------------
+ *  adjustTheta
+ *      For changing the theta value for conversion purposes
+ *---------------------------------*/
 float Ladar::adjustTheta(float theta){
     float adjustedTheta, reference = this->angle_max;
     adjustedTheta = theta;
@@ -166,9 +170,10 @@ string Ladar::coordinatesToString(vector<pair<float, float> > coordinates){
 }//end coordinatestostring
 
 
-/*********************************************************
-*Coordinate Processing Methods
-**********************************************************/
+/*================================================
+ *Coordinate Processing Methods
+ *================================================*/
+
 vector<float> Ladar::getSlopes(vector<pair<float,float> > coordinates){
   this->slopes.clear();
   vector<float> slopes(coordinates.size()-1);
@@ -184,7 +189,9 @@ vector<float> Ladar::getSlopes(vector<pair<float,float> > coordinates){
   return slopes;
 }//end getSlopes
 
+
 vector<float> Ladar::getAverageSlopes(vector<float> slopes){}
+
 
 float Ladar::getAverageSlope(vector<float> slopes){
     float slopeSum = 0;
@@ -196,6 +203,7 @@ float Ladar::getAverageSlope(vector<float> slopes){
     return slopeSum/slopes.size();
 }//end getAverageSlope
 
+
 float Ladar::getAverageSlope(vector<float> slopes, int startIndex, int endIndex){
     float slopeSum = 0;
     for(int i = startIndex; i <= endIndex; i++){
@@ -206,8 +214,10 @@ float Ladar::getAverageSlope(vector<float> slopes, int startIndex, int endIndex)
     return slopeSum/slopes.size();
 }//end getAverageSlope
 
+
 //change return to walls values I guess
 void Ladar::processSlopes(){}
+
 
 /*Function for finding corners from vector of slopes*/
 vector<int> Ladar::findCorners(vector<float> slopes){
@@ -232,9 +242,10 @@ vector<int> Ladar::findCorners(vector<float> slopes){
     return corners;
 }
 
-/*********************************************************
-*Print Methods
-**********************************************************/
+/*================================================
+ *Print Methods
+ *================================================*/
+ 
 void Ladar::print(vector<float> choice, string type){
     for(int i = 0; i < choice.size() && i < coords.size(); i++){
         string coord = string("(") + ghetto_to_string(coords.at(i).first) + string(", ")
@@ -288,9 +299,9 @@ void Ladar::print(int choice){
     }
 }
 
-/*********************************************************
-*Graphics
-**********************************************************/
+/*================================================
+ *Graphics
+ *================================================*/
 int Ladar::drawCoordinates(vector<pair<float, float> > coordinates)
 {
     DrawSDL *draw = new DrawSDL();
@@ -298,9 +309,9 @@ int Ladar::drawCoordinates(vector<pair<float, float> > coordinates)
 }
 
 
-/*********************************************************
-*Thoughts, Concerns, Conundrums
-**********************************************************/
+/*================================================
+ *Thoughts, Concerns, Conundrums
+ *================================================*/
 //NOTE: Any value < 0.1 is like literally touching the ladar
 bool Ladar::forwardCheck(){} //make check for forward facing ladar
 bool Ladar::leftCheck(){}

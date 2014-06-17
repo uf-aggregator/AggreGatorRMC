@@ -9,6 +9,11 @@
 #include "ladar/processed_data.h"
 #include "ladar/conversions.h"
 
+//TODO Refactor into a ladar_node class
+
+/*================================================
+ *Callback Methods
+ *================================================*/
 void scanCallback(const sensor_msgs::LaserScan laser){
 	//Prep arguments from LaserScan message
 	int numSample = laser.ranges.size();
@@ -62,6 +67,9 @@ void scanCallback(const sensor_msgs::LaserScan laser){
 	usleep(1000000);
 }
 
+/*================================================
+ *Main Method
+ *================================================*/
 int main(int argc, char **argv){
 	ros::init(argc, argv, "ladar_node");
 	ros::NodeHandle n;
