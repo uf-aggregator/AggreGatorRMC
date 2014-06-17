@@ -16,6 +16,7 @@ class MissionControl {
 		void Abort();
 		void Start();
 		//void StateHandlerCallback();
+		//Callback functions will be defined here and used by mission_control_node
 };
 
 #endif
