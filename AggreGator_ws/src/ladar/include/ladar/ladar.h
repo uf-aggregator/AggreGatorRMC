@@ -1,10 +1,10 @@
-
-#ifndef _LADAR_H_
-#define _LADAR_H_ 
 #include <vector>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "sensor_msgs/LaserScan.h"
+
+#ifndef _LADAR_H_
+#define _LADAR_H_ 
 
 class Ladar {
 	protected:
@@ -14,9 +14,7 @@ class Ladar {
 
 	float angle_max, reference_angle;
 
-	ROS::NodeHandle nh
-	ROS::Subscriber sub;
-	ROS::Publisher pub;
+	//ROS::NodeHandle nh, ROS::Subscriber sub, ROS::Publisher pub
 
 	public:
 	//CONSTRUCTORS
@@ -35,7 +33,7 @@ class Ladar {
 
 	//UTILITY METHODS
 	float adjustTheta(float theta);
-	string ghetto_to_string(float number);
+	std::string ghetto_to_string(float number);
 	int drawCoordinates(std::vector<std::pair<float, float> > coordinates);
 
 	//COORDINATE PROCESSING
@@ -59,8 +57,6 @@ class Ladar {
 	bool leftCheck();
 	bool rightCheck();
 
-	//ROS
-    void scanCallback(const sensor_msgs::LaserScan laser);
 };
 
 #endif

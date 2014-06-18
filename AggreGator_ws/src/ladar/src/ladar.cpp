@@ -318,40 +318,4 @@ bool Ladar::rightCheck(){}
 /*================================================
  *ROS Methods
  *================================================*/
-void Ladar::scanCallback(const sensor_msgs::LaserScan laser){
-    //Prep arguments from LaserScan message
-    int numSample = laser.ranges.size();
-    float ranges[numSample];
-    for(int i = 0; i < numSample; i++){
-        ranges[i] = laser.ranges[i];
-    }
-    float angle_min = laser.angle_min;
-    float angle_increment = laser.angle_increment;
-    float min_range = laser.range_min;
-    float max_range = laser.range_max;
 
-    //instantiate classes
-    Conversions *convert = new Conversions();
-
-    //process Ladar data
-    std::vector<std::pair<float, float> > coordinates = getCoordinates(ranges, numSample, angle_min, angle_increment, min_range, max_range);
-    
-    //publish data
-    this->pub = this->nh.advertise<ladar::processed_data>("ladar_info", 1);
-    ros::Rate loop_rate(10);
-    
-    std::cout << "Starting publishing..."<< std::endl;
-
-    while(ros::ok()) {
-        std::cout << "Publishing..." << std::endl;
-        
-        ladar::processed_data msg;
-        msg.connection = true;
-
-        pub.publish(msg);
-        ros::spinOnce();
-        
-        loop_rate.sleep();
-    }
-    usleep(1000000);
-}

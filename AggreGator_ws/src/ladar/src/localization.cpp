@@ -2,7 +2,7 @@
 #include <cmath>
 #include <math.h>
 #include <limits>
-#include "ladar/ladar_data.h"
+#include "ladar/ladar.h"
 #include "ladar/localization.h"
 
 
