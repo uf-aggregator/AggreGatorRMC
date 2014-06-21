@@ -1,8 +1,3 @@
-//
-//  interpretRanges.cpp
-//
-//  Created by Joey Siracusa on 3/25/14.
-//
 #include <iostream>
 #include <cstdlib>
 #include <utility>
@@ -10,15 +5,17 @@
 #include <cmath>
 #include <sstream>
 #include "ladar/SDL/SDL.h"
-#include "ladar/ladar_data.h"
+#include "ladar/ladar.h"
 #include "ladar/draw.h"
+#include "ladar/conversions.h"
+#include "ladar/processed_data.h"
 
 using namespace std;
 /*================================================
  *General Methods
  *================================================*/
 //to_string not a function in roscpp, so using this because works
-string ghetto_to_string(float number){
+string Ladar::ghetto_to_string(float number){
     ostringstream buffer;
     buffer << number;
     return buffer.str();
@@ -317,4 +314,8 @@ bool Ladar::forwardCheck(){} //make check for forward facing ladar
 bool Ladar::leftCheck(){}
 bool Ladar::rightCheck(){}
 
+
+/*================================================
+ *ROS Methods
+ *================================================*/
 
