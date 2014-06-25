@@ -6,6 +6,9 @@ class StateHandler {
 		int current_state;
 		int prev_state;
 		vector<int> state_history;
+		//intending to add more data members for decision-making
+		//actionValue from ladar
+
 	public:
 		StateHandler();
 		~StateHandler(){}
@@ -14,6 +17,7 @@ class StateHandler {
 		int getPrevState() const;
 		vector<int> getStateHistory() const;
 		void setCurrentState(int newCurrentState);
+		int nextState();
 };
 
 #endif
