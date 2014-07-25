@@ -3,22 +3,50 @@
 #include "mission_control/mission_control.h"
 
 using namespace std;
-
+//====================================================
+//CONSTRUCTORS
+//====================================================
+/*-----------------------------------------	
+ *	Default Constructor
+ *		initialize debug and class_name
+ *		creates an instance of all the handlers
+ *-----------------------------------------*/
 MissionControl::MissionControl(){
 	this->debug = false;
 	this->class_name = "[MISSION CONTROL]";
-	lh = new LadarHandler();
+	sh = new StateHandler();
 }
 
+/*-----------------------------------------	
+ *	Debug Constructor
+ *		same as default constructor except
+ *		can turn on debug mode, e.g. all if(debug) will run
+ *-----------------------------------------*/
 MissionControl::MissionControl(bool debug){
 	this->debug = debug;
 	this->class_name = "[MISSION CONTROL]";
-	lh = new LadarHandler();
+	sh = new StateHandler();
 }
 
-void StateHandlerCallback(const std_msgs::String::ConstPtr& msg){
+//====================================================
+//CALLBACKS
+//====================================================
+/*-----------------------------------------	
+ *	MissionControlCallback
+ *		
+ *-----------------------------------------*/
+void MissionControlCallback(const std_msgs::String::ConstPtr& msg){
 	cout << msg->data.c_str() << endl;
 }
+
+
+//====================================================
+//METHODS
+//====================================================
+/*-----------------------------------------	
+ *	Publish
+ *		publishes to the /mission_control topic
+ *-----------------------------------------*/
 void MissionControl::Publish(){
 	pub = nh.advertise<std_msgs::String>("/mission_control", 1000);
 
@@ -32,14 +60,29 @@ void MissionControl::Publish(){
 	pub.publish(msg);
 	ros::spinOnce();
 }
+
+/*-----------------------------------------	
+ *	Subscribe
+ *		subsribes to the topics mission_control_node needs
+ *-----------------------------------------*/
 void MissionControl::Subscribe(){
-	sub = nh.subscribe("/mission_control",1000, StateHandlerCallback);
+	//currently only listening to itself
+	sub = nh.subscribe("/mission_control",1000, MissionControlCallback);
 	ros::spinOnce();
 }
+
+/*-----------------------------------------	
+ *	Abort
+ *		cleans up everything when program terminates expectedly
+ *-----------------------------------------*/
 void MissionControl::Abort(){
 	cout << class_name << " is aborting..." << endl;
 }
 
+/*-----------------------------------------	
+ *	Start
+ *		starts up everything
+ *-----------------------------------------*/
 void MissionControl::Start(){
 	int input;
 	for(int i = 0;; i++) {
@@ -51,9 +94,8 @@ void MissionControl::Start(){
 			break;
 		}
 		else {
-			//lh->executeActions();
 			Publish();
 			Subscribe();
 		}
-	}
+	}//end Start
 }

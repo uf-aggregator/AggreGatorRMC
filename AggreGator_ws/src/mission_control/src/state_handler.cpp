@@ -1,6 +1,8 @@
 #include <iostream>
 #include "mission_control/state_handler.h"
 
+using namespace std;
+
 /*-----------------------------------------
  *	DEFINE STATE ID'S HERE
  *-----------------------------------------*/
@@ -8,6 +10,10 @@ enum states {
 
 };
 
+
+//====================================================
+//CONSTRUCTORS
+//====================================================
 //Default Constructor
 StateHandler::StateHandler(){
 	//change these values to the state enum
@@ -15,6 +21,9 @@ StateHandler::StateHandler(){
 	this->prev_state = 0;
 }
 
+//====================================================
+//METHODS
+//====================================================
 /*-----------------------------------------	
  *	getCurrentState
  *		returns the current state
