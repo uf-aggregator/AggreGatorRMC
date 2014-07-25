@@ -47,12 +47,12 @@ include_directories(
   include ${catkin_INCLUDE_DIRS}
 )
 
-#add_executable(mission_control_node src/mission_control_node.cpp 
-#									src/mission_control.cpp 
+add_executable(mission_control_node src/mission_control_node.cpp 
+									src/mission_control.cpp 
 #									src/state_handler.cpp
-#									src/mid_level/base_mid_handler.cpp
-#									src/mid_level/ladar_handler.cpp)
-#add_dependencies(mission_control_node mission_control_generate_messages_cpp)
-#target_link_libraries(mission_control_node
-#   ${catkin_LIBRARIES}
-# )
+									src/mid_level/base_mid_handler.cpp
+									src/mid_level/ladar_handler.cpp)
+add_dependencies(mission_control_node mission_control_generate_messages_cpp)
+target_link_libraries(mission_control_node
+   ${catkin_LIBRARIES}
+ )

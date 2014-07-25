@@ -1,21 +1,20 @@
 #ifndef BASE_MID_HANDLER_H
 #define BASE_MID_HANDLER_H
-#include <ros/ros.h>
+
+#include <iostream>
 
 class BaseMidLevelHandler {
 	protected:
+		std::string class_name;
 		int state_id;
-	public:
-		ROS::Subscriber sub;
-		ROS::Publisher pub;
-		ROS::NodeHandle nh;
 
+	public:
 		BaseMidLevelHandler();
 		~BaseMidLevelHandler(){}
 
-		void executeActions();
+		virtual void executeActions() = 0;
 		int getStateId() const;
-		void setStateId(int newId) const;
+		void setStateId(int newId);
 };
 
-#endif BASE_MID_HANDLER_H
+#endif

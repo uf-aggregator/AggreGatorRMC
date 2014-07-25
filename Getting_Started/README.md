@@ -93,7 +93,19 @@ The following are the package names so just insert them at <package name>
 
 
 ----------------------------------------------------------
-###4.) New? Learn More About AggreGator
+###4.) Running the System
+
+TBD
+
+----------------------------------------------------------
+###5.) Troubleshooting
+
+Some common issues we've encountered and our workarounds.
+
+Click [here](https://docs.google.com/document/d/1OsnD7rFXJDcYGi1VJESj43cr08V7GOLNI-skH8Boo-o/edit?usp=sharing) to see troubleshooting document.
+
+----------------------------------------------------------
+###6.) New? Learn More About AggreGator
 	
 Visit our [site](http://www.ufaggregator.com)
 

@@ -1,22 +1,29 @@
+#include "std_msgs/String.h"
+#include "ros/ros.h"
+#include <mission_control/ladar_handler.h>
+
 #ifndef MISSION_CONTROL_H 
 #define MISSION_CONTROL_H
-#include <ros/ros.h>
 
 class MissionControl {
 	protected:
-		ROS::NodeHandle nh
-		ROS::Subscriber sub;
-		ROS::Publisher pub;
+		ros::NodeHandle nh;
+		ros::Subscriber sub;
+		ros::Publisher pub;
+		LadarHandler *lh;
 		bool debug;
+		std::string class_name;
 
 	public:
 		MissionControl();
 		MissionControl(bool debug);
-		~MissionControl(){}
+		~MissionControl(){
+			delete lh;
+		}
+		void Publish();
+		void Subscribe();
 		void Abort();
 		void Start();
-		//void StateHandlerCallback();
-		//Callback functions will be defined here and used by mission_control_node
 };
 
 #endif

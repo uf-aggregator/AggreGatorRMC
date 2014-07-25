@@ -6,7 +6,7 @@ Keep up to date with non-code shenanigans at [our website](http://www.ufaggregat
 
 ----------------------------------------------------------
 
-###Running the Aggregator
+###Running the Aggregator (2013-2014)
 
 First, on the Odroid, navigate to the NASAboticsCode folder, and run the ODroid script:
 ```
