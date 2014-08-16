@@ -95,7 +95,7 @@ The following are the package names so just insert them at <package name>
 ----------------------------------------------------------
 ###4.) Running the System
 
-TBD
+TBD will be using roslaunch
 
 ----------------------------------------------------------
 ###5.) Troubleshooting

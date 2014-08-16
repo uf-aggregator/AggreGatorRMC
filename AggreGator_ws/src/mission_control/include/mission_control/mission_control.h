@@ -23,7 +23,8 @@ class MissionControl {
 		void Publish();
 		void Subscribe();
 		void Abort();
-		void Start();
+		void StartSenseAct();
+		void StartPlanSenseAct();
 };
 
 #endif

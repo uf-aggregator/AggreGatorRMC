@@ -1,6 +1,6 @@
 #include <iostream>
 #include <sstream>
-#include "mission_control/mission_control.h"
+#include "mission_control.h"
 
 using namespace std;
 //====================================================
@@ -83,7 +83,7 @@ void MissionControl::Abort(){
  *	Start
  *		starts up everything
  *-----------------------------------------*/
-void MissionControl::Start(){
+void MissionControl::StartSenseAct(){
 	int input;
 	for(int i = 0;; i++) {
 		cout << "Enter 0 to abort. Any other key to continue." << endl;
@@ -97,5 +97,9 @@ void MissionControl::Start(){
 			Publish();
 			Subscribe();
 		}
-	}//end Start
-}
+	}//end for
+}//end StartSenseAct
+
+void MissionControl::StartPlanSenseAct(){
+
+}//end StartPlanSenseAct

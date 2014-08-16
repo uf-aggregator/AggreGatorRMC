@@ -1,5 +1,0 @@
-int8 addr
-int8 register
-int8 size
----
-uint8[] data
