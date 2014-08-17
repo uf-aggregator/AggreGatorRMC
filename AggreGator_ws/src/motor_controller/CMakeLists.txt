@@ -70,7 +70,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
+# INCLUDE_DIRS include
 #  LIBRARIES Remote_Control_Code
   CATKIN_DEPENDS message_runtime hardware_interface
 #  DEPENDS system_lib 
@@ -102,6 +102,18 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 # target_link_libraries(Remote_Control_Code_node
 #   ${catkin_LIBRARIES}
 # )
+
+add_executable(wheel_motor_node src/wheel_motor_node.cpp src/controller.cpp src/matrix.cpp)
+target_link_libraries(wheel_motor_node ${catkin_LIBRARIES})
+add_dependencies(wheel_motor_node motor_controller_generate_messages_cpp)
+
+add_executable(bucket_motor_node src/bucket_motor_node.cpp src/controller.cpp src/matrix.cpp)
+target_link_libraries(bucket_motor_node ${catkin_LIBRARIES})
+add_dependencies(bucket_motor_node motor_controller_generate_messages_cpp)
+
+add_executable(linear_actuator_node src/linear_actuator_node.cpp src/controller.cpp src/matrix.cpp)
+target_link_libraries(linear_actuator_node ${catkin_LIBRARIES})
+add_dependencies(linear_actuator_node motor_controller_generate_messages_cpp)
 
 #############
 ## Install ##
@@ -158,17 +170,4 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 #add_executable(listener src/listener.cpp)
 #target_link_libraries(listener ${catkin_LIBRARIES})
 #add_dependencies(listener beginner_tutorials_generate_messages_cpp)
-
-
-add_executable(wheel_motor_node src/wheel_motor_node.cpp src/controller.cpp src/matrix.cpp)
-target_link_libraries(wheel_motor_node ${catkin_LIBRARIES})
-add_dependencies(wheel_motor_node motor_controller_generate_messages_cpp)
-
-add_executable(bucket_motor_node src/bucket_motor_node.cpp src/controller.cpp src/matrix.cpp)
-target_link_libraries(bucket_motor_node ${catkin_LIBRARIES})
-add_dependencies(bucket_motor_node motor_controller_generate_messages_cpp)
-
-add_executable(linear_actuator_node src/linear_actuator_node.cpp src/controller.cpp src/matrix.cpp)
-target_link_libraries(linear_actuator_node ${catkin_LIBRARIES})
-add_dependencies(linear_actuator_node motor_controller_generate_messages_cpp)
 

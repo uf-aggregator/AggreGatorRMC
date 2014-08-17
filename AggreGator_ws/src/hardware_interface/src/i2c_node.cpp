@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include <i2c.h>
+#include <hardware_interface/i2c.h>
 
 int main(int argc, char** argv)
 {

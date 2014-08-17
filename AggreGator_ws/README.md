@@ -3,6 +3,15 @@
 This is the ROS workspace for all of the packages.
 
 ------------------------------------------------
+
+##Compilation Notice
+
+Due to the interpackage dependencies and our current CMakeList setup, the workspace must be `catkin_make`'d several times, until the dependencies are generated.
+<br>
+The source of this is likely due to the lack of dependency exporting in the `motor_controller` package.
+<p style="padding-bottom: 1em;"></p>
+
+------------------------------------------------
 ###hardware_interface
 This package contains the drivers for reading and writing to various hardware, including: 
 - I2C 

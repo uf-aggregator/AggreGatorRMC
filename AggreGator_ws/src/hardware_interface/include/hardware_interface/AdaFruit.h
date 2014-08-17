@@ -1,7 +1,7 @@
-/*Daniel Kelly
-UF AggreGator
-This header file contains declarations of the necessary functions to interface with Adafruit PWM generator
-*/
+/* by Daniel Kelly refactored by Andrew V
+ * UF AggreGator
+ * This header file contains declarations of the necessary functions to interface with Adafruit PWM generator
+ */
 
 #ifndef _ADAFRUIT_H_
 #define _ADAFRUIT_H_
@@ -13,6 +13,11 @@ This header file contains declarations of the necessary functions to interface w
 #include "GPIO.h"
 //#include "i2c.h"
 #include <unistd.h>
+#include "ros/ros.h"
+#include "motor_controller/AdaCmd.h"
+#include "hardware_interface/WriteI2C.h"
+#include "hardware_interface/WriteI2CRegister.h"
+#include "hardware_interface/ReadI2CRegister.h"
 
 //List of register addresses
 enum regAddr
@@ -23,9 +28,10 @@ enum regAddr
     //Important setup register
     mode1                               = 0x00,
     mode2                               = 0x01,
+    preScale                            = 0xFE,
 
     //Motor Control Channels
-    leftFrontMotorChannel_ON_LOW        = 0x13,
+    leftFrontMotorChannel_ON_LOW        = 0x12,
     leftFrontMotorChannel_ON_HIGH,
     leftFrontMotorChannel_OFF_LOW,
     leftFrontMotorChannel_OFF_HIGH,
@@ -67,21 +73,53 @@ struct pwmRegisterData
 	int *initData;
 };
 
-//Initialize
-pwmRegisterData AdaFruitInit();
-//Set relevant PWM channel for left front motor
-pwmRegisterData setLeftFrontMotor(float);
-//Set relevant PWM channel for left rear motor
-pwmRegisterData setLeftRearMotor(float);
-//Set relevant PWM channel for right rear motor
-pwmRegisterData setRightRearMotor(float);
-//Set relevant PWM channel for right front motor
-pwmRegisterData setRightFrontMotor(float);
-//Set relevant PWM channel for linear actuators
-pwmRegisterData setLinearActuator(float PWM);
-//Set relevant PWM channel for bucket drum
-pwmRegisterData setBucketDrum(float PWM);
+struct PWM_setting
+{
+    u_int8_t low;
+    u_int8_t high;
+};
 
-#endif //_ADAFRUIT_H_
+
+class AdaFruit {
+    public:
+        ros::NodeHandle n;
+        ros::Subscriber sub;
+        ros::Publisher write_pub;
+        ros::Publisher write_reg_pub;
+        ros::ServiceClient read_register_svr;   //Reads I2C registers
+        
+        //Constructor + Destructor
+        AdaFruit();
+        ~AdaFruit(){
+
+        }
+
+        //Initialize
+        pwmRegisterData AdaFruitInit();
+        //Set relevant PWM channel for left front motor
+        pwmRegisterData setLeftFrontMotor(float);
+        //Set relevant PWM channel for left rear motor
+        pwmRegisterData setLeftRearMotor(float);
+        //Set relevant PWM channel for right rear motor
+        pwmRegisterData setRightRearMotor(float);
+        //Set relevant PWM channel for right front motor
+        pwmRegisterData setRightFrontMotor(float);
+        //Set relevant PWM channel for linear actuators
+        pwmRegisterData setLinearActuator(float PWM);
+        //Set relevant PWM channel for bucket drum
+        pwmRegisterData setBucketDrum(float PWM);
+
+
+        static PWM_setting convertSetpointToPWM(float set_point);
+        static void WritePWMRegisters(PWM_setting pwm, regAddr base_addr);
+        static void adaInitialize();
+        static void setWheelMotorI2C(const motor_controller::AdaCmd& msg);
+        static void setBucketMotorI2C(const motor_controller::AdaCmd& msg);
+        static void setLinearActuatorI2C(const motor_controller::AdaCmd& msg);
+        static void adaFruitCallBack(const motor_controller::AdaCmd& msg);
+
+        int run();
+};
+#endif
 
 

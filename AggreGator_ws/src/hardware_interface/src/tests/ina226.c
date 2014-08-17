@@ -8,7 +8,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "i2c.h"
+#include "hardware_interface/i2c.h"
 
 int main(void) {
     int file; //the "file" that will be used to interface with the i2c bus

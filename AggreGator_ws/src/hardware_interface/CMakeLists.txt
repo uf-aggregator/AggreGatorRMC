@@ -99,14 +99,17 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
-  include/${PROJECT_NAME}
+  #include/${PROJECT_NAME}
+  include ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a cpp library
- add_library(hardware_utils
-   src/GPIO.cpp
-   src/i2c.cpp
-   src/AdaFruit.cpp
+ add_library(
+    hardware_utils
+      include/hardware_interface/GPIO.cpp
+      include/hardware_interface/i2c.cpp
+      include/hardware_interface/AdaFruit.cpp
+      include/hardware_interface/ina226.cpp
  )
 
 ## Declare adafruit cpp executable
