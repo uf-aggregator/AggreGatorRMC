@@ -1,4 +1,4 @@
-#NASAboticsCode
+#AggreGatorRMC
 
 Welcome to the UF AggreGator GitHub repository!
 
@@ -45,7 +45,7 @@ roscore on the Odroid will now be running, and you can once again connect to it 
 
 ----------------------------------------------------------
 
-See our [style guide](https://www.github.com/fnivek/NASAboticsCode/Getting_Started/Style_Guide/ "UF Aggregator Style Guide") for our code and naming practices
+See our [style guide](https://github.com/uf-aggregator/AggreGatorRMC/tree/master/Getting_Started/Style_Guide "UF Aggregator Style Guide") for our code and naming practices
 
 ----------------------------------------------------------
 
