@@ -1,7 +1,6 @@
 #Third_party_packages
 ------------------------------
 For some reason, the files for the packages were not properly committed to GitHub. Forgoing adding them to the repo and added a bash script to install files. Internet connection required.
-
 <br>
 ###Summary
 
@@ -22,11 +21,11 @@ This is the node for getting data from the LADAR.
 #####usb_cam
 This package reads in streaming video or images and broadcasts published to ROS.
 [See their wiki](http://wiki.ros.org/usb_cam)
-
+<br>
 ###Compatibility
-__image common__: groovy, hydro, indigo
-__joy__: groovy, hydro, indigo
-__laser proc__: groovy, hydro
-__urg c__: groovy, hydro, indigo
-__urg node__: groovy, hydro, indigo
-__usb cam__: groovy, hydro, indigo
+* __image common__: groovy, hydro, indigo
+* __joy__: groovy, hydro, indigo
+* __laser proc__: groovy, hydro
+* __urg c__: groovy, hydro, indigo
+* __urg node__: groovy, hydro, indigo
+* __usb cam__: groovy, hydro, indigo
