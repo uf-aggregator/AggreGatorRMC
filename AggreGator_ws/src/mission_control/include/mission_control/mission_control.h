@@ -1,6 +1,6 @@
 #include "std_msgs/String.h"
 #include "ros/ros.h"
-#include "mission_control/state_handler.h"
+#include "stateMachine/state_machine.h"
 
 #ifndef MISSION_CONTROL_H 
 #define MISSION_CONTROL_H

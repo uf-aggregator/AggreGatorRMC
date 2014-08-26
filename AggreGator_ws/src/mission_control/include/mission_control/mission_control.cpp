@@ -44,62 +44,18 @@ void MissionControlCallback(const std_msgs::String::ConstPtr& msg){
 //METHODS
 //====================================================
 /*-----------------------------------------	
- *	Publish
- *		publishes to the /mission_control topic
- *-----------------------------------------*/
-void MissionControl::Publish(){
-	pub = nh.advertise<std_msgs::String>("/mission_control", 1000);
-
-	ros::Rate loop_rate(1);
-
-	std_msgs::String msg;
-	std::stringstream ss;     
-	ss << "YOU HAVE A VIRUS, RUN AWAY.";
-	msg.data = ss.str();
-
-	pub.publish(msg);
-	ros::spinOnce();
-}
-
-/*-----------------------------------------	
- *	Subscribe
- *		subsribes to the topics mission_control_node needs
- *-----------------------------------------*/
-void MissionControl::Subscribe(){
-	//currently only listening to itself
-	sub = nh.subscribe("/mission_control",1000, MissionControlCallback);
-	ros::spinOnce();
-}
-
-/*-----------------------------------------	
- *	Abort
- *		cleans up everything when program terminates expectedly
- *-----------------------------------------*/
-void MissionControl::Abort(){
-	cout << class_name << " is aborting..." << endl;
-}
-
-/*-----------------------------------------	
  *	Start
  *		starts up everything
  *-----------------------------------------*/
 void MissionControl::StartSenseAct(){
 	int input;
-	for(int i = 0;; i++) {
-		cout << "Enter 0 to abort. Any other key to continue." << endl;
-		cin >> input;
+	cout << "Ctrl-C to terminate." << endl;
 
-		if(input == 0){ 
-			Abort();
-			break;
-		}
-		else {
-			Publish();
-			Subscribe();
-		}
-	}//end for
+	while(true) {
+		
+
+		
+	}//end while
+
+	//clean up anything here
 }//end StartSenseAct
-
-void MissionControl::StartPlanSenseAct(){
-
-}//end StartPlanSenseAct

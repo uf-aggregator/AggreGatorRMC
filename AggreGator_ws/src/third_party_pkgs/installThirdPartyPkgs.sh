@@ -39,3 +39,9 @@ if [ $option == "y" ]; then
 fi
 sudo apt-get install ros-hydro-urg-c
 
+echo ""
+if [ $option == "y" ]; then
+	read -p "Installing pcl. Press enter to continue...Ctrl-C to cancel"
+fi
+sudo apt-get install ros-hydro-pcl-ros
+

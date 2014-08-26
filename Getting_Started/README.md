@@ -7,8 +7,9 @@ So, you're now part of this repository and (presumably) now part of the AggreGat
 First, here are some *prequisites*:
   * Ask a team lead to add you to the Google Drive 
   * Add your contact information to the Contact Info document on the Google Drive
-  * Get added to the organization on Trello (optional)
+  * Get added to the organization on Trello (optional | software only)
     * for task management purposes
+    * the Trello is the same as the whiteboard in the lab
 
 ----------------------------------------------------------
 ###1.) Install Ubuntu
@@ -82,7 +83,7 @@ Using
 `sudo apt-get install ros-<distro>-<package name>`
 
 
-The following are the package names so just insert them at <package name>
+The following are the package names currently used by us, so just insert them at <package name>
 
 * urg-node 
 * usb-cam
@@ -91,11 +92,24 @@ The following are the package names so just insert them at <package name>
 * image-transport
 * gazebo-ros-pkgs
 
+_NOTE_ There is a bash script in `AggreGatorWS/src/third-party-pkgs` ([link](https://github.com/uf-aggregator/AggreGatorRMC/tree/master/AggreGator_ws/src/third_party_pkgs)). Just run that and it should install all the packages we're using.
 
 ----------------------------------------------------------
 ###4.) Running the System
 
+#####With ROSlaunch
+
 TBD will be using roslaunch
+
+#####Manually
+
+Assuming you've `catkin_make`d the workspace, just do the command
+
+	roscore
+
+And then start up the following packages in listed order:
+
+* [insert here]
 
 ----------------------------------------------------------
 ###5.) Troubleshooting
