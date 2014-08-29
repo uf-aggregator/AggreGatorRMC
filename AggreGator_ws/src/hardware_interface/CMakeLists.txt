@@ -86,7 +86,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES hardware_utils
-  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
+  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime 
 #  DEPENDS system_lib
 )
 
@@ -99,7 +99,6 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
-  #include/${PROJECT_NAME}
   include ${catkin_INCLUDE_DIRS}
 )
 

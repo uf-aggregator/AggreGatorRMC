@@ -9,6 +9,8 @@ This is the ROS workspace for all of the packages.
 Due to the interpackage dependencies and our current CMakeList setup, the workspace must be `catkin_make`'d several times, until the dependencies are generated.
 <br>
 The source of this is likely due to the lack of dependency exporting in the `motor_controller` package.
+<br>
+__Note:__ If any of the code has compilation errors, then the workspace will not compile at all. Even the message dependencies.
 <p style="padding-bottom: 1em;"></p>
 
 ------------------------------------------------

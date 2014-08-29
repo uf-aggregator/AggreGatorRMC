@@ -14,7 +14,6 @@ using namespace std;
 MissionControl::MissionControl(){
 	this->debug = false;
 	this->class_name = "[MISSION CONTROL]";
-	sh = new StateHandler();
 }
 
 /*-----------------------------------------	
@@ -25,7 +24,6 @@ MissionControl::MissionControl(){
 MissionControl::MissionControl(bool debug){
 	this->debug = debug;
 	this->class_name = "[MISSION CONTROL]";
-	sh = new StateHandler();
 }
 
 //====================================================

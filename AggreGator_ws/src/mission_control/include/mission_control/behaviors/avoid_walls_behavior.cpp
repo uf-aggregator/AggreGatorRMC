@@ -5,5 +5,5 @@ AvoidWallsBehavior::AvoidWallsBehavior(){
 }
 
 std::string AvoidWallsBehavior::run(){
-
+	return "";
 }

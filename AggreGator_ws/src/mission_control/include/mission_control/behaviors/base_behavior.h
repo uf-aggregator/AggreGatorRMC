@@ -9,8 +9,6 @@ class BaseBehavior {
 		bool on;
 		std::string name;
 	public:
-		BaseBehavior();
-		~BaseBehavior(){}
 		//Methods
 		virtual std::string run() = 0;
 		

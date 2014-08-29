@@ -1,13 +1,12 @@
+#ifndef MISSION_CONTROL_H 
+#define MISSION_CONTROL_H
+
 #include "std_msgs/String.h"
 #include "ros/ros.h"
 #include "stateMachine/state_machine.h"
 
-#ifndef MISSION_CONTROL_H 
-#define MISSION_CONTROL_H
-
 class MissionControl {
 	protected:
-		StateHandler *sh;
 		bool debug;
 		std::string class_name;
 

@@ -43,14 +43,24 @@ catkin_package(
 ## Build ##
 ###########
 
-include_directories(
-  include ${catkin_INCLUDE_DIRS}
+add_library(
+	mission_utils
+	include/mission_control/behaviors/avoid_walls_behavior.cpp
+
+	include/mission_control/stateMachine/state_machine.cpp
+	include/mission_control/mission_control.cpp
 )
 
-add_executable(mission_control_node mission_control_node.cpp)
+include_directories(
+	${catkin_INCLUDE_DIRS}
+  	include ${catkin_INCLUDE_DIRS}
+)
+
+add_executable(mission_control_node src/mission_control_node.cpp )
 
 add_dependencies(mission_control_node mission_control_generate_messages_cpp)
 
 target_link_libraries(mission_control_node
    ${catkin_LIBRARIES}
+   mission_utils
  )

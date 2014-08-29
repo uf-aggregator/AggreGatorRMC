@@ -10,7 +10,7 @@ int main(int argc, char **argv){
 	ros::init(argc, argv, "mission_control_node");
 
 	MissionControl *mc = new MissionControl();
-	mc->StartSenseAct();
+	//mc->StartSenseAct();
 	
 	return 0;
 }

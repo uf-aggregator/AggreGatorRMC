@@ -4,6 +4,8 @@
 #include <queue>
 #include <string>
 
+
+
 /*state
  *	stateId - id for stateHistory and deciding next state
  *	name - the name of the state, for logging purposes
@@ -11,7 +13,8 @@
  */
 struct state {
 	int stateId;
-	int behavior[4];
+	int behaviorCount;
+	int *behavior;
 	std::string name;
 };
 
