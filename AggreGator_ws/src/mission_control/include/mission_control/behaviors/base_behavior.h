@@ -10,8 +10,7 @@ class BaseBehavior {
 		std::string name;
 	public:
 		//Methods
-		virtual std::string run() = 0;
-		
+		virtual std::string run() = 0;	
 };
 
 #endif

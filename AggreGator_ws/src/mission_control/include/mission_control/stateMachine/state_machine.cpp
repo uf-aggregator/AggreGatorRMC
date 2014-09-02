@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <iostream>
 #include "state_machine.h"
+#include <cstdlib>
 
 StateMachine::StateMachine () {
 	//initialize all the state definitions
@@ -36,17 +37,23 @@ StateMachine::StateMachine () {
 
 int StateMachine::start(int starting){
 	currentState = starting;
+	stateHistory[currentHistoryIndex] = currentState;
+	currentHistoryIndex++;
+
 	while(currentState > 0){
 		currentState = next();
-		
+		stateHistory[currentHistoryIndex] = currentState;
+
 		//execute behaviors
+		std::cout << currentState << "\n";
 	}
 	return 0; //normal termination
 }
 
 int StateMachine::next(){
-	return -1;
+	return rand() % 4;
 }
+
 void StateMachine::printHistory() {
 	int charPerLine = 7;
 	for(int i = 0; i < currentHistoryIndex; i++){

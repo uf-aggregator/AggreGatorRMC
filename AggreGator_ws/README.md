@@ -2,6 +2,10 @@
 
 This is the ROS workspace for all of the packages.
 
+##Running Nodes
+
+Make sure your `ROS_PACKAGE_PATH` includes the `src/` folder of your workspace.
+
 ------------------------------------------------
 
 ##Compilation Notice
