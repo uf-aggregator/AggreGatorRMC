@@ -49,13 +49,13 @@ void MissionControl::StartSenseAct(){
 	int input;
 	cout << "Ctrl-C to terminate." << endl;
 
-	while(true) {
-		try {
-			StateMachine *sm = new StateMachine();
-		}catch(...){
-			cout << "Some exception has occurred." << "\n";
-		}
-	}//end while
+	try {
+		StateMachine *sm = new StateMachine();
+		sm->start(0);
+
+	}catch(...){
+		cout << "Some exception has occurred." << "\n";
+	}
 
 	//clean up anything here
 }//end StartSenseAct

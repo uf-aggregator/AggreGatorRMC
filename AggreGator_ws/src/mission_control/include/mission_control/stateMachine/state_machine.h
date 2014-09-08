@@ -56,6 +56,11 @@ class StateMachine {
 		 *	prints out the state history in ascending order
 		 */
 		 void printHistory();
+
+		 /*bool pushToQueue(int* ids, int numIds)
+		  * pushes behaviors to the queue
+		  */
+		 bool pushToQueue(int* ids, int numIds);
 };
 
 #endif
