@@ -36,7 +36,8 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation
 ## Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   WheelMotor.msg 
+   Motor.msg 
+   I2CGeneric.msg
    AdaCmd.msg
  )
 
@@ -103,17 +104,17 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 #   ${catkin_LIBRARIES}
 # )
 
-add_executable(wheel_motor_node src/wheel_motor_node.cpp src/controller.cpp src/matrix.cpp)
-target_link_libraries(wheel_motor_node ${catkin_LIBRARIES})
-add_dependencies(wheel_motor_node motor_controller_generate_messages_cpp)
+add_executable(motor_node src/motor_node.cpp)# src/controller.cpp src/matrix.cpp)
+target_link_libraries(motor_node ${catkin_LIBRARIES})
+add_dependencies(motor_node motor_controller_generate_messages_cpp)
 
-add_executable(bucket_motor_node src/bucket_motor_node.cpp src/controller.cpp src/matrix.cpp)
-target_link_libraries(bucket_motor_node ${catkin_LIBRARIES})
-add_dependencies(bucket_motor_node motor_controller_generate_messages_cpp)
+#add_executable(bucket_motor_node src/bucket_motor_node.cpp)# src/controller.cpp src/matrix.cpp)
+#target_link_libraries(bucket_motor_node ${catkin_LIBRARIES})
+#add_dependencies(bucket_motor_node motor_controller_generate_messages_cpp)
 
-add_executable(linear_actuator_node src/linear_actuator_node.cpp src/controller.cpp src/matrix.cpp)
-target_link_libraries(linear_actuator_node ${catkin_LIBRARIES})
-add_dependencies(linear_actuator_node motor_controller_generate_messages_cpp)
+#add_executable(linear_actuator_node src/linear_actuator_node.cpp)# src/controller.cpp src/matrix.cpp)
+#target_link_libraries(linear_actuator_node ${catkin_LIBRARIES})
+#add_dependencies(linear_actuator_node motor_controller_generate_messages_cpp)
 
 #############
 ## Install ##
