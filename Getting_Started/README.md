@@ -21,7 +21,8 @@ There are two ways to go about this, choose one or both
 This is the easier way to get Ubuntu up and running on your computer. However, it is not recommended for several reasons, this includes slower performance, miscellaneous hardware issues, and system dependencies. For coding and testing purposes, this option is fine.
 
 1.) **Downloading Virtualization Software**
-Once again, two options. Download and install either or.
+Once again, two options. Download and install either.
+
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Oracle's freeware)
 
 * [VMWare](http://e5.onthehub.com/WebStore/ProductsByMajorVersionList.aspx?ws=c52673b4-58fe-e011-8e6c-f04da23e67f6&vsro=8) (premium, free at onthehub)
@@ -46,23 +47,24 @@ Now that you have Ubuntu, enjoy the superior OS.
 ###2.) Cloning the Repository
 
 All distros of Ubuntu have git pre-installed. If yours is bizarre or bootleg and doesn't have git, then run the following command
-'sudo apt-get install git'
+
+	sudo apt-get install git
 
 1.) **Create a directory to put the repo folder in.**
-	'mkdir <path where you want directory to be>\<new directory>'
 
-	mkdir will make this directory if it doesn't already exist there.
+	mkdir <path where you want directory to be>\<new directory>
+
+mkdir will make this directory if it doesn't already exist there.
 
 2.) **Change Into That Directory.**
 
-	`cd <relative path to your directory>`
+	cd <relative path to your directory>
 
 3.) **Clone the Repo with Git**
 
-	`git clone https://github.com/fnivek/NASAboticsCode.git`
+	git clone https://github.com/uf-aggregator/AggreGatorRMC.git
 
-Since this repo is private, you will have to enter your login for GitHub.
-For those of you who read GitHub's Getting-Started, yes you can just download the zip from the page, but c'mon :\.
+You have to be a member of a team on GitHub that's added to this repo. Ask [Andrew](https://github.com/FaytxZen) or [Joey](https://github.com/JoeyS7) to be added.
 
 ----------------------------------------------------------
 ###3.) Install ROS
@@ -80,7 +82,7 @@ ROS has a bunch of handy packages for simplifying robotics. The currently used l
 
 Using
 	
-`sudo apt-get install ros-<distro>-<package name>`
+	sudo apt-get install ros-<distro>-<package name>
 
 
 The following are the package names currently used by us, so just insert them at <package name>
