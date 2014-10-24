@@ -12,7 +12,7 @@ class Behaviors {
 		static void dump();
 		static void mine();
 		static void move();
-		
+		static void wait();
 };
 
 #endif

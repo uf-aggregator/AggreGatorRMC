@@ -45,6 +45,12 @@ class StateMachine {
 		 */
 		int next();
 
+		/*void flush(void)
+ 		 *	empty out the behaviorQueue
+ 		 *	EMERGENCIES ONLY
+		 */
+ 		 void flush();
+
 		/*void retrace(int numBack)
 		 *	resets the current state to numBack states ago
 		 */

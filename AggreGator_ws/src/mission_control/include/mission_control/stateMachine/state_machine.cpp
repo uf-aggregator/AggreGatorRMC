@@ -6,6 +6,7 @@
 #include <stack>
 #include "state_machine.h"
 #include "../behaviors/behavior_map.h"
+#include "../behaviors/behaviors.h"
 
 StateMachine::StateMachine () {
 	//initialize starting index for stateHistory
@@ -51,8 +52,20 @@ int StateMachine::start(int starting){
 		behaviorQueue.pop();
 
 		switch(executeBhvId){
+			case MOVE:
+				Behaviors::move();
+				break;
+			case MINE:
+				Behaviors::mine();
+				break;
+			case DUMP:
+				Behaviors::dump();
+				break;
+			case WAIT:
+				Behaviors::wait();
+				break;
 			default:
-				std::cout << "Executing bhvId " << executeBhvId << "\n";
+				std::cout << "Unknown bhvId: " << executeBhvId << "\n";
 				break;
 		}
 
@@ -69,7 +82,7 @@ int StateMachine::next(){
 	//ros::NodeHandle nh;
 	//ros::Subscriber I2CListener;
 
-	return ((int)(rand()*10000)) % 5;
+	return -1;
 }
 
 //CALLBACKS============================================
@@ -77,6 +90,12 @@ int StateMachine::next(){
 
 
 //UTILITY METHODS======================================
+
+void StateMachine::flush(){
+	while(!behaviorQueue.empty()){
+		behaviorQueue.pop();
+	}
+}
 
 void StateMachine::printHistory() {
 	int charPerLine = 7;
