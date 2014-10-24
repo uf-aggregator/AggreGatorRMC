@@ -45,7 +45,7 @@ catkin_package(
 
 add_library(
 	mission_utils
-	include/mission_control/behaviors/avoid_walls_behavior.cpp
+	include/mission_control/behaviors/behaviors.cpp
 
 	include/mission_control/stateMachine/state_machine.cpp
 	include/mission_control/mission_control.cpp

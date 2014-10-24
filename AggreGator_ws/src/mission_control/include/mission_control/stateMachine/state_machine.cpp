@@ -1,38 +1,13 @@
 #include <ros/ros.h>
 #include <iostream>
-#include "state_machine.h"
 #include <cstdlib>
 #include <stdlib.h>
 #include <time.h>
+#include <stack>
+#include "state_machine.h"
+#include "../behaviors/behavior_map.h"
 
 StateMachine::StateMachine () {
-	//initialize all the state definitions
-	mine.stateId = 2;
-	mine.name = "Mine";
-	mine.behaviorCount = 2;
-	mine.behavior = new int[mine.behaviorCount];
-	mine.behavior[0] = -1;
-	mine.behavior[1] = -1;
-
-	dump.stateId = 3;
-	dump.name = "Dump";
-	dump.behaviorCount = 2;
-	dump.behavior = new int[dump.behaviorCount];
-	dump.behavior[0] = -1;
-	dump.behavior[1] = -1;
-
-	wait.stateId = 0;
-	wait.name = "Wait";
-	wait.behaviorCount = 1;
-	wait.behavior = new int[wait.behaviorCount];
-	wait.behavior[0] = -1;
-
-	move.stateId = 1;
-	move.name = "Move";
-	move.behaviorCount = 1;
-	move.behavior = new int[move.behaviorCount];
-	move.behavior[0] = -1;
-
 	//initialize starting index for stateHistory
 	currentHistoryIndex = 0;
 }
@@ -51,17 +26,17 @@ int StateMachine::start(int starting){
 
 		//add behaviors to the queue
 		switch(currentState){
-			case 1:
-				pushToQueue(move.behavior, move.behaviorCount);
+			case MOVE:
+				behaviorQueue.push(MOVE);
 				break;
-			case 2:
-				pushToQueue(mine.behavior, mine.behaviorCount);
+			case MINE:
+				behaviorQueue.push(MINE);
 				break;
-			case 3:
-				pushToQueue(dump.behavior, dump.behaviorCount);
+			case DUMP:
+				behaviorQueue.push(DUMP);
 				break;
-			case 0:
-				pushToQueue(wait.behavior, wait.behaviorCount);
+			case WAIT:
+				behaviorQueue.push(WAIT);
 				break;
 			default:
 				std::cout << "Unidentified state: " << currentState << "\n";
@@ -80,6 +55,8 @@ int StateMachine::start(int starting){
 				std::cout << "Executing bhvId " << executeBhvId << "\n";
 				break;
 		}
+
+		std::cout << std::endl;
 	}
 	return 0; //normal termination
 }
@@ -92,7 +69,7 @@ int StateMachine::next(){
 	//ros::NodeHandle nh;
 	//ros::Subscriber I2CListener;
 
-	return rand() % 5;
+	return ((int)(rand()*10000)) % 5;
 }
 
 //CALLBACKS============================================
@@ -100,20 +77,6 @@ int StateMachine::next(){
 
 
 //UTILITY METHODS======================================
-
-bool StateMachine::pushToQueue(int* ids, int numIds) {
-	for(int i = 0; i < numIds; i++){
-		try{
-			behaviorQueue.push(ids[i]);
-			std::cout << "Pushing " << ids[i] << " to behaviorQueue\n";
-		} catch(...) {
-			std::cout << "Pushing to queue failed." << "\n";
-			return false;
-		}
-	}
-
-	return true;
-}
 
 void StateMachine::printHistory() {
 	int charPerLine = 7;
@@ -124,5 +87,24 @@ void StateMachine::printHistory() {
 }
 
 void StateMachine::retrace(int numBack){
+	std::queue<int> temp;
+	int limit = currentHistoryIndex - numBack;
+	
+	if(limit < 0) limit = 0;
 
+	for(int i = limit; i <= currentHistoryIndex; i++){
+		temp.push(stateHistory[i]);
+	}
+
+	for(int i = 0; i < behaviorQueue.size(); i++){
+		temp.push(behaviorQueue.front());
+		behaviorQueue.pop();
+	}
+
+	while(!temp.empty()){
+		behaviorQueue.push(temp.front());
+		temp.pop();
+	}
+
+	currentHistoryIndex = limit;
 }
