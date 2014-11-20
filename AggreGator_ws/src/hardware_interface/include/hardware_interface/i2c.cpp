@@ -12,6 +12,7 @@ char* I2C::read_i2c(int address, int size)
     char* read_buffer = (char*) malloc(MAX_READ_BYTES);
 	read_buffer[0] = 1; //1 means data is not valid
 	
+    //MITIGATING FAILURE=======================
     if (size > MAX_READ_BYTES)
 	{
 		printf("Cannot read that many bytes!");
@@ -32,10 +33,11 @@ char* I2C::read_i2c(int address, int size)
         /* ERROR HANDLING; you can check errno to see what went wrong */
 		/*error_buffer = g_strerror(errno);
             printf(error_buffer);*/
-	close(file);
+	    close(file);
         return read_buffer;
     }
 	
+    //THE ACTUAL READING
 	if (read(file,read_buffer+1,size) != size) {
             /* ERROR HANDLING: i2c transaction failed */
             printf("Failed to read from the i2c bus.\n");

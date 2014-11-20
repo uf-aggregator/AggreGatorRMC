@@ -10,9 +10,9 @@
 #include "std_msgs/MultiArrayLayout.h"
 #include "std_msgs/MultiArrayDimension.h"
 #include "std_msgs/Float32MultiArray.h"
+#include "std_msgs/Bool.h"
 
 using namespace std;
-
 
 //last scan 
 sensor_msgs::LaserScan last_scan;
@@ -22,10 +22,8 @@ std_msgs::Float32MultiArray last_output;
 //the filter
 Filter filter;
 
-
 //ladar_node output messages - vector of differences and average difference
 //ros::Publisher output;
-
 
 ros::Time last_time, current_time;
 ros::Duration send_time(1);       //time in seconds between sends (send 1 message a sec)
@@ -41,8 +39,8 @@ void scanCallback(const sensor_msgs::LaserScan laser){
 	last_scan = laser;
 }
 
-void snapshotCallBack(bool snapshot){
-	if(snapshot){
+void snapshotCallBack(std_msgs::Bool snapshot){
+	if(snapshot.data){
 		//set the offset to be the last scan taken
 		filter.setOffset(last_scan);
 	}

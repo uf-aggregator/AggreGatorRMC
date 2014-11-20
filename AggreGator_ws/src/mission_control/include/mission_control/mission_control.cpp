@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include "mission_control.h"
+#include "mission_control/behaviors/behavior_map.h"
 
 using namespace std;
 //====================================================
@@ -51,7 +52,7 @@ void MissionControl::StartSenseAct(){
 
 	try {
 		StateMachine *sm = new StateMachine();
-		sm->start(0);
+		sm->start(WAIT);
 
 	}catch(...){
 		cout << "Some exception has occurred." << "\n";

@@ -47,8 +47,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
  add_message_files(
    FILES
- ########  Avg_Noise.msg
- ########  Filtered.msg
+   Avg_Noise.msg
+   Filtered.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -106,14 +106,14 @@ include_directories(
  )
 
 ## Declare a cpp executable
-######## add_executable(filter_node src/filter_node.cpp)
+add_executable(filter_node src/filter_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-######## add_dependencies(filter_node filter_generate_messages_cpp)
+add_dependencies(filter_node filter_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-########target_link_libraries(filter_node ${catkin_LIBRARIES} filter )
+target_link_libraries(filter_node ${catkin_LIBRARIES} filter )
 
 #############
 ## Install ##

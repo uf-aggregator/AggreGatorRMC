@@ -4,24 +4,11 @@
 #include <queue>
 #include <string>
 
-/*state
- *	stateId - id for stateHistory and deciding next state
- *	name - the name of the state, for logging purposes
- *	behavior - all the behaviors the state can start
- */
-struct state {
-	int stateId;
-	int behaviorCount;
-	int *behavior;
-	std::string name;
-};
-
 class StateMachine {
 	public:
 	//DATA MEMBERS==================
 		static const int MAX_HISTORY = 100;
-		//all currently planned states
-		state dump, wait, move, mine; 
+
 
 		//holds behaviors to be executed
 		std::queue<int> behaviorQueue;
@@ -60,6 +47,8 @@ class StateMachine {
 		 *	prints out the state history in ascending order
 		 */
 		 void printHistory();
+
+		 //CALLBACKS
 };
 
 #endif

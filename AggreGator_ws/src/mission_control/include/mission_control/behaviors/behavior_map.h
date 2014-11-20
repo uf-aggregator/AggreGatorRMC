@@ -5,7 +5,8 @@ enum Behavior {
 	MOVE = 0,
 	MINE,
 	DUMP,
-	WAIT
+	WAIT,
+	QUIT
 };
 
 #endif

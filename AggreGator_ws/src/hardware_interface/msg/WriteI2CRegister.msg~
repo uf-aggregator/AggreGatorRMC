@@ -1,3 +1,0 @@
-int8 addr
-int8 register
-uint8[] data

@@ -19,11 +19,13 @@ int StateMachine::start(int starting){
 	currentHistoryIndex++;
 
 	while(currentState > -1){
-		currentState = next();
-		stateHistory[currentHistoryIndex] = currentState;
+		std::cout << "Current State was " << currentState << "\n";
 
-		//execute behaviors
-		std::cout << "Current State is " << currentState << "\n";
+		currentState = next();
+
+		std::cout << "Current State is now " << currentState << "\n";
+
+		stateHistory[currentHistoryIndex] = currentState;
 
 		//add behaviors to the queue
 		switch(currentState){
@@ -77,16 +79,26 @@ int StateMachine::start(int starting){
 //Currently just random numbers, but we'll have to make
 //actual logic based on ROS values
 int StateMachine::next(){
-	//subscribe to topics and get message whnever this method is called
+	//subscribe to topics and return the weighted value when this method is called
+	ros::NodeHandle nh;
 
-	//ros::NodeHandle nh;
-	//ros::Subscriber I2CListener;
-
-	return -1;
+	switch(currentState){
+		case MOVE:
+			return MINE;
+		case MINE:
+			return DUMP;
+		case DUMP:
+			return QUIT;			
+		case WAIT:
+			return MOVE;
+		case QUIT:
+			return -1;
+		default:
+			return MOVE;
+	}
 }
 
 //CALLBACKS============================================
-
 
 
 //UTILITY METHODS======================================
