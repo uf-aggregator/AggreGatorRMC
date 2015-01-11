@@ -2,6 +2,7 @@
 #define BEHAVIORS_H
 
 #include "behavior_map.h"
+#include "behavior_move.h"
 
 class Behaviors {
 	private:

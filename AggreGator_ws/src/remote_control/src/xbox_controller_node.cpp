@@ -205,7 +205,6 @@ void WriteMotorValue()
 		               and buttons as ints with 0 (not pressed) or 1 (pressed)
 	OUTPUT: None, but global variables left_motor and right_motor are set
 			left_motor and right_motor are used in WriteMotorValues()
-
 */
 
 void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
@@ -231,7 +230,6 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		else
 			ROS_INFO("Linear actuator set to retract");
 	}
-
 	//Bucket Drum toggle TODO: Change this to another mining motor later
 	if (btn_released[LB])
 	{
@@ -308,7 +306,6 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 	/*
 	if(btn_released[Y])
 	{
-
 		bucket_gear += 0.1f;
 		if (bucket_gear >= 1.0f)
 		{

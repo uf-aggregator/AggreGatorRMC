@@ -5,21 +5,14 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  message_generation
+  genmsg
+  hardware_interface
 )
-
-## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
 
 ################################################
 ## Declare ROS messages, services and actions ##
 ################################################
-
-## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -28,15 +21,16 @@ find_package(catkin REQUIRED COMPONENTS
 #   Service2.srv
 # )
 
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   std_msgs
+   hardware_interface
+ )
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES mission_control
-  CATKIN_DEPENDS roscpp rospy std_msgs
+  LIBRARIES mission_control hardware_utils
+  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
 )
 
 ###########
@@ -46,7 +40,7 @@ catkin_package(
 add_library(
 	mission_utils
 	include/mission_control/behaviors/behaviors.cpp
-
+  include/mission_control/behaviors/behavior_move.cpp
 	include/mission_control/stateMachine/state_machine.cpp
 	include/mission_control/mission_control.cpp
 )

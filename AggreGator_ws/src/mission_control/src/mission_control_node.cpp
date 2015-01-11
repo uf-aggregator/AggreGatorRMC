@@ -17,6 +17,6 @@ int main(int argc, char **argv){
 
 	MissionControl *mc = new MissionControl();
 	mc->StartSenseAct();
-	
+
 	return 0;
 }
