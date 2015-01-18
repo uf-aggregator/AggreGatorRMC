@@ -1,7 +1,8 @@
 #include "ros/ros.h"
 #include "std_msgs/builtin_int16.h"
-#include "motor_controller/AdaCmd.h"
 #include "hardware_interface/GPIO.h"
+#include "motor_controller/LinActMotor.h"
+#include "motor_controller/AdaCmd.h"
 #include "controller.h"
 
 #define epsilon 0.001
@@ -89,10 +90,10 @@ motor_controller::AdaCmd generateMessage()
 }
 
 
-void callBack(const std_msgs::Int16& msg)
+void LinActCallback(const motor_controller::LinActMotor& msg)
 {
 	//Scales input to be an equivalent voltage input to motor controller
-	linearActuator.setU(msg.data * 24.0 / 32768.0); 
+	linearActuator.setU(msg.mining_motorVal * 24.0 / 32768.0); 
 }
 
 void stopLinearActuator()
@@ -107,7 +108,7 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "linear_actuator_node");                     //Initialize node
     ros::NodeHandle n;                                                 //Create nodehandle object
 
-    sub = n.subscribe("linear_actuator_rc", 1000, callBack);           //Create object to subscribe to topic "linear_actuator_rc"
+    sub = n.subscribe("linear_actuator_rc", 1000, LinActCallback);           //Create object to subscribe to topic "linear_actuator_rc"
     pub = n.advertise<motor_controller::AdaCmd>("adaFruit",1000);      //Create object to publish to topic "adaFruit"
 	
    while(ros::ok())

@@ -2,7 +2,7 @@
 #define BEHAVIORS_H
 
 #include "behavior_map.h"
-#include "behavior_move.h"
+#include "motor_utility.h"
 
 class Behaviors {
 	private:

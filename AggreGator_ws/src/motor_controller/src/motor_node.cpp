@@ -3,16 +3,15 @@
 	Author: Daniel Kelly
 	Description: This ROS node catches data from the remote control node,processes it, and sends it out to the i2c node to be used by the wheel motors	*/
 
+#include <iostream>
+#include <cmath>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-#include "motor_controller/Motor.h"
-#include "remote_control/Motor.h"
-#include "motor_controller/AdaCmd.h"
 #include "hardware_interface/GPIO.h"
+#include "motor_controller/AdaCmd.h"
+#include "motor_controller/Motor.h"
 #include "motor_controller/I2CGeneric.h"
-#include <iostream>
 #include "controller.h"
-#include <cmath>
 
 #define epsilon 0.001
 
@@ -20,7 +19,7 @@ using namespace std;
 
 //Global variables
 //float* controlOutput = new float[5]; 	//Array used for organizing the data on i2c for each motor
-								//Temporarily removing, may be permanent -Joey
+										//Temporarily removing, may be permanent -Joey
 
 ros::Subscriber sub; 		//Subscriber object, used for accepting messages from the remote controller
 
@@ -36,10 +35,10 @@ SSController leftFrontWheel; 		//create controller object for left front wheel
 SSController leftRearWheel; 		//create controller object for left rear wheel
 SSController rightRearWheel; 		//create controller object for right rear wheel
 SSController rightFrontWheel; 		//create controller object for right front wheel
-
 */
+
 //The last message sent from the xbox controller
-remote_control::Motor lastRemoteMsg;
+motor_controller::Motor lastRemoteMsg;
 
 /*
 The ODROID will not need to directly access pins not related to I2C -Joey
@@ -63,7 +62,7 @@ enum MotorPins
 		This function will generate that byte from a Motor msg from the xbox controller
 	-Joey
 	*/
-unsigned char getMotorDirection(remote_control::Motor msg)
+unsigned char getMotorDirection(motor_controller::Motor msg)
 {
 	//convert the motor msg into an array to easily loop through values
 	float controllerOutput[4];
@@ -181,22 +180,19 @@ uint8_t convertTo8bit(float controller_motorVal){
 }
 
 //Creates a message to be sent to the I2C node based on message from xbox controller
-motor_controller::I2CGeneric generateMessage(remote_control::Motor input)
+motor_controller::I2CGeneric generateMessage(motor_controller::Motor input)
 {
-
 	motor_controller::I2CGeneric msg;
 
 	msg.addr = 1; //all motors are controlled by the same Teensy, address = 1
 	
 	msg.data.push_back(getMotorDirection(input));
 	
-	
 	msg.data.push_back(convertTo8bit(input.leftFront_motorVal));
 	msg.data.push_back(convertTo8bit(input.rightFront_motorVal));
 	msg.data.push_back(convertTo8bit(input.rightRear_motorVal));
 	msg.data.push_back(convertTo8bit(input.leftRear_motorVal));
 	
-
 	return msg;
 
 }
@@ -219,7 +215,7 @@ motor_controller::I2CGeneric generateZeroMessage(){
 }
 
 //Callback function which fills motorArray with values from the message
-void callBack (const remote_control::Motor msg){
+void callBack (const motor_controller::Motor msg){
 //	leftFrontWheel.setU(msg.leftFront_motorVal * 24.0 / 32768.0); //Set controller inputs
 //	leftRearWheel.setU(msg.leftRear_motorVal * 24.0 / 32768.0);
 //	rightRearWheel.setU(msg.rightRear_motorVal * 24.0 / 32768.0);
@@ -231,7 +227,6 @@ void callBack (const remote_control::Motor msg){
 //MAIN
 int main(int argc, char** argv)
 {
-
 	ros::init(argc, argv, "motor_node"); //Initialize node
 
 	ros::NodeHandle n; //Create nodehandle object
@@ -267,8 +262,7 @@ int main(int argc, char** argv)
 
 			//controlFunction(); //Motor controller function
 			pub.publish(generateMessage(lastRemoteMsg));
-		}
-		
+		}		
 			ros::spinOnce();
 	}
 	
@@ -278,8 +272,5 @@ int main(int argc, char** argv)
 	//controlFunction();
 	pub.publish(generateZeroMessage());
 
-	
-
 	return 0;
 }
-

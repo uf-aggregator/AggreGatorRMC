@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <unistd.h>
-#include "matrix.h"
-#include "controller.h"
+#include "motor_controller/matrix.h"
+#include "motor_controller/controller.h"
 
 using namespace std;
 

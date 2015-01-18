@@ -4,7 +4,13 @@ project(motor_controller)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation hardware_interface)
+find_package(catkin REQUIRED COMPONENTS 
+	roscpp 
+	rospy 
+	std_msgs 
+	message_generation 
+	hardware_interface
+)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -37,28 +43,16 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation
  add_message_files(
    FILES
    Motor.msg 
+   LinActMotor.msg
    I2CGeneric.msg
    AdaCmd.msg
  )
 
-## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
-
-## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
-#   Action2.action
-# )
-
 ## Generate added messages and services with any dependencies listed here
  generate_messages(
    DEPENDENCIES
-   std_msgs  # Or other packages containing msgs
+   std_msgs 
+   hardware_interface
  )
 
 ###################################
@@ -70,105 +64,40 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+
+#configure the package's catkin stuff
 catkin_package(
-# INCLUDE_DIRS include
-#  LIBRARIES Remote_Control_Code
-  CATKIN_DEPENDS message_runtime hardware_interface
-#  DEPENDS system_lib 
+	INCLUDE_DIRS include
+	LIBRARIES motor_utils hardware_utils
+	CATKIN_DEPENDS roscpp rospy std_msgs message_runtime hardware_interface
 )
 
-include_directories(include ${catkin_INCLUDE_DIRS})
 
 ###########
 ## Build ##
 ###########
 
-## Specify additional locations of header files
-## Your package locations should be listed before other locations
-# include_directories(include)
+#create a "library" of files to be linked
+add_library(
+	motor_utils
+	include/matrix.cpp
+  	include/controller.cpp
+)
 
-## Declare a cpp library
-# add_library(Remote_Control_Code
-#   src/${PROJECT_NAME}/Remote_Control_Code.cpp
-# )
+#make the package aware of its include folder
+include_directories(
+	${catkin_INCLUDE_DIRS}
+  	include ${catkin_INCLUDE_DIRS}
+)
 
-## Declare a cpp executable
-# add_executable(Remote_Control_Code_node src/Remote_Control_Code_node.cpp)
-
-## Add cmake target dependencies of the executable/library
-## as an example, message headers may need to be generated before nodes
-# add_dependencies(Remote_Control_Code_node Remote_Control_Code_generate_messages_cpp)
-
-## Specify libraries to link a library or executable target against
-# target_link_libraries(Remote_Control_Code_node
-#   ${catkin_LIBRARIES}
-# )
-
-add_executable(motor_node src/motor_node.cpp)# src/controller.cpp src/matrix.cpp)
-target_link_libraries(motor_node ${catkin_LIBRARIES})
+add_executable(motor_node src/motor_node.cpp)
+target_link_libraries(motor_node ${catkin_LIBRARIES} motor_utils)
 add_dependencies(motor_node motor_controller_generate_messages_cpp)
+
+add_executable(linear_actuator_node src/linear_actuator_node.cpp)
+target_link_libraries(linear_actuator_node ${catkin_LIBRARIES} motor_utils)
+add_dependencies(linear_actuator_node motor_controller_generate_messages_cpp)
 
 #add_executable(bucket_motor_node src/bucket_motor_node.cpp)# src/controller.cpp src/matrix.cpp)
 #target_link_libraries(bucket_motor_node ${catkin_LIBRARIES})
 #add_dependencies(bucket_motor_node motor_controller_generate_messages_cpp)
-
-#add_executable(linear_actuator_node src/linear_actuator_node.cpp)# src/controller.cpp src/matrix.cpp)
-#target_link_libraries(linear_actuator_node ${catkin_LIBRARIES})
-#add_dependencies(linear_actuator_node motor_controller_generate_messages_cpp)
-
-#############
-## Install ##
-#############
-
-# all install targets should use catkin DESTINATION variables
-# See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
-
-## Mark executable scripts (Python etc.) for installation
-## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
-
-## Mark executables and/or libraries for installation
-# install(TARGETS hardware_interface
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
-
-## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-# )
-
-## Mark other files for installation (e.g. launch and bag files, etc.)
-# install(FILES
-#   # myfile1
-#   # myfile2
-#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
-
-#############
-## Testing ##
-#############
-
-## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_Remote_Control_Code.cpp)
-# if(TARGET ${PROJECT_NAME}-test)
-#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
-# endif()
-
-## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)
-
-#add_executable(talker src/talker.cpp)
-#target_link_libraries(talker ${catkin_LIBRARIES})
-#add_dependencies(talker beginner_tutorials_generate_messages_cpp)
-
-#add_executable(listener src/listener.cpp)
-#target_link_libraries(listener ${catkin_LIBRARIES})
-#add_dependencies(listener beginner_tutorials_generate_messages_cpp)
-

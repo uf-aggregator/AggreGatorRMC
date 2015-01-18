@@ -4,12 +4,12 @@
  *  Created on: Feb 4, 2014
  *      Author: Daniel Kelly
  */
-
+#include <sstream>
+#include <vector>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-#include <sstream>
 #include "motor_controller/AdaCmd.h"
-#include <vector>
+
 
 int main(int argc, char **argv)
 {

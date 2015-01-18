@@ -37,17 +37,19 @@ catkin_package(
 ## Build ##
 ###########
 
+#create library for linking definitions
 add_library(
 	mission_utils
 	include/mission_control/behaviors/behaviors.cpp
-  include/mission_control/behaviors/behavior_move.cpp
+  include/mission_control/behaviors/motor_utility.cpp
 	include/mission_control/stateMachine/state_machine.cpp
 	include/mission_control/mission_control.cpp
 )
 
+#make the include directory known
 include_directories(
 	${catkin_INCLUDE_DIRS}
-  	include ${catkin_INCLUDE_DIRS}
+  include ${catkin_INCLUDE_DIRS}
 )
 
 add_executable(mission_control_node src/mission_control_node.cpp )

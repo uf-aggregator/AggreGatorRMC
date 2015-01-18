@@ -1,8 +1,8 @@
 #include "ros/ros.h"
 #include "std_msgs/builtin_int16.h"
-#include "motor_controller/AdaCmd.h"
 #include "hardware_interface/GPIO.h"
-#include "controller.h"
+#include "motor_controller/AdaCmd.h"
+#include "motor_controller/controller.h"
 
 #define epsilon 0.001
 
