@@ -30,7 +30,7 @@ class motor_utility {
 		static void stop_actuators();
 		static void stop();
 		static void write(float leftMotorsVal, float rightMotorsVal);
-		static void write(int actuatorVal, int actuatorDir);
+		static void write(int mineVal, int mineDir, int dumpVal, int dumpDir);
 
 		static void incWheelGear();
 		static void decWheelGear();

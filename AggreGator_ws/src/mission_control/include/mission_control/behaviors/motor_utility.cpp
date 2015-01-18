@@ -65,7 +65,7 @@ void motor_utility::write(float leftMotorsVal, float rightMotorsVal){
 	}
 }
 
-void motor_utility::write(int actuatorVal, int actuatorDir){
+void motor_utility::write(int mineVal, int mineDir, int dumpVal, int dumpDir){
 	ros::Time current_time = ros::Time::now();
 	ros::Duration send_freq(send_time);
 	
@@ -73,7 +73,7 @@ void motor_utility::write(int actuatorVal, int actuatorDir){
 		prev_write_time = current_time;
 
 		motor_controller::LinActMotor actuator_msg;
-		int value_to_write = (actuatorVal - 1) * -16383 * actuatorDir * actuator_motor_gear;
+		int value_to_write = (mineVal - 1) * -16383 * mineDir * actuator_motor_gear;
 		actuator_msg.mining_motorVal = value_to_write;
 		actuator_msg.dumping_motorVal = 0;
 		publish_to_actuators(actuator_msg);
