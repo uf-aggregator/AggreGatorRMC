@@ -1,6 +1,7 @@
 ~$
 .swp$
 build/
+devel/
 devel/share/*
 bin/
 lib/
