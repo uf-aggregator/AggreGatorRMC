@@ -7,8 +7,8 @@
 class StateMachine {
 	public:
 	//DATA MEMBERS==================
+		//cap for how many states to retain
 		static const int MAX_HISTORY = 100;
-
 
 		//holds behaviors to be executed
 		std::queue<int> behaviorQueue;
@@ -17,6 +17,7 @@ class StateMachine {
 		int stateHistory[MAX_HISTORY];
 		int currentState, currentHistoryIndex;
 
+		//constructors
 		StateMachine();
 		~StateMachine(){
 		}

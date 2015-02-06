@@ -6,7 +6,6 @@
 #include <stack>
 #include "state_machine.h"
 #include "../behaviors/behavior_map.h"
-#include "../behaviors/behaviors.h"
 
 StateMachine::StateMachine () {
 	//initialize starting index for stateHistory
@@ -55,16 +54,16 @@ int StateMachine::start(int starting){
 
 		switch(executeBhvId){
 			case MOVE:
-				Behaviors::move();
+				
 				break;
 			case MINE:
-				Behaviors::mine();
+				
 				break;
 			case DUMP:
-				Behaviors::dump();
+				
 				break;
 			case WAIT:
-				Behaviors::wait();
+				
 				break;
 			default:
 				std::cout << "Unknown bhvId: " << executeBhvId << "\n";

@@ -14,19 +14,6 @@ find_package(catkin REQUIRED COMPONENTS
 ## Declare ROS messages, services and actions ##
 ################################################
 
-## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
-
- generate_messages(
-   DEPENDENCIES
-   std_msgs
-   hardware_interface
- )
-
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES mission_control hardware_utils
@@ -40,7 +27,6 @@ catkin_package(
 #create library for linking definitions
 add_library(
 	mission_utils
-	include/mission_control/behaviors/behaviors.cpp
   include/mission_control/behaviors/motor_utility.cpp
 	include/mission_control/stateMachine/state_machine.cpp
 	include/mission_control/mission_control.cpp

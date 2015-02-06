@@ -1,5 +1,5 @@
-#ifndef BEHAVIORMAP_H
-#define BEHAVIORMAP_H
+#ifndef BEHAVIORENUM_H
+#define BEHAVIORENUM_H
 
 enum Behavior {
 	MOVE = 0,

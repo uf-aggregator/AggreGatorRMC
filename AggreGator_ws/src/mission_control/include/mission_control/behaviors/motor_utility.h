@@ -14,15 +14,10 @@ class motor_utility {
 		static unsigned int delay_queue_size;
 		static double wheel_motor_gear;
 		static double actuator_motor_gear;
-		static double delay_time;
-		static double send_time;
-
-		static ros::Time prev_write_time;
 
 		motor_utility();
 		static void publish_to_wheels(motor_controller::Motor msg);
 		static void publish_to_actuators(motor_controller::LinActMotor msg);
-		
 	public:
 		static void init();
 		static void ros_init();
@@ -36,8 +31,6 @@ class motor_utility {
 		static void decWheelGear();
 		static double getWheelGear();
 		static double getActuatorGear();
-		static double getDelay();
-		static void setDelayTime(double newDelay);
 };
 
 #endif
