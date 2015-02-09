@@ -1,4 +1,0 @@
-float32 leftFront_motorVal
-float32 rightFront_motorVal
-float32 rightRear_motorVal
-float32 leftRear_motorVal

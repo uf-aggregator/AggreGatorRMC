@@ -6,25 +6,36 @@ Keep up to date with non-code shenanigans at [our website](http://www.ufaggregat
 
 ----------------------------------------------------------
 
-###Running the Aggregator (2013-2014)
+###Setting Up Your Workspace
 
-First, on the Odroid, navigate to the NASAboticsCode folder, and run the ODroid script:
-```
-bash ODroidStart.sh
+In order to setup the workspace, first run the usual commands from the directory you want it in,
+	
+```shell
+
+	# init the workspace
+	source /opt/ros/hydro/setup.bash
+	mkdir src
+	cd src
+	catkin_init_workspace
+
+	# build it for the first time
+	cd ..
+	catkin_make
+
+	# clone the repo in src/
+	cd src/
+	git clone https://github.com/uf-aggregator/AggreGatorRMC.git
+
+	#initialize the repo with a special build script
+	cd ../..
+	catkin_make --pkg common_msgs
+	catkin_make --pkg common_msgs
+
+	#repeat the following until it generates without error, normally ~2-3 times
+	catkin_make
 ```
 
-Then, on your own computer, run the Command script:
-
-```
-bash CommandStart.sh
-```
-
-Wait a few seconds, then open a new terminal on your own computer. Run the image_view node:
-
-```
-rosrun image_view image_view image:=rotated/image 
-```
-----------------------------------------------------------
+---------------------------------------------------------
 
 ###Recovering from Crashes
 
