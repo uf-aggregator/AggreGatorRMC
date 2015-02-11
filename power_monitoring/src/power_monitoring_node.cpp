@@ -8,8 +8,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "common_msgs/RawMotorPowerData.h"
-#include "common_msgs/ElectronicPowerData.h"
+#include "common_files/RawMotorPowerData.h"
+#include "common_files/ElectronicPowerData.h"
 
 using namespace std;
 
@@ -67,13 +67,13 @@ bool readPercentage(){
 
 
 //Converts raw data from ADC into power
-void ConvertRawMotorToPower(const common_msgs::RawMotorPowerData& data)
+void ConvertRawMotorToPower(const common_files::RawMotorPowerData& data)
 {
   //  ROS_INFO("Raw data [Voltage: %i, Current: %i]", data.voltage, data.current);
 }
 
 //Tracks the power used by the electronics
-void TrackElectronicPower(const common_msgs::ElectronicPowerData& data)
+void TrackElectronicPower(const common_files::ElectronicPowerData& data)
 {
 	float calculatedPower = data.power; //Calculates power based on the digital value from the INA226 and the bit-to-Watt conversion ratio. Calculated in the ina226 node
 	//ROS_INFO("%i",data.power);

@@ -2,9 +2,9 @@
 #define INA_226
 
 #include "ros/ros.h"
-#include "common_msgs/WriteI2CRegister.h"
-#include "hardware_interface/ReadI2CRegister.h"
-#include "common_msgs/ElectronicPowerData.h"
+#include "common_files/WriteI2CRegister.h"
+#include "common_files/ReadI2CRegister.h"
+#include "common_files/ElectronicPowerData.h"
 
 #define	MAX_EXPECTED_CURRENT 	 2//Max expected currrent flowing through the shunt, in amps
 #define	RSHUNT			 0.004 //Shunt register value, in ohms

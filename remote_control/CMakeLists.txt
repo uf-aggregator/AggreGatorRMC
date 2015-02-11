@@ -19,7 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
 generate_messages(
    DEPENDENCIES
    sensor_msgs
-   common_msgs
+   common_files
 )
 
 ###################################

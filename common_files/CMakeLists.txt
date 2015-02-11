@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(common_msgs)
+project(common_files)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -52,6 +52,12 @@ add_message_files (
   filter/Filtered.msg
 )
 
+add_service_files ( 
+	FILES
+	ReadI2C.srv
+	ReadI2CRegister.srv
+)
+
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
@@ -68,8 +74,8 @@ generate_messages(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES common_msgs
+#  INCLUDE_DIRS include
+  LIBRARIES common_files
   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime 
 #  DEPENDS system_lib
 )
@@ -83,10 +89,9 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
-  include ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(common_msgs_node src/common_msgs_node.cpp)
-add_dependencies(common_msgs_node common_msgs_generate_messages_cpp)
-target_link_libraries(common_msgs_node ${catkin_LIBRARIES})
+add_executable(common_files_node src/common_files_node.cpp)
+add_dependencies(common_files_node common_files_generate_messages_cpp)
+target_link_libraries(common_files_node ${catkin_LIBRARIES})
 

@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include "ros/ros.h"
 #include <sensor_msgs/Joy.h>
-#include "common_msgs/Motor.h"
+#include "common_files/Motor.h"
 #include <std_msgs/builtin_int16.h>
 #include "ros/time.h"
 #include "ros/duration.h"
@@ -122,7 +122,7 @@ void WriteMotorValue()
 		
 		if(enable){ //if overall motor enable is true
 			//Format data
-			common_msgs::Motor motor_msg;
+			common_files::Motor motor_msg;
 			if(enable){
 				/* NOTE: Before, these values were scaled to a 16 bit integer
 				The motor_controller node now has that responsibility
@@ -350,7 +350,7 @@ void StopEverything()
 {
 	//Generate msgs
     //Format data
-    common_msgs::Motor motor_msg;
+    common_files::Motor motor_msg;
 
     //Fill msgs with 0s
     motor_msg.leftFront_motorVal = 0;
@@ -428,7 +428,7 @@ int main(int argc, char** argv)
 
 
     //Set up publisher on motor_rc, buffer up to 1000 msgs
-    motor_pub = n.advertise<common_msgs::Motor>("motor_rc", 1000);
+    motor_pub = n.advertise<common_files::Motor>("motor_rc", 1000);
 
     //Initilize time
     last_time = ros::Time::now();

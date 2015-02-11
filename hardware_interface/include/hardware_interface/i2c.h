@@ -14,10 +14,10 @@
 #include <fcntl.h>
 #include "GPIO.h"
 #include "ros/ros.h"
-#include "common_msgs/WriteI2C.h"
-#include "hardware_interface/ReadI2C.h"
-#include "common_msgs/WriteI2CRegister.h"
-#include "hardware_interface/ReadI2CRegister.h"
+#include "common_files/WriteI2C.h"
+#include "common_files/ReadI2C.h"
+#include "common_files/WriteI2CRegister.h"
+#include "common_files/ReadI2CRegister.h"
 
 #define MAX_READ_BYTES 41
 #define MAX_WRITE_BYTES 40
@@ -50,15 +50,15 @@ class I2C {
 	static int softwareReset(void);
 
 	//callbacks
-	static bool ReadI2CCallback(hardware_interface::ReadI2C::Request&  request,
-                     hardware_interface::ReadI2C::Response& reply);
+	static bool ReadI2CCallback(common_files::ReadI2C::Request&  request,
+                     common_files::ReadI2C::Response& reply);
 
-	static bool ReadRegisterI2CCallback(hardware_interface::ReadI2CRegister::Request&  request,
-                             hardware_interface::ReadI2CRegister::Response& reply);
+	static bool ReadRegisterI2CCallback(common_files::ReadI2CRegister::Request&  request,
+                             common_files::ReadI2CRegister::Response& reply);
 
-	static void WriteI2CCallback(const common_msgs::WriteI2C& msg);
+	static void WriteI2CCallback(const common_files::WriteI2C& msg);
 
-	static void WriteRegisterI2C(const common_msgs::WriteI2CRegister& msg);
+	static void WriteRegisterI2C(const common_files::WriteI2CRegister& msg);
 };
 
 #endif

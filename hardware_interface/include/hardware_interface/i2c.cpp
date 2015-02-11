@@ -224,8 +224,8 @@ int I2C::softwareReset(void)
 /*************************
  * Callbacks
  **************************/
-bool I2C::ReadI2CCallback(hardware_interface::ReadI2C::Request&  request,
-                     hardware_interface::ReadI2C::Response& reply)
+bool I2C::ReadI2CCallback(common_files::ReadI2C::Request&  request,
+                     common_files::ReadI2C::Response& reply)
 {
     char* buf;
     buf = I2C::read_i2c(request.addr, request.size);
@@ -239,8 +239,8 @@ bool I2C::ReadI2CCallback(hardware_interface::ReadI2C::Request&  request,
 
 
 //Read from I2C register
-bool I2C::ReadRegisterI2CCallback(hardware_interface::ReadI2CRegister::Request&  request,
-                             hardware_interface::ReadI2CRegister::Response& reply)
+bool I2C::ReadRegisterI2CCallback(common_files::ReadI2CRegister::Request&  request,
+                             common_files::ReadI2CRegister::Response& reply)
 {
     char* buf;
     buf = I2C::readfromreg_i2c(request.addr, request.reg, request.size);
@@ -264,7 +264,7 @@ bool I2C::ReadRegisterI2CCallback(hardware_interface::ReadI2CRegister::Request& 
 
 
 //Write to I2C
-void I2C::WriteI2CCallback(const common_msgs::WriteI2C& msg)
+void I2C::WriteI2CCallback(const common_files::WriteI2C& msg)
 {
     char* data = (char*) malloc(msg.data.size());
     for(int i = 0; i < msg.data.size(); ++i)
@@ -279,7 +279,7 @@ void I2C::WriteI2CCallback(const common_msgs::WriteI2C& msg)
 
 
 //Write to I2C register
-void I2C::WriteRegisterI2C(const common_msgs::WriteI2CRegister& msg)
+void I2C::WriteRegisterI2C(const common_files::WriteI2CRegister& msg)
 {
 	//ROS_INFO("swag");
     char* data = (char*) malloc(msg.data.size());

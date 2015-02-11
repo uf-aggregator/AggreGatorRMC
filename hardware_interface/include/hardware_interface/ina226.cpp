@@ -5,7 +5,7 @@
 void INA226::inaInitialize()
 {
 	//Set cconfiguration register
-	common_msgs::WriteI2CRegister configure;
+	common_files::WriteI2CRegister configure;
 	configure.addr = ina226Addr;
 	configure.reg = config;
 	configure.data.push_back(0x4B); //Set averaging mode and conversion times on INA226
@@ -13,7 +13,7 @@ void INA226::inaInitialize()
 	write_reg_pub.publish(configure); //Publish message containing information to write to the configuration register
 	
 	//Set Calibration register
-	common_msgs::WriteI2CRegister calibration;
+	common_files::WriteI2CRegister calibration;
 	calibration.addr = ina226Addr;
 	calibration.reg = calibrate;
 	
@@ -27,7 +27,7 @@ void INA226::inaInitialize()
 //Reads power from the INA226 by requesting a service call to the i2c_node
 int INA226::readElectronicPower()
 {
-	hardware_interface::ReadI2CRegister readPower;
+	common_files::ReadI2CRegister readPower;
 	
 	readPower.request.addr = ina226Addr; //Sets request address
 	readPower.request.size = 2; //Specifies size of return data
@@ -46,7 +46,7 @@ int INA226::readElectronicPower()
 //Publishes raw power data gathered from the readElectronicPower function
 void INA226::publishElectronicPower()
 {
-	common_msgs::ElectronicPowerData sendPowerData;
+	common_files::ElectronicPowerData sendPowerData;
 	//ROS_INFO("POWER: %i",readElectronicPower());
 	sendPowerData.power = readElectronicPower()*powerLSB; //grab power reading from service, multiply it by the powerLSB conversion ratio to get Watts, then publish to power monitoring node
 	

@@ -45,11 +45,12 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate services in the 'srv' folder
- add_service_files(
-   FILES
-   ReadI2C.srv
-   ReadI2CRegister.srv
- )
+###!!MOVED TO common_files PACKAGE!!!
+# add_service_files(
+#   FILES
+#   ReadI2C.srv
+#   ReadI2CRegister.srv
+# )
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -62,7 +63,7 @@ find_package(catkin REQUIRED COMPONENTS
  generate_messages(
    DEPENDENCIES
    std_msgs
-   common_msgs
+   common_files
  )
 
 ###################################
@@ -98,13 +99,8 @@ include_directories(
     hardware_utils
       include/hardware_interface/GPIO.cpp
       include/hardware_interface/i2c.cpp
-      include/hardware_interface/AdaFruit.cpp
       include/hardware_interface/ina226.cpp
  )
-
-## Declare adafruit cpp executable
-add_executable(adafruit_node src/adafruit_node.cpp)
-target_link_libraries(adafruit_node ${catkin_LIBRARIES} hardware_utils motor_utils)
 
 ## Declare adc cpp executable
 add_executable(adc_node src/adc_node.cpp)
@@ -120,8 +116,7 @@ target_link_libraries(i2c_node ${catkin_LIBRARIES} hardware_utils motor_utils)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-add_dependencies(adafruit_node adc_node ina226_node i2c_node hardware_interface_generate_messages_cpp)
-
+add_dependencies(adc_node ina226_node i2c_node hardware_interface_generate_messages_cpp)
 #############
 ## Install ##
 #############

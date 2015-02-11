@@ -4,17 +4,17 @@
 motor_utility::motor_utility(){ }
 
 /*METHODS=====================================*/
-void motor_utility::publish_to_wheels(common_msgs::Motor msg){
+void motor_utility::publish_to_wheels(common_files::Motor msg){
 	if(!ros::isInitialized()) ros_init();
 	ros::NodeHandle nh;
-	ros::Publisher pub = nh.advertise<common_msgs::Motor>("motor_rc", 1000);
+	ros::Publisher pub = nh.advertise<common_files::Motor>("motor_rc", 1000);
 	pub.publish(msg);
 }
 
-void motor_utility::publish_to_actuators(common_msgs::LinActMotor msg){
+void motor_utility::publish_to_actuators(common_files::LinActMotor msg){
 	if(!ros::isInitialized()) ros_init();
 	ros::NodeHandle nh;
-	ros::Publisher pub = nh.advertise<common_msgs::LinActMotor>("linear_actuator_rc",1000);
+	ros::Publisher pub = nh.advertise<common_files::LinActMotor>("linear_actuator_rc",1000);
 	pub.publish(msg);
 }
 
@@ -24,7 +24,7 @@ void motor_utility::ros_init(){
 }
 
 void motor_utility::stop_wheels(){
-	common_msgs::Motor motor_msg;
+	common_files::Motor motor_msg;
 	motor_msg.leftFront_motorVal = 0;
 	motor_msg.rightFront_motorVal = 0;
 	motor_msg.rightRear_motorVal = 0;
@@ -34,7 +34,7 @@ void motor_utility::stop_wheels(){
 }
 
 void motor_utility::stop_actuators(){
-	common_msgs::LinActMotor actuator_msg;
+	common_files::LinActMotor actuator_msg;
 	actuator_msg.mining_motorVal = 0;
 	actuator_msg.dumping_motorVal = 0;
 	publish_to_actuators(actuator_msg);
@@ -49,7 +49,7 @@ void motor_utility::write(float leftMotorsVal, float rightMotorsVal){
 	float leftVal = leftMotorsVal * wheel_motor_gear;
 	float rightVal = rightMotorsVal * wheel_motor_gear;
 
-	common_msgs::Motor motor_msg;
+	common_files::Motor motor_msg;
 	motor_msg.leftFront_motorVal = leftVal;
 	motor_msg.leftRear_motorVal = leftVal;
 	motor_msg.rightFront_motorVal = rightVal;
@@ -59,7 +59,7 @@ void motor_utility::write(float leftMotorsVal, float rightMotorsVal){
 }
 
 void motor_utility::write(int mineVal, int mineDir, int dumpVal, int dumpDir){
-	common_msgs::LinActMotor actuator_msg;
+	common_files::LinActMotor actuator_msg;
 	int value_to_write = (mineVal - 1) * -16383 * mineDir * actuator_motor_gear;
 	actuator_msg.mining_motorVal = value_to_write;
 	actuator_msg.dumping_motorVal = 0;

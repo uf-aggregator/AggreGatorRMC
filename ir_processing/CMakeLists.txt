@@ -18,7 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 generate_messages(
   DEPENDENCIES
-  common_msgs
+  common_files
 )
 
 catkin_package(

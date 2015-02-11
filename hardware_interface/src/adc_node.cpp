@@ -28,10 +28,10 @@
 #include "ros/ros.h"
 #include "std_msgs/builtin_uint8.h"
 
-#include "common_msgs/WriteI2CRegister.h"
-#include "hardware_interface/ReadI2CRegister.h"
-#include "common_msgs/RawIRData.h"
-#include "common_msgs/RawMotorPowerData.h"
+#include "common_files/WriteI2CRegister.h"
+#include "common_files/ReadI2CRegister.h"
+#include "common_files/RawIRData.h"
+#include "common_files/RawMotorPowerData.h"
 
 
 //Global varibles
@@ -96,7 +96,7 @@ enum ADC_REG
 bool isADCBusy(ADC adc)
 {
     //Define and fill in a service request
-    hardware_interface::ReadI2CRegister read;
+    common_files::ReadI2CRegister read;
     read.request.addr = adc;
     read.request.reg = ADC_BUSY;
     read.request.size = 1;
@@ -136,7 +136,7 @@ u_int16_t ReadADC(ADC adc, ADC_REG reg)
     while(isADCBusy(adc));
 
     //Define a read service
-    hardware_interface::ReadI2CRegister read;
+    common_files::ReadI2CRegister read;
 
     //Read 2 bytes from register reg on ADC adc
     read.request.addr = adc;
@@ -166,7 +166,7 @@ bool InitADC()
     while(isADCBusy(ADC_CURRENT_SENSE));    //Wait until Current Sense ADC isn't busy
 
     //Define a msg for repeted use
-    common_msgs::WriteI2CRegister write;
+    common_files::WriteI2CRegister write;
 
     //Set up config, shudown mode, interupts disabled and cleared (0x08)
     write.addr      = ADC_IR;
@@ -226,7 +226,7 @@ bool InitADC()
 void PublishIRData()
 {
     //Generate a msg
-    common_msgs::RawIRData ir_data;
+    common_files::RawIRData ir_data;
 
     //Loop through all IR's
     for(int iii = ADC_CH0, jjj = 0; iii <= ADC_CH7; ++iii, ++jjj)
@@ -244,7 +244,7 @@ void PublishIRData()
 void PublishMotorPowerData()
 {
     //Generate the msg
-    common_msgs::RawMotorPowerData power_data;
+    common_files::RawMotorPowerData power_data;
 
     //Read the data
     power_data.current = ReadADC(ADC_CURRENT_SENSE, ADC_CH0);
@@ -270,11 +270,11 @@ int main(int argc, char** argv)
     ros::NodeHandle n;
 
     //Initilize publishers, subscribers, and services
-    write_register_pub = n.advertise<common_msgs::WriteI2CRegister>("write_i2c_register", 1000);
-    motor_power_pub = n.advertise<common_msgs::RawMotorPowerData>("raw_motor_power", 1000);
-    ir_pub = n.advertise<common_msgs::RawIRData>("raw_ir", 1000);
+    write_register_pub = n.advertise<common_files::WriteI2CRegister>("write_i2c_register", 1000);
+    motor_power_pub = n.advertise<common_files::RawMotorPowerData>("raw_motor_power", 1000);
+    ir_pub = n.advertise<common_files::RawIRData>("raw_ir", 1000);
 
-    read_register_svr = n.serviceClient<hardware_interface::ReadI2CRegister>("read_i2c_register");
+    read_register_svr = n.serviceClient<common_files::ReadI2CRegister>("read_i2c_register");
 
     //Initilize the ADCs
     ROS_INFO("Initilizing the ADC");

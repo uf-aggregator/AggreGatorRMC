@@ -43,7 +43,7 @@ find_package(catkin REQUIRED COMPONENTS
  generate_messages(
    DEPENDENCIES
    std_msgs 
-   common_msgs
+   common_files
  )
 
 ###################################
@@ -85,9 +85,9 @@ add_executable(motor_node src/motor_node.cpp)
 target_link_libraries(motor_node ${catkin_LIBRARIES} motor_utils hardware_utils)
 add_dependencies(motor_node motor_controller_generate_messages_cpp)
 
-add_executable(linear_actuator_node src/linear_actuator_node.cpp)
-target_link_libraries(linear_actuator_node ${catkin_LIBRARIES} motor_utils hardware_utils)
-add_dependencies(linear_actuator_node motor_controller_generate_messages_cpp)
+#add_executable(linear_actuator_node src/linear_actuator_node.cpp)
+#target_link_libraries(linear_actuator_node ${catkin_LIBRARIES} motor_utils hardware_utils)
+#add_dependencies(linear_actuator_node motor_controller_generate_messages_cpp)
 
 #add_executable(bucket_motor_node src/bucket_motor_node.cpp)# src/controller.cpp src/matrix.cpp)
 #target_link_libraries(bucket_motor_node ${catkin_LIBRARIES})

@@ -1,7 +1,7 @@
 #include "ros/ros.h"
 #include "std_msgs/builtin_int16.h"
-#include "hardware_interface/GPIO.h"
-#include "common_msgs/AdaCmd.h"
+#include "common_files/GPIO.h"
+#include "common_files/AdaCmd.h"
 #include "motor_controller/controller.h"
 
 #define epsilon 0.001
@@ -76,11 +76,11 @@ void controlFunction() //WARNING: CONTROL USED BELOW WERE DESIGNED FOR WHEEL MOT
 	setMotorDirection();
 }
 
-common_msgs::AdaCmd generateMessage()
+common_files::AdaCmd generateMessage()
 {
-    common_msgs::AdaCmd msg;
+    common_files::AdaCmd msg;
 
-    msg.device = common_msgs::AdaCmd::bucketDrum;
+    msg.device = common_files::AdaCmd::bucketDrum;
 
 	msg.value.push_back(abs(bucketDrumMotor.getY()[0][0] / 24 * 100));
 
@@ -106,7 +106,7 @@ int main(int argc, char** argv)
     ros::NodeHandle n;                                                       //Create nodehandle object
 
     sub = n.subscribe("bucket_motor_rc", 1000, callBack);                 //Create object to subscribe to topic "linear_actuator_rc"
-    pub = n.advertise<common_msgs::AdaCmd>("adaFruit",1000);         //Create object to publish to topic "I2C"
+    pub = n.advertise<common_files::AdaCmd>("adaFruit",1000);         //Create object to publish to topic "I2C"
 
      while(ros::ok())
 	{

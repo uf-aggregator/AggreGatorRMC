@@ -7,10 +7,8 @@
 #include <cmath>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-#include "hardware_interface/GPIO.h"
-#include "common_msgs/AdaCmd.h"
-#include "common_msgs/Motor.h"
-#include "common_msgs/I2CGeneric.h"
+#include "common_files/Motor.h"
+#include "common_files/I2CGeneric.h"
 #include "controller.h"
 
 #define epsilon 0.001
@@ -38,7 +36,7 @@ SSController rightFrontWheel; 		//create controller object for right front wheel
 */
 
 //The last message sent from the xbox controller
-common_msgs::Motor lastRemoteMsg;
+common_files::Motor lastRemoteMsg;
 
 /*
 The ODROID will not need to directly access pins not related to I2C -Joey
@@ -62,7 +60,7 @@ enum MotorPins
 		This function will generate that byte from a Motor msg from the xbox controller
 	-Joey
 	*/
-unsigned char getMotorDirection(common_msgs::Motor msg)
+unsigned char getMotorDirection(common_files::Motor msg)
 {
 	//convert the motor msg into an array to easily loop through values
 	float controllerOutput[4];
@@ -180,9 +178,9 @@ uint8_t convertTo8bit(float controller_motorVal){
 }
 
 //Creates a message to be sent to the I2C node based on message from xbox controller
-common_msgs::I2CGeneric generateMessage(common_msgs::Motor input)
+common_files::I2CGeneric generateMessage(common_files::Motor input)
 {
-	common_msgs::I2CGeneric msg;
+	common_files::I2CGeneric msg;
 
 	msg.addr = 1; //all motors are controlled by the same Teensy, address = 1
 	
@@ -199,8 +197,8 @@ common_msgs::I2CGeneric generateMessage(common_msgs::Motor input)
 
 //Creates a message to be sent to the I2C node
 //Turns off all motors
-common_msgs::I2CGeneric generateZeroMessage(){
-	common_msgs::I2CGeneric msg;
+common_files::I2CGeneric generateZeroMessage(){
+	common_files::I2CGeneric msg;
 
 	msg.addr = 1; //all motors are controlled by the same Teensy, address = 1
 	
@@ -215,7 +213,7 @@ common_msgs::I2CGeneric generateZeroMessage(){
 }
 
 //Callback function which fills motorArray with values from the message
-void callBack (const common_msgs::Motor msg){
+void callBack (const common_files::Motor msg){
 //	leftFrontWheel.setU(msg.leftFront_motorVal * 24.0 / 32768.0); //Set controller inputs
 //	leftRearWheel.setU(msg.leftRear_motorVal * 24.0 / 32768.0);
 //	rightRearWheel.setU(msg.rightRear_motorVal * 24.0 / 32768.0);
@@ -233,7 +231,7 @@ int main(int argc, char** argv)
 
 	sub = n.subscribe("motor_rc", 1000, callBack); //Create object to subscribe to topic "motor_rc"
 	
-	pub = n.advertise<common_msgs::I2CGeneric>("write_i2c",1000); //Create object to publish to topic "write_i2c"
+	pub = n.advertise<common_files::I2CGeneric>("write_i2c",1000); //Create object to publish to topic "write_i2c"
 	while(pub.getNumSubscribers()==0);//Prevents message from sending when publisher is not completely connected to subscriber.
 	
 	//ros::Rate loop_rate(10); //Set frequency of looping. 10 Hz

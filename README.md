@@ -28,8 +28,8 @@ In order to setup the workspace, first run the usual commands from the directory
 
 	#initialize the repo with a special build script
 	cd ../..
-	catkin_make --pkg common_msgs
-	catkin_make --pkg common_msgs
+	catkin_make --pkg common_files
+	catkin_make --pkg common_files
 
 	#repeat the following until it generates without error, normally ~2-3 times
 	catkin_make

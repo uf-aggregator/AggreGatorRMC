@@ -11,11 +11,11 @@ int main(int argc, char** argv)
     ros::NodeHandle n;
 	
 	//Set up publishers
-	write_reg_pub = n.advertise<common_msgs::WriteI2CRegister>("write_i2c_register",1000);
-	power_pub = n.advertise<common_msgs::ElectronicPowerData>("electronic_power",1000);
+	write_reg_pub = n.advertise<common_files::WriteI2CRegister>("write_i2c_register",1000);
+	power_pub = n.advertise<common_files::ElectronicPowerData>("electronic_power",1000);
 	
 	//Set up service client
-	read_register_srv = n.serviceClient<hardware_interface::ReadI2CRegister>("read_i2c_register");
+	read_register_srv = n.serviceClient<common_files::ReadI2CRegister>("read_i2c_register");
 	
 	while(write_reg_pub.getNumSubscribers()==0 && ros::ok()); //Wait until the publisher is fully connected to the subscriber
 	

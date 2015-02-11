@@ -2,8 +2,8 @@
 #define MOTO_UTILITY_H
 
 #include <std_msgs/builtin_int16.h>
-#include <common_msgs/Motor.h>
-#include <common_msgs/LinActMotor.h>
+#include <common_files/Motor.h>
+#include <common_files/LinActMotor.h>
 #include <cstdlib>
 #include <ros/ros.h>
 #include <string.h>
@@ -16,8 +16,8 @@ class motor_utility {
 		static double actuator_motor_gear;
 
 		motor_utility();
-		static void publish_to_wheels(common_msgs::Motor msg);
-		static void publish_to_actuators(common_msgs::LinActMotor msg);
+		static void publish_to_wheels(common_files::Motor msg);
+		static void publish_to_actuators(common_files::LinActMotor msg);
 	public:
 		static void init();
 		static void ros_init();
