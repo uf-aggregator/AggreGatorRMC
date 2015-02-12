@@ -1,2 +1,0 @@
-int16 mining_motorVal
-int16 dumping_motorVal

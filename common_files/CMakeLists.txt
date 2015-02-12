@@ -36,23 +36,20 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files (
+add_message_files (DIRECTORY msg
   FILES
-  motor_controller/Motor.msg 
-  motor_controller/LinActMotor.msg
-  motor_controller/I2CGeneric.msg
-  motor_controller/AdaCmd.msg
-  hardware_interface/WriteI2C.msg
-  hardware_interface/WriteI2CRegister.msg
-  hardware_interface/RawIRData.msg
-  hardware_interface/RawMotorPowerData.msg
-  hardware_interface/ElectronicPowerData.msg
-  remote_control/keys.msg
-  filter/Avg_Noise.msg
-  filter/Filtered.msg
+  Motor.msg 
+  WriteI2C.msg
+  WriteI2CRegister.msg
+  RawIRData.msg
+  RawMotorPowerData.msg
+  ElectronicPowerData.msg
+  keys.msg
+  Avg_Noise.msg
+  Filtered.msg
 )
 
-add_service_files ( 
+add_service_files (DIRECTORY srv 
 	FILES
 	ReadI2C.srv
 	ReadI2CRegister.srv
@@ -76,7 +73,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES common_files
-  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime 
+  CATKIN_DEPENDS message_runtime roscpp rospy std_msgs 
 #  DEPENDS system_lib
 )
 
