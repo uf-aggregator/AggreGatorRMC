@@ -7,7 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   genmsg
   std_msgs
   sensor_msgs
-  message_generation
+  common_files
 )
 
 
@@ -16,11 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
 ################################################
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-   DEPENDENCIES
-   sensor_msgs
-   common_files
-)
+
 
 ###################################
 ## catkin specific configuration ##
@@ -33,7 +29,7 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   #INCLUDE_DIRS include
-  CATKIN_DEPENDS message_runtime
+  CATKIN_DEPENDS roscpp std_msgs common_files
 )
 
 ###########

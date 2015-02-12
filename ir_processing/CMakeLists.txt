@@ -6,9 +6,8 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   hardware_interface
-  message_generation
+  common_files
 )
-
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -16,15 +15,11 @@ find_package(catkin REQUIRED COMPONENTS
 ## catkin specific configuration ##
 ###################################
 
-generate_messages(
-  DEPENDENCIES
-  common_files
-)
 
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ir_processing hardware_utils
-  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
+  CATKIN_DEPENDS roscpp rospy std_msgs common_files
 )
 
 ###########
