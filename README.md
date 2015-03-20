@@ -27,7 +27,7 @@ In order to setup the workspace, first run the usual commands from the directory
 	git clone https://github.com/uf-aggregator/AggreGatorRMC.git
 
 	#initialize the repo with a special build script
-	cd ../..
+	cd ..
 	catkin_make --pkg common_files
 	catkin_make --pkg common_files
 
