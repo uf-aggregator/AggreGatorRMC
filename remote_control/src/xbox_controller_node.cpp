@@ -124,12 +124,12 @@ void WriteMotorValue()
 			//Format data
 			common_files::Motor motor_msg;
 			if(enable){
-				/* NOTE: Before, these values were scaled to a 16 bit integer
-				The motor_controller node now has that responsibility
-				This node will send the motor values based on what it receives from joy_node * wheel_gear
-					Bounds: [-1,1] * wheel_gear = [-wheel_gear, wheel_gear]
+	/* NOTE: Before, these values were scaled to a 16 bit integer
+	The motor_controller node now has that responsibility
+	This node will send the motor values based on what it receives from joy_node * wheel_gear
+	Bounds: [-1,1] * wheel_gear = [-wheel_gear, wheel_gear]
 				-Joey
-				*/
+	*/
 				left = left_motors  * wheel_gear;       //Scale to gear
 				right = right_motors * wheel_gear;     //Scale to gear
 			}else{
@@ -165,7 +165,7 @@ void WriteMotorValue()
 			motor_msg.leftRear_motorVal = left;
 			motor_msg.rightRear_motorVal = right;
 			motor_msg.rightFront_motorVal = right;
-
+/*
 			if(simulation_delay)
 			{
 				//if there is a simulation delay, use left and right to create a simulated message
@@ -188,10 +188,10 @@ void WriteMotorValue()
 			}
 			else
 			{
-		
-				//Send msg right away
-				motor_pub.publish(motor_msg);
-			}
+*/		
+			//Send msg right away
+			motor_pub.publish(motor_msg);
+			
 			
 		}
 
@@ -387,8 +387,8 @@ int main(int argc, char** argv)
 
     //Get the parameters
     //Send frequence
-    double temp;
-    n.param<double>("/remote_control/send_freq", temp, 0.1);
+    double temp = 0.1;
+    //n.param<double>("/remote_control/send_freq", temp, 0.1);
     send_time.fromSec(1 / temp);
     ROS_INFO("Setting send period to %f, (frequency: %f)", send_time.toSec(), temp);
 

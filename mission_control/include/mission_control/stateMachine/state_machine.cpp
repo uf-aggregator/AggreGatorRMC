@@ -6,6 +6,10 @@
 #include <stack>
 #include "state_machine.h"
 #include "../behaviors/behavior_map.h"
+#include "../behaviors/motor_utility.h"
+#include <common_files/Motor.h>
+
+ros::Publisher pub;
 
 StateMachine::StateMachine () {
 	//initialize starting index for stateHistory
@@ -17,9 +21,13 @@ int StateMachine::start(int starting){
 	stateHistory[currentHistoryIndex] = currentState;
 	currentHistoryIndex++;
 
+	if(!ros::isInitialized()) motor_utility::ros_init();
+        ros::NodeHandle nh;
+        pub = nh.advertise<common_files::Motor>("motor_rc",1000);
+
 	while(currentState > -1){
 		std::cout << "Current State was " << currentState << "\n";
-
+		
 		currentState = next();
 
 		std::cout << "Current State is now " << currentState << "\n";
@@ -54,13 +62,14 @@ int StateMachine::start(int starting){
 
 		switch(executeBhvId){
 			case MOVE:
-				
+				{
+				motor_utility::write(1.0, -1.0);
 				break;
+				}
 			case MINE:
 				
 				break;
-			case DUMP:
-				
+			case DUMP:				
 				break;
 			case WAIT:
 				
@@ -72,6 +81,7 @@ int StateMachine::start(int starting){
 
 		std::cout << std::endl;
 	}
+	motor_utility::stop();
 	return 0; //normal termination
 }
 
@@ -79,11 +89,10 @@ int StateMachine::start(int starting){
 //actual logic based on ROS values
 int StateMachine::next(){
 	//subscribe to topics and return the weighted value when this method is called
-	ros::NodeHandle nh;
 
 	switch(currentState){
 		case MOVE:
-			return MINE;
+			return MOVE;
 		case MINE:
 			return DUMP;
 		case DUMP:
