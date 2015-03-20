@@ -12,6 +12,7 @@
 	<!--Motor Controller nodes-->
 	<node name="motor_node" pkg="motor_controller" type="motor_node"/>
 		
-	
+
+		
 </launch>
 

@@ -7,8 +7,11 @@ motor_utility::motor_utility(){ }
 void motor_utility::publish_to_wheels(common_files::Motor msg){
 	if(!ros::isInitialized()) ros_init();
 	ros::NodeHandle nh;
+	ROS_INFO("Publish to wheels:%f, %f", msg.leftFront_motorVal, msg.rightFront_motorVal);
+
 	ros::Publisher pub = nh.advertise<common_files::Motor>("motor_rc", 1000);
 	pub.publish(msg);
+	ros::spinOnce();
 }
 
 void motor_utility::publish_to_actuators(common_files::LinActMotor msg){
