@@ -17,7 +17,7 @@
  *      Writes are composed of ADC address, register address, data to write
  *
  *      Reads:
- *              First if not done previously write the ADC address then imideatly write the address of the register
+ *              First if not done previously write the ADC address then immediately write the address of the register
  *              Then read from the ADC as you would normally (write the address out)
  *
  *      Digital output = [(Inx - GND) / VREF] * 2^12
@@ -277,14 +277,14 @@ int main(int argc, char** argv)
     read_register_svr = n.serviceClient<common_files::ReadI2CRegister>("read_i2c_register");
 
     //Initilize the ADCs
-    ROS_INFO("Initilizing the ADC");
+    ROS_INFO("Initializing the ADC");
     if(InitADC())
     {
-        ROS_INFO("Initilzed the ADC");
+        ROS_INFO("Initialzed the ADC");
     }
     else
     {
-        ROS_ERROR("Failed to initilize the ADC");
+        ROS_ERROR("Failed to initialize the ADC");
     }
 
     /*
