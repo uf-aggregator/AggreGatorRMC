@@ -38,8 +38,8 @@ uint IrProcessing::getValue(){
 	//READING
 	//prep the service parameters
 	common_files::ReadI2C data;
-	data.request.addr = addr;
-	data.request.size = size;
+	data.request.addr = i2c_addr;
+	data.request.size = i2c_size;
 
 	//fetch the value from the service
 	if(client.call(data)){

@@ -31,22 +31,21 @@ include_directories(
   include ${catkin_INCLUDE_DIRS}
 )
 
-#add_library(
-#	ir_processing_utils
-#	include/${PROJECT_NAME}/ir_processing.cpp
-#)
+add_library(
+	ir_processing_utils
+	include/${PROJECT_NAME}/ir_processing.cpp
+)
 
-#add_executable(
-#	ir_processing_node 
-#	src/ir_processing_node.cpp
-#)
+add_executable(
+	ir_processing_node 
+	src/ir_processing_node.cpp
+)
 
-#add_dependencies(
-#	ir_processing_node ir_processing_generate_messages_cpp
-#)
+add_dependencies(
+	ir_processing_node ir_processing_generate_messages_cpp
+)
 
-#target_link_libraries(
-#	ir_processing_node
-#	${catkin_LIBRARIES}
-#	ir_processing_utils
-#)
+target_link_libraries(
+	ir_processing_node
+	${catkin_LIBRARIES}	ir_processing_utils
+)
