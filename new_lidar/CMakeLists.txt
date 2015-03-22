@@ -107,7 +107,7 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-#### add_executable(pcl_conversion_node src/pcl_conversion_node.cpp)
+add_executable(pcl_conversion_node src/pcl_conversion_node.cpp)
 		
 
 ## Add cmake target dependencies of the executable/library
@@ -115,15 +115,21 @@ include_directories(
 # add_dependencies(new_lidar_node new_lidar_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-#### target_link_libraries(pcl_conversion_node
-####   ${catkin_LIBRARIES}
-#### )
+target_link_libraries(pcl_conversion_node
+  ${catkin_LIBRARIES}
+)
 
-####add_executable(pcl_segmentation_node src/pcl_segmentation_node.cpp)
+add_executable(pcl_segmentation_node src/pcl_segmentation_node.cpp)
 
-####target_link_libraries(pcl_segmentation_node
-####   ${catkin_LIBRARIES}
-####)
+target_link_libraries(pcl_segmentation_node
+   ${catkin_LIBRARIES}
+)
+
+add_executable(pcl_centroid_node src/pcl_centroid_node.cpp)
+
+target_link_libraries(pcl_centroid_node
+   ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##

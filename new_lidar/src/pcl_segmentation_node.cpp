@@ -30,9 +30,9 @@ void segmentCallBack(const sensor_msgs::PointCloud2::ConstPtr& ros_pc_in){
 	pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
 	
 	//set EC configurations
-	ec.setClusterTolerance(0.4); //cluster is about 0.4 meters (size of Joey)
-	ec.setMinClusterSize(5); //guesstimation
-	ec.setMaxClusterSize(40); //guesstimation
+	ec.setClusterTolerance(0.1); //cluster is about 0.4 meters (size of Joey)
+	ec.setMinClusterSize(1); //guesstimation
+	ec.setMaxClusterSize(2147483647); //guesstimation
 	ec.setSearchMethod(tree); //use the KdTree created above
 	ec.setInputCloud(pc_in); //use pc_in as input cloud
 	
@@ -51,7 +51,7 @@ void segmentCallBack(const sensor_msgs::PointCloud2::ConstPtr& ros_pc_in){
 		//convert it back to a ros message
 		pcl::toROSMsg(*cloud_cluster, *ros_pc_out);
 
-
+		output.publish(ros_pc_out);
 	}	
 		
 }

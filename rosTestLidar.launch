@@ -9,14 +9,15 @@
 	<!--node name="xbox_controller_node" pkg="remote_control" type="xbox_controller_node"/-->
 
 	<!--Hardware Interface nodes-->
-	<node name="i2c_node"      pkg="hardware_interface" type="i2c_node"/>
+	<!--node name="i2c_node"      pkg="hardware_interface" type="i2c_node"/-->
 	<!--node name="adafruit_node" pkg="hardware_interface" type="adafruit_node"/>
 	<node name="ina226_node"   pkg="hardware_interface" type="ina226_node"/-->
 	
 	<!-- LADAR Nodes-->
-	<!--<node name="urg_node" pkg="urg" type="?"/>-->
-	<!--node name="ladar_node" pkg="ladar" type="ladar_node"/-->
-	
+	<node name="urg_node" pkg="urg_node" type="urg_node"/>
+	<node name="pcl_conversion_node" pkg="new_lidar" type="pcl_conversion_node"/>
+	<!--node name="pcl_segmentation_node" pkg="new_lidar" type="pcl_segmentation_node"/-->
+
 	<!--Motor Controller nodes-->
 	<!--node name="motor_node" pkg="motor_controller" type="motor_node"/-->
 		

@@ -174,7 +174,11 @@ void controlFunction()
 
 //takes absolute value of  motorVal [-1, 1] and scales it to [0,255] for Teensy
 uint8_t convertTo8bit(float controller_motorVal){	
-	return (uint8_t)(abs(controller_motorVal) * 255.0);
+	if(controller_motorVal < abs(0.15)){
+		return 0;
+	}else{
+		return (uint8_t)(abs(controller_motorVal) * 255.0);
+	}
 }
 
 //Creates a message to be sent to the I2C node based on message from xbox controller
