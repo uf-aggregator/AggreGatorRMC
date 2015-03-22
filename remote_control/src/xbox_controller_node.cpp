@@ -104,6 +104,12 @@ void WriteMotorValue()
 			//Format data
 			common_files::Motor motor_msg;
 			if(enable){
+	/* NOTE: Before, these values were scaled to a 16 bit integer
+	The motor_controller node now has that responsibility
+	This node will send the motor values based on what it receives from joy_node * wheel_gear
+	Bounds: [-1,1] * wheel_gear = [-wheel_gear, wheel_gear]
+				-Joey
+	*/
 				left = left_motors  * wheel_gear;       //Scale to gear
 				right = right_motors * wheel_gear;     //Scale to gear
 			}else{
@@ -308,7 +314,7 @@ int main(int argc, char** argv)
     ros::NodeHandle n;
 
     //Get the parameters
-    //Send frequence
+    //Send frequency
     send_time.fromSec(0.1);
 
     //mapping

@@ -10,8 +10,9 @@
 	<node name="i2c_node"      pkg="hardware_interface" type="i2c_node"/>
 	
 	<!--Motor Controller nodes-->
-	<!--node name="motor_node" pkg="motor_controller" type="motor_node"/-->
+	<node name="motor_node" pkg="motor_controller" type="motor_node"/>
 		
-	
+
+		
 </launch>
 

@@ -179,8 +179,8 @@ int I2C::write_i2c(int address, int size, char* data)
 	if ((file = open(filename,O_RDWR)) < 0) {
         printf("Failed to open the bus.\n");
         /* ERROR HANDLING; you can check errno to see what went wrong */
-		/*error_buffer = g_strerror(errno);
-            printf(error_buffer);*/
+		/*error_buffer = g_strerror(errno);*/
+        printf("Error #%i\n",errno);
         return 1;
     }
 	
@@ -199,7 +199,8 @@ int I2C::write_i2c(int address, int size, char* data)
 		printf("Error: %i", errno);
 		close(file);
 		return 1;
-    }  
+    }
+	
 	close(file);
 	return 0;
 }
@@ -281,7 +282,7 @@ void I2C::WriteI2CCallback(const common_files::WriteI2C& msg)
 //Write to I2C register
 void I2C::WriteRegisterI2C(const common_files::WriteI2CRegister& msg)
 {
-	//ROS_INFO("swag");
+    ROS_INFO("swag");
     char* data = (char*) malloc(msg.data.size());
     for(int i = 0; i < msg.data.size(); ++i)
     {
