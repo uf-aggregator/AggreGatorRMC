@@ -53,7 +53,7 @@ add_service_files (DIRECTORY srv
 	FILES
 	ReadI2C.srv
 	ReadI2CRegister.srv
-  Coordinates.srv
+	Coordinates.srv
 )
 
 ## Generate added messages and services with any dependencies listed here

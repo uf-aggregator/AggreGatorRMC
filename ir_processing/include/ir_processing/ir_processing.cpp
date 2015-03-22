@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 
 #include "ir_processing.h"
+#include "common_files/WriteI2C.h"
 #include "common_files/ReadI2C.h"
 
 /*CONSTRUCTOR===============================*/
@@ -24,10 +25,10 @@ uint IrProcessing::getValue(){
 	ros::init(argc, argv, "init_ir_processing");
 	ros::NodeHandle n;
 	ros::ServiceClient client = n.serviceClient<common_files::ReadI2C>(serviceNm);
-	ros::Publisher pub = n.advertise<common_files::I2CRead>("write_i2c",1000);
+	ros::Publisher pub = n.advertise<common_files::WriteI2C>("write_i2c",1000);
 
 	//WRITING the command byte
-	common_files::I2CRead msg;
+	common_files::WriteI2C msg;
 	msg.addr = i2c_addr; //must be 15 < some value < 255, chose a legal value
 	pub.publish(msg);
 
