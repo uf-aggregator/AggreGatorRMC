@@ -7,12 +7,19 @@ from common_files.srv import Coordinates, CoordinatesResponse
 
 debug = False
 
+#################################################
+# Runs the services for the video_processing package
+#################################################
 def video_processing_service():
 	rospy.init_node('video_processing_service')
 	coord_xy_service = rospy.Service('get_target_coordinates_in_xy', Coordinates, get_point_xy)
 	coord_m_service = rospy.Service('get_target_coordinates_in_meters', Coordinates, get_point_meters);
 	rospy.spin()
 
+#################################################
+# Finds the best source of red via the webcam
+# @param req	the request object passed in by ROS defined in Coordinates.srv
+#################################################
 def process_video_input(req):
 	#create the windows if debugging
 	if debug:
@@ -88,9 +95,24 @@ def process_video_input(req):
 	capture.release()
 
 	# acts like quadrant 1 coordinates
-	result = [float(width - output[0]), float(height - output[1])]
-	return result
+	try:
+		result = [float(width - output[0]), float(height - output[1])]
+		return result
+	except Exception:
+		return [-1, -1]
 
+#################################################
+# Gets the distance of the source of red based on the centerpoint
+# Requires known distance
+# @param req	the request object passed in by ROS defined in Coordinates.srv
+#################################################
+def get_distance(req):
+	return -1
+
+#################################################
+# Gets the point of the source of red in pixels
+# @param req	the request object passed in by ROS defined in Coordinates.srv
+#################################################
 def get_point_xy(req):
 	response = CoordinatesResponse()
 	response.output = process_video_input(req)
@@ -98,9 +120,18 @@ def get_point_xy(req):
 
 def get_point_meters(req):
 	response = CoordinatesResponse()
-	response.output = convertToMeters(process_video_input(req))
+	coords = process_video_input(req);
+	if coords[0] == -1:
+		response.output = [-1, -1]
+	else:
+		response.output = convertToMeters(coords)
+
 	return response
 
+#################################################
+# Gets the point of the source of red in meters
+# @param req	the request object passed in by ROS defined in Coordinates.srv
+#################################################
 def convertToMeters(xyArr):
 	pixelToCm = 0.026458333;
 	return [xyArr[0]*pixelToCm/100, xyArr[1]*pixelToCm/100]

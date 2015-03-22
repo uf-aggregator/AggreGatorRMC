@@ -27,19 +27,27 @@ def get_results_in_meters():
 def usage():
 	return "%s"%sys.argv[0]
 
+def formatDecimal(decimal):
+	if decimal == int(decimal):	return str(int(decimal))
+	else: return str(decimal)
+
 if __name__ == "__main__":
 	if len(sys.argv) == 1:
 		print "Requesting coordinates..."
-		coords = get_results_in_xy()
-		if debug:
-			while True:
-				coords = get_results_in_xy()
-				print "%d, %d"%(coords[0], coords[1])
+		try: 
+			coords = get_results_in_xy()
+			if debug:
+				while True:
+					coords = get_results_in_xy()
+					print "%d, %d"%(coords[0], coords[1])
 
-		print "%d, %d"%(coords.output[0], coords.output[1])
-		
-		coords = get_results_in_meters()
-		print "%f m, %f m"%(coords.output[0], coords.output[1])
+			print "%d px, %d px"%(coords.output[0], coords.output[1])
+
+			coords = get_results_in_meters()
+			print "%s m, %s m"%(formatDecimal(coords.output[0]), formatDecimal(coords.output[1]))
+		except Exception: 
+			print "Something went wrong with the service."
+			
 	else:
 		print usage()
 		sys.exit(1)

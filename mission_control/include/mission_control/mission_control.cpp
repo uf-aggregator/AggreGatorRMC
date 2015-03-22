@@ -46,7 +46,7 @@ void MissionControlCallback(const std_msgs::String::ConstPtr& msg){
  *	Start
  *		starts up everything
  *-----------------------------------------*/
-void MissionControl::StartSenseAct(){
+void MissionControl::start(){
 	int input;
 	cout << "Ctrl-C to terminate." << endl;
 
@@ -54,7 +54,7 @@ void MissionControl::StartSenseAct(){
 		StateMachine *sm = new StateMachine();
 		sm->start(WAIT);
 
-	}catch(...){
+	} catch(...) {
 		cout << "Some exception has occurred." << "\n";
 	}
 

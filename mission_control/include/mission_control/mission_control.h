@@ -19,11 +19,10 @@ class MissionControl {
 		MissionControl(bool debug);
 		~MissionControl(){
 		}
-		void Publish();
-		void Subscribe();
-		void Abort();
-		void StartSenseAct();
-		void StartPlanSenseAct();
+		void publish();
+		void subscribe();
+		void abort();
+		void start();
 };
 
 #endif

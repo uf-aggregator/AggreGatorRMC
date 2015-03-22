@@ -9,8 +9,6 @@
 #include "../behaviors/motor_utility.h"
 #include <common_files/Motor.h>
 
-ros::Publisher pub;
-
 StateMachine::StateMachine () {
 	//initialize starting index for stateHistory
 	currentHistoryIndex = 0;
@@ -21,49 +19,21 @@ int StateMachine::start(int starting){
 	stateHistory[currentHistoryIndex] = currentState;
 	currentHistoryIndex++;
 
-	if(!ros::isInitialized()) motor_utility::ros_init();
-        ros::NodeHandle nh;
-        pub = nh.advertise<common_files::Motor>("motor_rc",1000);
-
 	while(currentState > -1){
 		std::cout << "Current State was " << currentState << "\n";
 		
-		currentState = next();
+		if(starting == -1) currentState = next();
+		else starting = -1;
 
 		std::cout << "Current State is now " << currentState << "\n";
 
 		stateHistory[currentHistoryIndex] = currentState;
 
-		//add behaviors to the queue
 		switch(currentState){
 			case MOVE:
-				behaviorQueue.push(MOVE);
-				break;
-			case MINE:
-				behaviorQueue.push(MINE);
-				break;
-			case DUMP:
-				behaviorQueue.push(DUMP);
-				break;
-			case WAIT:
-				behaviorQueue.push(WAIT);
-				break;
-			default:
-				std::cout << "Unidentified state: " << currentState << "\n";
-				return -1;
-		}
-
-		//execute behaviors
-		/* It's only doing one at a time, because it's possible the queue may need
-		 * to be cleared. That is, during emergency situations, e.g. obstacle ahead.
-		 */
-		int executeBhvId = behaviorQueue.front();
-		behaviorQueue.pop();
-
-		switch(executeBhvId){
-			case MOVE:
 				{
-				motor_utility::write(1.0, -1.0);
+				//motor_utility::write(1.0, -1.0);
+				
 				break;
 				}
 			case MINE:
@@ -75,7 +45,7 @@ int StateMachine::start(int starting){
 				
 				break;
 			default:
-				std::cout << "Unknown bhvId: " << executeBhvId << "\n";
+				std::cout << "Unknown state: " << currentState << "\n";
 				break;
 		}
 
@@ -110,40 +80,10 @@ int StateMachine::next(){
 
 
 //UTILITY METHODS======================================
-
-void StateMachine::flush(){
-	while(!behaviorQueue.empty()){
-		behaviorQueue.pop();
-	}
-}
-
 void StateMachine::printHistory() {
 	int charPerLine = 7;
 	for(int i = 0; i < currentHistoryIndex; i++){
 		if(charPerLine % i == 0 && i != 0)  std::cout << std::endl;
 		std::cout << stateHistory[i] << " ";
 	}
-}
-
-void StateMachine::retrace(int numBack){
-	std::queue<int> temp;
-	int limit = currentHistoryIndex - numBack;
-	
-	if(limit < 0) limit = 0;
-
-	for(int i = limit; i <= currentHistoryIndex; i++){
-		temp.push(stateHistory[i]);
-	}
-
-	for(int i = 0; i < behaviorQueue.size(); i++){
-		temp.push(behaviorQueue.front());
-		behaviorQueue.pop();
-	}
-
-	while(!temp.empty()){
-		behaviorQueue.push(temp.front());
-		temp.pop();
-	}
-
-	currentHistoryIndex = limit;
 }
