@@ -67,18 +67,6 @@ enum XboxAxis
 double left_motors(0.0), right_motors(0.0);
 bool enable = false; //for all motors, not just wheels
 double wheel_gear = 0.7f;				//Multiplier to simulate wheel_gears (Default to 70%)
-bool simulation_delay = false; //if true, uses a queue to simulate NASA lag
-
-//double bucket_motor(1.0), linear_actuator(1.0);		//One is stop due to controller input
-//short int bucket_motor_dir(1), linear_actuator_dir(1);
-//bool mining_motion_enable = false;			//If this is false bucket and actuators will be published 0
-//double bucket_gear = 0.5f;
-
-
-//Create a queue for the motor publisher
-unsigned int delay_queue_size = 0;		//Size of queue to get desired delay
-const double delay_time = 2;			//delay x seconds
-std::queue<MotorStruct> motor_queue;
 
 //Keep track of button presses (to find button releases)
 bool btn_pressed[NUM_BTNS] = { false };  //TODO: Eventually convert these to hashes
@@ -89,10 +77,6 @@ ros::Time last_time, current_time;
 ros::Duration send_time(0.1);       //time in seconds between sends (send ten messages a second)
 
 //Ros publishers and subscribers
-//Combine all publishers into one
-	//ros::Publisher wheel_motor_pub; --REMOVED
-	//ros::Publisher linear_actuator_pub; --REMOVED
-	//ros::Publisher bucket_motor_pub; --REMOVED
 ros::Publisher motor_pub;
 
 
@@ -115,11 +99,7 @@ void WriteMotorValue()
     	double right = 0;
     	current_time = ros::Time::now();
     	if(current_time - last_time > send_time){
-	    	//Update time
-		last_time = current_time;
-		//reset running avg
-		//running_avg = 0;
-		
+	    	
 		if(enable){ //if overall motor enable is true
 			//Format data
 			common_files::Motor motor_msg;
@@ -136,28 +116,6 @@ void WriteMotorValue()
 				left = 0.0;
 				right = 0.0;
 			}
-		//Format actuator and bucket drum data
-		/*0
-		TODO: Figure out if we still need this stuff (leaving it for now) - Joey
-		 *      LT and RT are maped to:
-		 *          not pressed = 1
-		 *          half = 0
-		 *          full pressed = -1
-		 *      Transform to:
-		 *          not pressed = 0
-		 *          half = 16384
-		 *          full pressed = 32767
-		 *      Math:
-		 *          value -= 1
-		 *          value /= -2
-		 *          value *= 32767
-		 *
-		 *          Subtract one from the scale factor so that we do not go over(-16383)
-		 *
-		 *      Make positive or negative based on booleans:
-		 *          value *= direction
-		 *          direction = 1 or -1 based on LB and RB
-		 */
 
 			//Write to all motors at the same time
 			//Create a message with all motor values
@@ -165,33 +123,11 @@ void WriteMotorValue()
 			motor_msg.leftRear_motorVal = left;
 			motor_msg.rightRear_motorVal = right;
 			motor_msg.rightFront_motorVal = right;
-/*
-			if(simulation_delay)
-			{
-				//if there is a simulation delay, use left and right to create a simulated message
-				//push this message to the motor_queue
-				//and then publish the message at the front of the queue (if the queue is at delay_queue_size)
-				//this simulates a "lag" that we will have to deal with at NASA
-				MotorStruct motor_temp = {left, right, right, left};
-				motor_queue.push(motor_temp);
-				if(motor_queue.size() >= delay_queue_size && (motor_queue.size() > 0))
-				{
-					
-					MotorStruct motor_temp = motor_queue.front();
-					motor_queue.pop();				
-					motor_msg.leftFront_motorVal = motor_temp.leftFront;
-					motor_msg.leftRear_motorVal = motor_temp.leftRear;
-					motor_msg.rightRear_motorVal = motor_temp.rightRear;
-					motor_msg.rightFront_motorVal = motor_temp.rightFront;
-					motor_pub.publish(motor_msg);
-				}
-			}
-			else
-			{
-*/		
+
 			//Send msg right away
 			motor_pub.publish(motor_msg);
-			
+			//mark the time the message was sent
+			last_time = ros::Time::now();
 			
 		}
 
@@ -361,15 +297,7 @@ void StopEverything()
 	//publish the message
     motor_pub.publish(motor_msg);
     
-    //StopEverything will be used for emergencies, so it will bypass the "simulated delay" if it's enabled
-    //thus we will restart the delay by emptying the queue as well
-    while(motor_queue.size() > 0){
-		motor_queue.pop();
-    }
 
-
-//    bucket_motor = 1.0;
-//    linear_actuator = 1.0;
 }
 
 int main(int argc, char** argv)
@@ -386,14 +314,8 @@ int main(int argc, char** argv)
     ros::NodeHandle n;
 
     //Get the parameters
-    //Send frequence
-    double temp = 0.1;
-    //n.param<double>("/remote_control/send_freq", temp, 0.1);
-    send_time.fromSec(1 / temp);
-    ROS_INFO("Setting send period to %f, (frequency: %f)", send_time.toSec(), temp);
-
-    //Calculate message size 
-    delay_queue_size = (int)(delay_time * temp);
+    //Send frequency
+    send_time.fromSec(0.1);
 
     //mapping
     n.param<int32_t>("/remote_control/xbox_controller/mapping", mapping, 1);
@@ -419,16 +341,14 @@ int main(int argc, char** argv)
     }
 */
     //parameter for simulating delay
-    n.param<bool>("/remote_control/sim", simulation_delay, false);
 
-    ROS_INFO("Xbox controller set to order %i mapping", mapping);
 
     //Set up subscriber, listens to joy topic, buffer only 10 messages, use XboxCallback
-    ros::Subscriber joy_sub = n.subscribe<sensor_msgs::Joy>("joy", 1000, XboxCallback);
+    ros::Subscriber joy_sub = n.subscribe<sensor_msgs::Joy>("joy", 10, XboxCallback);
 
 
-    //Set up publisher on motor_rc, buffer up to 1000 msgs
-    motor_pub = n.advertise<common_files::Motor>("motor_rc", 1000);
+    //Set up publisher on motor_rc, buffer up to 10 msgs
+    motor_pub = n.advertise<common_files::Motor>("motor_rc", 10);
 
     //Initilize time
     last_time = ros::Time::now();
