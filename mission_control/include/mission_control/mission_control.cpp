@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include "mission_control.h"
-#include "mission_control/behaviors/behavior_map.h"
+#include "mission_control/behaviors/behaviors.h"
 
 using namespace std;
 //====================================================

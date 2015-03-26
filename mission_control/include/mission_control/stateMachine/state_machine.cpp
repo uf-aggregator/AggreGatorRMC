@@ -5,8 +5,7 @@
 #include <time.h>
 #include <stack>
 #include "state_machine.h"
-#include "../behaviors/behavior_map.h"
-#include "../behaviors/motor_utility.h"
+#include "../behaviors/behaviors.h"
 #include <common_files/Motor.h>
 
 StateMachine::StateMachine () {
@@ -33,7 +32,7 @@ int StateMachine::start(int starting){
 			case MOVE:
 				{
 				//motor_utility::write(1.0, -1.0);
-				
+
 				break;
 				}
 			case MINE:

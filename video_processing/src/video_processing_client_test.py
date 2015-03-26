@@ -31,6 +31,10 @@ def formatDecimal(decimal):
 	if decimal == int(decimal):	return str(int(decimal))
 	else: return str(decimal)
 
+
+###########################
+# MAIN METHOD
+###########################
 if __name__ == "__main__":
 	if len(sys.argv) == 1:
 		print "Requesting coordinates..."
@@ -39,12 +43,16 @@ if __name__ == "__main__":
 			if debug:
 				while True:
 					coords = get_results_in_xy()
-					print "%d, %d"%(coords[0], coords[1])
-
-			print "%d px, %d px"%(coords.output[0], coords.output[1])
+					print "%d px, %d px"%(coords.output[0], coords.output[1])
+			print "For a camera of res: %dx%d"%(coords.width, coords.height)
+			print "Point 1: %d px, %d px"%(coords.output[0], coords.output[1])
+			print "Point 2: %d px, %d px"%(coords.output[2], coords.output[3])
 
 			coords = get_results_in_meters()
-			print "%s m, %s m"%(formatDecimal(coords.output[0]), formatDecimal(coords.output[1]))
+			print "For a camera of res: %fm x%fm"%(coords.width, coords.height)
+			print "Point 1: %s m, %s m"%(formatDecimal(coords.output[0]), formatDecimal(coords.output[1]))
+			print "Point 2: %s m, %s m"%(formatDecimal(coords.output[2]), formatDecimal(coords.output[3]))
+
 		except Exception: 
 			print "Something went wrong with the service."
 			

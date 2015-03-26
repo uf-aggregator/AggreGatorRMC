@@ -1,2 +1,4 @@
 ---
 float32[] output
+float32 width
+float32 height
