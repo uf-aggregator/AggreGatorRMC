@@ -111,9 +111,13 @@ target_link_libraries(ina226_node ${catkin_LIBRARIES} hardware_utils motor_utils
 add_executable(i2c_node src/i2c_node.cpp)
 target_link_libraries(i2c_node ${catkin_LIBRARIES} hardware_utils motor_utils)
 
+# Declare test node
+add_executable(test_node src/test_node.cpp)
+target_link_libraries(test_node ${catkin_LIBRARIES} hardware_utils motor_utils)
+
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-add_dependencies(adc_node ina226_node i2c_node hardware_interface_generate_messages_cpp)
+add_dependencies(adc_node ina226_node i2c_node test_node hardware_interface_generate_messages_cpp)
 #############
 ## Install ##
 #############

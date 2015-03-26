@@ -30,8 +30,8 @@ void segmentCallBack(const sensor_msgs::PointCloud2::ConstPtr& ros_pc_in){
 	pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
 	
 	//set EC configurations
-	ec.setClusterTolerance(0.1); //cluster is about 0.4 meters (size of Joey)
-	ec.setMinClusterSize(1); //guesstimation
+	ec.setClusterTolerance(0.01); //cluster tolerance estimated 1 cm
+	ec.setMinClusterSize(2); //guesstimation
 	ec.setMaxClusterSize(2147483647); //guesstimation
 	ec.setSearchMethod(tree); //use the KdTree created above
 	ec.setInputCloud(pc_in); //use pc_in as input cloud

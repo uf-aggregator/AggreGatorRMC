@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--xml file for roslaunch
+	This will launch nodes meant to run on the O-Droid
+-->
+
+<launch>
+	<!-- Remote Control -->
+
+	<!--Hardware Interface nodes-->
+	<node name="i2c_node"      pkg="hardware_interface" type="i2c_node"/>
+	
+		
+</launch>
+
