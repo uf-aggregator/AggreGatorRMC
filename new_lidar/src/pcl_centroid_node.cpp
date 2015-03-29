@@ -32,7 +32,7 @@ int main(int argc, char** argv){
 	ros::init(argc, argv, "pcl_centroid_node");
 	ros::NodeHandle nh;
 
-	cluster_pc = nh.subscribe<sensor_msgs::PointCloud2>("cluser_pointcloud", 1, cluster_pcCallBack);
+	cluster_pc = nh.subscribe<sensor_msgs::PointCloud2>("lidar_pointcloud", 1, cluster_pcCallBack);
 //	output = nh.advertise<sensor_msgs::PointXYZ>("cluster_centroid", 1);
 
 	while(ros::ok()){

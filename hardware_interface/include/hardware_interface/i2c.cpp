@@ -38,21 +38,27 @@ char* I2C::read_i2c(int address, int size)
     }
 	
     //THE ACTUAL READING
-	if (read(file,read_buffer+1,size) != size) {
+	if (read(file,read_buffer,size) != size) {
             /* ERROR HANDLING: i2c transaction failed */
             printf("Failed to read from the i2c bus.\n");
-            /*error_buffer = g_strerror(errno);
-            printf(error_buffer);*/
-            printf("\n\n");
-			read_buffer[0] = 1; //1 means data is not valid
-			close(file);
-			return read_buffer;
+            printf("Error: %i", errno);
+	    printf("\n\n");
+	    read_buffer[0] = 1; //1 means data is not valid
+	    close(file);
+	    return read_buffer;
         } else {
-			//for(int i = size; i >0; i--) //shift all data right one bit
-			//	read_buffer[i] = read_buffer[i-1];
-			read_buffer[0] = 0;//0 for valid data, 1 else
+		printf("In i2c.cpp, read_buffer:");
+		for(int i = 0; i < size+1; i++){
+			printf(" %d", *(read_buffer+i));
+		}
+		printf("\n");	
+		for(int i = 0; i < size+1; i++){
+			printf(" %d", read_buffer[i]);
+		}
+		printf("\n");	
+		//read_buffer[0] = 0;//0 for valid data, 1 else
 		close(file);
-            return read_buffer;
+                return read_buffer;
 	 }
 	close(file);
      return read_buffer;
