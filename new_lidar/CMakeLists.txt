@@ -131,6 +131,11 @@ target_link_libraries(pcl_centroid_node
    ${catkin_LIBRARIES}
 )
 
+add_executable(test_lidar_node src/test_lidar_node.cpp)
+target_link_libraries(test_lidar_node
+   ${catkin_LIBRARIES}
+)
+
 #############
 ## Install ##
 #############

@@ -7,13 +7,14 @@ Node uses pcl_common's compute3DCentroid to get location of robot
 #include <pcl/common/centroid.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl/point_cloud.h>
-#include <pcl/search/kdtree.h>
 #include <pcl/PointIndices.h>
-#include <pcl/segmentation/sac_segmentation.h>
-#include <pcl/segmentation/extract_clusters.h>
+#include "common_files/ReadLidar.h"
 
 ros::Subscriber cluster_pc;
 ros::Publisher centroid;
+ros::ServiceServer read_srv;
+
+float last_centroid[3] = {0.0, 0.0, 0.0};
 
 void cluster_pcCallBack(const sensor_msgs::PointCloud2::ConstPtr& ros_pc_in){
         //convert ROS message into pcl::PointCloud
@@ -25,7 +26,16 @@ void cluster_pcCallBack(const sensor_msgs::PointCloud2::ConstPtr& ros_pc_in){
 	pcl::compute3DCentroid(*pc_in, centroid);
 	
 	ROS_INFO("X:%f, Y:%f, Z:%f", centroid[0], centroid[1], centroid[2]);
+	last_centroid[0] = centroid[0];
+	last_centroid[1] = centroid[1];
+	last_centroid[2] = centroid[2];
 	
+}
+
+bool ReadLidarCallback(common_files::ReadLidar::Request&  request,
+                     common_files::ReadLidar::Response& reply){
+	reply.x = last_centroid[0];
+	reply.y = last_centroid[1];
 }
 
 int main(int argc, char** argv){
@@ -34,6 +44,9 @@ int main(int argc, char** argv){
 
 	cluster_pc = nh.subscribe<sensor_msgs::PointCloud2>("lidar_pointcloud", 1, cluster_pcCallBack);
 //	output = nh.advertise<sensor_msgs::PointXYZ>("cluster_centroid", 1);
+	
+	read_srv = nh.advertiseService("read_lidar", ReadLidarCallback);
+
 
 	while(ros::ok()){
 		ros::spinOnce();

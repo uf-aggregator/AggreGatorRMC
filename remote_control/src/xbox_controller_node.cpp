@@ -16,11 +16,8 @@ void StopEverything();
 
 //this struct represents the Motor.msg file, which is sent on the /motor_rc topic to the motor_node
 struct MotorStruct{
-	float leftFront; //left front wheel
-	float rightFront; //right front wheel
-	float rightRear; //right rear wheel
-	float leftRear; //left rear wheel
-	//MORE MOTORS CAN BE ADDED HERE
+	float left; //left track
+	float right; //right track
 };
 
 //Buttons on the Xbox Controller
@@ -119,10 +116,8 @@ void WriteMotorValue()
 
 			//Write to all motors at the same time
 			//Create a message with all motor values
-			motor_msg.leftFront_motorVal = left;
-			motor_msg.leftRear_motorVal = left;
-			motor_msg.rightRear_motorVal = right;
-			motor_msg.rightFront_motorVal = right;
+			motor_msg.left = left;
+			motor_msg.right = right;
 
 			//Send msg right away
 			motor_pub.publish(motor_msg);
@@ -289,10 +284,8 @@ void StopEverything()
     common_files::Motor motor_msg;
 
     //Fill msgs with 0s
-    motor_msg.leftFront_motorVal = 0;
-    motor_msg.leftRear_motorVal = 0;
-    motor_msg.rightRear_motorVal = 0;
-    motor_msg.rightFront_motorVal = 0;
+    motor_msg.left = 0;
+    motor_msg.right = 0;
 	
 	//publish the message
     motor_pub.publish(motor_msg);
@@ -348,7 +341,7 @@ int main(int argc, char** argv)
 
 
     //Set up publisher on motor_rc, buffer up to 10 msgs
-    motor_pub = n.advertise<common_files::Motor>("motor_rc", 10);
+    motor_pub = n.advertise<common_files::Motor>("motor_vals", 10);
 
     //Initilize time
     last_time = ros::Time::now();
