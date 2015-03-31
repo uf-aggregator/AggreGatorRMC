@@ -28,6 +28,7 @@ catkin_package(
 #create library for linking definitions
 add_library(
 	mission_utils
+  include/mission_control/behaviors/orientation_behavior.cpp
   include/mission_control/behaviors/motor_utility.cpp
 	include/mission_control/stateMachine/state_machine.cpp
 	include/mission_control/mission_control.cpp
