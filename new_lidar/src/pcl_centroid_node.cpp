@@ -11,7 +11,7 @@ Node uses pcl_common's compute3DCentroid to get location of robot
 #include "common_files/ReadLidar.h"
 
 ros::Subscriber cluster_pc;
-ros::Publisher centroid;
+ros::Publisher centroid_pub;
 ros::ServiceServer read_srv;
 
 float last_centroid[3] = {0.0, 0.0, 0.0};
@@ -25,18 +25,24 @@ void cluster_pcCallBack(const sensor_msgs::PointCloud2::ConstPtr& ros_pc_in){
 	Eigen::Vector4f centroid;	
 	pcl::compute3DCentroid(*pc_in, centroid);
 	
-	ROS_INFO("X:%f, Y:%f, Z:%f", centroid[0], centroid[1], centroid[2]);
+	ROS_INFO("PC height=%d, width=%d", pc_in->height, pc_in->width);
+		
+	ROS_INFO("X:%f, Y:%f, Z:%f", centroid[1], centroid[0], centroid[2]);
 	last_centroid[0] = centroid[0];
 	last_centroid[1] = centroid[1];
 	last_centroid[2] = centroid[2];
 	
+	common_files::ReadLidar centroid_msg;
+	centroid_msg.x = centroid[1];
+	centroid_msg.y = centroid[0];
+	centroid_pub.publish(centroid_msg);	
 }
 
-bool ReadLidarCallback(common_files::ReadLidar::Request&  request,
-                     common_files::ReadLidar::Response& reply){
-	reply.x = last_centroid[0];
-	reply.y = last_centroid[1];
-}
+//bool ReadLidarCallback(common_files::ReadLidar::Request&  request,
+//                     common_files::ReadLidar::Response& reply){
+//	reply.x = last_centroid[0];
+//	reply.y = last_centroid[1];
+//}
 
 int main(int argc, char** argv){
 	ros::init(argc, argv, "pcl_centroid_node");
@@ -45,9 +51,10 @@ int main(int argc, char** argv){
 	cluster_pc = nh.subscribe<sensor_msgs::PointCloud2>("lidar_pointcloud", 1, cluster_pcCallBack);
 //	output = nh.advertise<sensor_msgs::PointXYZ>("cluster_centroid", 1);
 	
-	read_srv = nh.advertiseService("read_lidar", ReadLidarCallback);
+	//read_srv = nh.advertiseService("read_lidar", ReadLidarCallback);
 
-
+	centroid_pub = nh.advertise<common_files::ReadLidar>("read_lidar", 1);
+	
 	while(ros::ok()){
 		ros::spinOnce();
 	}
