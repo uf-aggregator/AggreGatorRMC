@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   pcl_ros
   pcl_conversions
   laser_geometry
+  common_files
 )
 
 ## System dependencies are found with CMake's conventions
@@ -85,9 +86,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES new_lidar
-#  CATKIN_DEPENDS roscpp rospy tf urg_node
-#  DEPENDS system_lib
+  LIBRARIES new_lidar
+  CATKIN_DEPENDS roscpp rospy tf urg_node common_files
+  DEPENDS system_lib
 )
 
 ###########
@@ -119,11 +120,6 @@ target_link_libraries(pcl_conversion_node
   ${catkin_LIBRARIES}
 )
 
-add_executable(pcl_segmentation_node src/pcl_segmentation_node.cpp)
-
-target_link_libraries(pcl_segmentation_node
-   ${catkin_LIBRARIES}
-)
 
 add_executable(pcl_centroid_node src/pcl_centroid_node.cpp)
 
@@ -131,10 +127,10 @@ target_link_libraries(pcl_centroid_node
    ${catkin_LIBRARIES}
 )
 
-add_executable(test_lidar_node src/test_lidar_node.cpp)
-target_link_libraries(test_lidar_node
-   ${catkin_LIBRARIES}
-)
+#add_executable(test_lidar_node src/test_lidar_node.cpp)
+#target_link_libraries(test_lidar_node
+#   ${catkin_LIBRARIES}
+#)
 
 #############
 ## Install ##
@@ -145,10 +141,10 @@ target_link_libraries(test_lidar_node
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+ install(PROGRAMS
+   scripts/velocity_node
+   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+ )
 
 ## Mark executables and/or libraries for installation
 # install(TARGETS new_lidar new_lidar_node
