@@ -33,7 +33,7 @@ include_directories(
 
 add_library(
 	ir_processing_utils
-	include/${PROJECT_NAME}/ir_processing.cpp
+	include/${PROJECT_NAME}/ir_reader.cpp
 )
 
 add_executable(

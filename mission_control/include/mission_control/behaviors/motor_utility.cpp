@@ -7,7 +7,7 @@ motor_utility::motor_utility(){ }
 void motor_utility::publish_to_wheels(common_files::Motor msg){
 	if(!ros::isInitialized()) ros_init();
 	ros::NodeHandle nh;
-	ROS_INFO("Publish to wheels:%f, %f", msg.leftFront_motorVal, msg.rightFront_motorVal);
+	ROS_INFO("Publish to wheels:%f, %f", msg.left, msg.right);
 
 	ros::Publisher pub = nh.advertise<common_files::Motor>("motor_rc", 1000);
 	pub.publish(msg);
@@ -28,10 +28,8 @@ void motor_utility::ros_init(){
 
 void motor_utility::stop_wheels(){
 	common_files::Motor motor_msg;
-	motor_msg.leftFront_motorVal = 0;
-	motor_msg.rightFront_motorVal = 0;
-	motor_msg.rightRear_motorVal = 0;
-	motor_msg.leftRear_motorVal = 0;
+	motor_msg.left = 0;
+	motor_msg.right = 0;
 
 	publish_to_wheels(motor_msg);
 }
@@ -53,10 +51,8 @@ void motor_utility::write(float leftMotorsVal, float rightMotorsVal){
 	float rightVal = rightMotorsVal * wheel_motor_gear;
 
 	common_files::Motor motor_msg;
-	motor_msg.leftFront_motorVal = leftVal;
-	motor_msg.leftRear_motorVal = leftVal;
-	motor_msg.rightFront_motorVal = rightVal;
-	motor_msg.rightRear_motorVal = rightVal;
+	motor_msg.left = leftVal;
+	motor_msg.right = rightVal;
 
 	publish_to_wheels(motor_msg);
 }
