@@ -9,7 +9,7 @@ Node uses pcl_common's compute3DCentroid to get location of robot
 #include <pcl/point_cloud.h>
 #include <pcl/PointIndices.h>
 #include "common_files/Centroid.h"
-#include "common_files/Velocity.h"
+//#include "common_files/Velocity.h"
 
 ros::Subscriber cluster_pc;
 ros::Publisher centroid_pub;
@@ -77,7 +77,7 @@ int main(int argc, char** argv){
 
 	cluster_pc = nh.subscribe<sensor_msgs::PointCloud2>("lidar_pointcloud", 1, cluster_pcCallBack);
 	centroid_pub = nh.advertise<common_files::Centroid>("centroid", 1);
-	velocity_pub = nh.advertise<common_files::Velocity>("velocity", 1);
+	//velocity_pub = nh.advertise<common_files::Velocity>("velocity", 1);
 	
 	
 	while(ros::ok()){
