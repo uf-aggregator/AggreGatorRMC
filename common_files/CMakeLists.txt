@@ -38,7 +38,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files (DIRECTORY msg
   FILES
-  Motor.msg 
+  Drive.msg 
+  Bucket.msg
+  Ladder.msg
   WriteI2C.msg
   WriteI2CRegister.msg
   RawIRData.msg
