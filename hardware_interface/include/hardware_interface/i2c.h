@@ -2,6 +2,7 @@
 #define _I2C_H
 
 
+
 #include <errno.h>
 #include <string.h>
 #include <stdio.h>
@@ -21,7 +22,8 @@
 
 #define MAX_READ_BYTES 41
 #define MAX_WRITE_BYTES 40
-#define FILENAME "/dev/i2c-1"
+#define FILENAME "/dev/i2c-2"
+
 
 class I2C {
 	public:
