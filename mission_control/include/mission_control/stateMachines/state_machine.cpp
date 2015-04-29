@@ -4,9 +4,16 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stack>
-#include "state_machine.h"
-#include "../behaviors/behaviors.h"
 #include <common_files/Motor.h>
+
+#include "../behaviors/behaviors.h"
+#include "state_dump.h"
+#include "state_start.h"
+#include "state_orientation.h"
+#include "state_mine.h"
+#include "state_navigation.h"
+
+#include "state_machine.h"
 
 StateMachine::StateMachine () {
 	//initialize starting index for stateHistory
@@ -29,20 +36,46 @@ int StateMachine::start(int starting){
 		stateHistory[currentHistoryIndex] = currentState;
 
 		switch(currentState){
-			case MOVE:
-				{
-				//motor_utility::write(1.0, -1.0);
-
+			case START:{
+				StartState *ss = new StartState(START);
+				delete ss;
 				break;
-				}
-			case MINE:
-				
+			}
+			case ORIENTATION_START:{
+				OrientationState *oss = new OrientationState(ORIENTATION_START);
+				delete oss;
 				break;
-			case DUMP:				
+			}
+			case NAVIGATE:{
+				NavigationState *ns = new NavigationState(NAVIGATE);
+				delete ns;
 				break;
-			case WAIT:
-				
+			}
+			case MINE:{
+				MineState *ms = new MineState(MINE);
+				delete ms;
 				break;
+			}
+			case GO_HOME:{
+				NavigationState *ghs = new NavigationState(GO_HOME);
+				delete ghs;
+				break;
+			}
+			case ORIENTATION_DUMP:{
+				OrientationState *ods = new OrientationState(ORIENTATION_DUMP);
+				delete ods;
+				break;
+			}
+			case DUMP:{
+				DumpState *ds = new DumpState(DUMP);
+				delete ds;
+				break;
+			}
+			case GO_MINE:{
+				NavigationState *gms = new NavigationState(GO_MINE);
+				delete gms;
+				break;
+			}
 			default:
 				std::cout << "Unknown state: " << currentState << "\n";
 				break;
@@ -50,7 +83,6 @@ int StateMachine::start(int starting){
 
 		std::cout << std::endl;
 	}
-	motor_utility::stop();
 	return 0; //normal termination
 }
 
@@ -60,19 +92,33 @@ int StateMachine::next(){
 	//subscribe to topics and return the weighted value when this method is called
 
 	switch(currentState){
-		case MOVE:
-			return MOVE;
-		case MINE:
-			return DUMP;
-		case DUMP:
-			return QUIT;			
-		case WAIT:
-			return MOVE;
-		case QUIT:
-			return -1;
-		default:
-			return MOVE;
-	}
+			case START:
+				return ORIENTATION_START;
+
+			case ORIENTATION_START:
+				return NAVIGATE;
+
+			case NAVIGATE:
+				return MINE;
+
+			case MINE:
+				return GO_HOME;
+
+			case GO_HOME:
+				return ORIENTATION_DUMP;
+
+			case ORIENTATION_DUMP:
+				return DUMP;
+
+			case DUMP:
+				return GO_MINE;
+
+			case GO_MINE:
+				return MINE;
+				
+			default:
+				return START;
+		}
 }
 
 //CALLBACKS============================================

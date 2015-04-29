@@ -3,7 +3,7 @@
 
 #include "std_msgs/String.h"
 #include "ros/ros.h"
-#include "stateMachine/state_machine.h"
+#include "stateMachines/state_machine.h"
 
 class MissionControl {
 	protected:

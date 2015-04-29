@@ -4,12 +4,15 @@
 #include "motor_utility.h"
 #include "orientation_behavior.h"
 
-enum Behavior {
-	MOVE = 0,
+enum States {
+	START = 0,
+	ORIENTATION_START,
+	NAVIGATE,
 	MINE,
+	GO_HOME,
+	ORIENTATION_DUMP,
 	DUMP,
-	WAIT,
-	QUIT
+	GO_MINE
 };
 
 #endif
