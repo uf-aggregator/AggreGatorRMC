@@ -52,5 +52,4 @@ add_dependencies(mission_control_node mission_control_generate_messages_cpp)
 target_link_libraries(mission_control_node
    ${catkin_LIBRARIES}
    mission_utils
-   motor_utils
  )

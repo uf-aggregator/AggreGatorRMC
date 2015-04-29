@@ -37,26 +37,61 @@ In order to setup the workspace, first run the usual commands from the directory
 
 ---------------------------------------------------------
 
-###Recovering from Crashes
-
+###Connecting to the Odroid (AggreGator)
 
 First, ssh into the Odroid:
 
-```
-ssh odroid@odroid
+```bash
+
+	ssh odroid@odroid
 ```
 
-Once logged in, run the kill all processes command:
+If you can't find the hostname IP for the Odroid, run the following while connected to the Team# WiFi
+
+```bash
+
+	sudo apt-get install arp-scan
+
 ```
-killall5
+
+Then, depending on your preference, run one of the below commands
+
+```bash
+	
+	sudo arp-scan --interface=wlan0 --localnet 		#meant for wifi
+	sudo arp-scan --interface=eth0 --localnet		#meant for LAN
+
+```
+
+---------------------------------------------------------
+
+###Starting the AggreGator
+
+Navigate into the folder with the `.launch` files and start one of them with
+
+```bash
+
+	roslaunch <file>.launch
+
+```
+
+If it says `roslaunch` isn't a command, check that you `source`'d `devel/setup.bash`.
+
+
+---------------------------------------------------------
+
+###Recovering from Crashes
+
+
+First, connect to the Odroid via ssh.
+
+Once logged in, run the kill all processes command:
+
+```bash
+
+	killall5
 ```
 
 Your ssh session will end after this command; log into the ODroid again, and run the ODroidStart script as before. 
 roscore on the Odroid will now be running, and you can once again connect to it with Command Nodes.  
-
-----------------------------------------------------------
-
-See our [style guide](https://github.com/uf-aggregator/AggreGatorRMC/tree/master/Getting_Started/Style_Guide "UF Aggregator Style Guide") for our code and naming practices
-
-----------------------------------------------------------
 

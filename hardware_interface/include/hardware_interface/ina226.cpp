@@ -1,4 +1,3 @@
-
 #include "ina226.h"
 
 //Sets configuration and calibration registers

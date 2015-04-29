@@ -54,7 +54,7 @@ find_package(catkin REQUIRED COMPONENTS
 #configure the package's catkin stuff
 catkin_package(
 	INCLUDE_DIRS include
-	LIBRARIES motor_utils
+	#LIBRARIES 
 	CATKIN_DEPENDS roscpp rospy std_msgs common_files hardware_interface
 )
 
@@ -64,11 +64,9 @@ catkin_package(
 ###########
 
 #create a "library" of files to be linked
-add_library(
-	motor_utils
-	include/matrix.cpp
-  	include/controller.cpp
-)
+#add_library(
+#	motor_utils
+#)
 
 #make the package aware of its include folder
 include_directories(
@@ -77,27 +75,19 @@ include_directories(
 )
 
 add_executable(motor_node src/motor_node.cpp)
-target_link_libraries(motor_node ${catkin_LIBRARIES} motor_utils hardware_utils)
+target_link_libraries(motor_node ${catkin_LIBRARIES} hardware_utils)
 add_dependencies(motor_node motor_controller_generate_messages_cpp)
 
-#add_executable(linear_actuator_node src/linear_actuator_node.cpp)
-#target_link_libraries(linear_actuator_node ${catkin_LIBRARIES} motor_utils hardware_utils)
-#add_dependencies(linear_actuator_node motor_controller_generate_messages_cpp)
-
-#add_executable(bucket_motor_node src/bucket_motor_node.cpp)# src/controller.cpp src/matrix.cpp)
-#target_link_libraries(bucket_motor_node ${catkin_LIBRARIES})
-#add_dependencies(bucket_motor_node motor_controller_generate_messages_cpp)
-
 ## Mark executables for installation
-install(TARGETS motor_utils 
-   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
- )
+#install(TARGETS motor_utils 
+#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
 ## Mark cpp header files for installation
- install(DIRECTORY include/${PROJECT_NAME}/
-   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+# install(DIRECTORY include/${PROJECT_NAME}/
+#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 #   FILES_MATCHING PATTERN "*.h"
 #   PATTERN ".svn" EXCLUDE
- )
+# )
