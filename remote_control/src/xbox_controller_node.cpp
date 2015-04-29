@@ -1,7 +1,9 @@
 #include <cstdlib>
 #include "ros/ros.h"
 #include <sensor_msgs/Joy.h>
-#include "common_files/Motor.h"
+#include "common_files/Drive.h"
+#include "common_files/Bucket.h"
+#include "common_files/Ladder.h"
 #include <std_msgs/builtin_int16.h>
 #include "ros/time.h"
 #include "ros/duration.h"
@@ -13,12 +15,6 @@
 * Forward declarations
 */
 void StopEverything();
-
-//this struct represents the Motor.msg file, which is sent on the /motor_rc topic to the motor_node
-struct MotorStruct{
-	float left; //left track
-	float right; //right track
-};
 
 //Buttons on the Xbox Controller
 enum XboxButtons
@@ -53,7 +49,9 @@ enum XboxAxis
 	LT,
 	LR_RIGHT,
 	UD_RIGHT,
-	RT
+	RT,
+	LR_DPAD,
+	UD_DPAD
 };
 
 
@@ -62,8 +60,16 @@ enum XboxAxis
  * NOTE: variables for bucket_motor and linear_actuator have been removed; use them if more motors are added
  */
 double left_motors(0.0), right_motors(0.0);
+double bucket_lift(0.0), bucket_dump(0.0);
+double ladder_lift(1.0), ladder_conv(1.0);
+
+int ladder_lift_dir = 1;
+int ladder_conv_dir = 1;
+
 bool enable = false; //for all motors, not just wheels
-double wheel_gear = 0.7f;				//Multiplier to simulate wheel_gears (Default to 70%)
+double wheel_gear = 0.7;
+double ladder_gear = 0.7;
+double bucket_gear = 0.2;
 
 //Keep track of button presses (to find button releases)
 bool btn_pressed[NUM_BTNS] = { false };  //TODO: Eventually convert these to hashes
@@ -74,15 +80,15 @@ ros::Time last_time, current_time;
 ros::Duration send_time(0.1);       //time in seconds between sends (send ten messages a second)
 
 //Ros publishers and subscribers
-ros::Publisher motor_pub;
-
+ros::Publisher drive_pub;
+ros::Publisher bucket_pub;
+ros::Publisher ladder_pub;
 
 /*
  * Int for mapping
  * 1 is linear, 2 is quadratic, 3 cubic (anything else defaults to linear)
  */
-int32_t mapping; //TODO: figure out what this actually does
-
+int32_t mapping; 
 
 /*
  * Write the motor msg out
@@ -92,35 +98,69 @@ int32_t mapping; //TODO: figure out what this actually does
  */
 void WriteMotorValue()
 { 
-    	double left = 0;
-    	double right = 0;
+    	double left = 0.0;
+    	double right = 0.0;
+	double buck_lift = 0.0;
+	double dump = 0.0;
+	double ladd_lift = 1.0;
+	double conv = 1.0;
     	current_time = ros::Time::now();
     	if(current_time - last_time > send_time){
 	    	
 		if(enable){ //if overall motor enable is true
 			//Format data
-			common_files::Motor motor_msg;
+			common_files::Drive drive_msg;
+			common_files::Bucket bucket_msg;
+			common_files::Ladder ladder_msg;
 			if(enable){
-	/* NOTE: Before, these values were scaled to a 16 bit integer
-	The motor_controller node now has that responsibility
-	This node will send the motor values based on what it receives from joy_node * wheel_gear
-	Bounds: [-1,1] * wheel_gear = [-wheel_gear, wheel_gear]
-				-Joey
-	*/
+			//Bounds: [-1,1] * wheel_gear = [-wheel_gear, wheel_gear]
 				left = left_motors  * wheel_gear;       //Scale to gear
 				right = right_motors * wheel_gear;     //Scale to gear
+				buck_lift = bucket_lift*bucket_gear;
+				dump = bucket_dump*bucket_gear;
+				ladd_lift = ladder_lift;
+				conv = ladder_conv;
+				//triggers are scaled from -1 released to 1 pressed
+				//convert to 0 released and 1 pressed
+				if(ladd_lift == 0.0){
+				/*
+					when the joy node first launches
+					it reads '0.0' as trigger which is half-way pressed
+					check for 0.0, and if you see it, change it to 1.0 (not pressed)
+				*/
+					ladd_lift = 1.0;
+				}
+				if(conv == 0.0){
+					conv = 1.0;
+				}
+				//now scale from 0 to 1
+				ladd_lift = ((-1.0*ladd_lift) + 1.0)/2.0;
+				conv = ((-1.0*conv) + 1.0)/2.0;
+				//now scale them with the gear as normal
+				ladd_lift = ladd_lift*ladder_lift_dir*ladder_gear;
+				conv = conv*ladder_conv_dir*ladder_gear;
+				
 			}else{
 				left = 0.0;
 				right = 0.0;
+				buck_lift = 0.0;
+				dump = 0.0;
+				ladd_lift = 0.0;
+				conv = 0.0;
 			}
 
 			//Write to all motors at the same time
-			//Create a message with all motor values
-			motor_msg.left = left;
-			motor_msg.right = right;
-
-			//Send msg right away
-			motor_pub.publish(motor_msg);
+			//Create messages with all motor values
+			drive_msg.left = left;
+			drive_msg.right = right;
+			bucket_msg.lift = buck_lift;
+			bucket_msg.dump = dump;
+			ladder_msg.lift = ladd_lift;
+			ladder_msg.conv = conv;
+			//Send msgs right away
+			drive_pub.publish(drive_msg);
+			bucket_pub.publish(bucket_msg);
+			ladder_pub.publish(ladder_msg);
 			//mark the time the message was sent
 			last_time = ros::Time::now();
 			
@@ -151,27 +191,26 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		btn_pressed[iii] = joy->buttons[iii];
 	}
 
-/*
-	//Linear Actuator toggle TODO: Change this to another mining motor later
-	if (btn_released[RB])
-	{
-		linear_actuator_dir *= -1;
-		if(linear_actuator_dir)
-			ROS_INFO("Linear actuator set to extend");
-		else
-			ROS_INFO("Linear actuator set to retract");
-	}
-	//Bucket Drum toggle TODO: Change this to another mining motor later
+	//Ladder Lift toggle TODO: Change this to another mining motor later
 	if (btn_released[LB])
 	{
-		bucket_motor_dir *= -1;
-		if(bucket_motor_dir)
-			ROS_INFO("Bucket drum set to dump");
-		else
-			ROS_INFO("Bucket drum set to mine");
+		ladder_lift_dir *= -1;
+		if(ladder_lift_dir == 1){
+			ROS_INFO("Ladder system set to raise");
+		}else{
+			ROS_INFO("Ladder system set to lower");
+		}
 	}
-*/
-    
+	
+	if (btn_released[RB])
+	{
+		ladder_conv_dir *= -1;
+		if(ladder_conv_dir == 1){
+			ROS_INFO("Ladder conveyor set in positive direction");
+		}else{
+			ROS_INFO("Ladder conveyor set in negative direction");
+		}
+    	}
 	//OVERALL motor enable toggle
 	if (btn_released[START])
 	{
@@ -233,43 +272,41 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 			ROS_INFO("Speed limited to %.2f%% of max", wheel_gear * 100.0f);
 	}
 
-	//Bucket gear up TODO: Change this to another mining motor later
-	/*
+	// Mining Gear
+	// lower mining speed
 	if(btn_released[Y])
 	{
-		bucket_gear += 0.1f;
-		if (bucket_gear >= 1.0f)
+		ladder_gear += 0.1f;
+		if (ladder_gear >= 0.7f)
 		{
-			bucket_gear = 1.0f;
-			ROS_INFO("Mining speed not limited (100%% of max)");
+			ladder_gear = 0.7f;
+			ROS_INFO("Mining speed maximum (70%% of max)");
 		}
 		else
-			ROS_INFO("Mining speed limited to %.2f%% of max", bucket_gear * 100.0f);
+			ROS_INFO("Mining speed limited to %.2f%% of max", ladder_gear );
 	}
-	*/
-	
-	//bucket_gear down TODO: Change this to another mining motor later
-	/*
+	// increase mining speed
 	if (btn_released[X])
 	{
-		bucket_gear -= 0.1f;
-		if (bucket_gear <= 0.1f)
+		ladder_gear -= 0.1f;
+		if (ladder_gear <= 0.1f)
 		{
-			bucket_gear = 0.1f;
+			ladder_gear = 0.1f;
 			ROS_INFO("Mining speed limited to minimum 10%% of max");
 		}
 		else
-			ROS_INFO("Mining speed limited to %.2f%% of max", bucket_gear * 100.0f);
+			ROS_INFO("Mining speed limited to %.2f%% of max", ladder_gear );
 	}
-    */
+    
     
     //Set motors to current value
     left_motors = joy->axes[UD_LEFT];
     right_motors = joy->axes[UD_RIGHT];
-
+    bucket_lift = -1.0*(joy->axes[LR_DPAD]); //it's opposite for some reason
+    bucket_dump = joy->axes[UD_DPAD];
     
-//    bucket_motor = joy->axes[LT];
-//    linear_actuator = joy->axes[RT];
+    ladder_lift = joy->axes[LT];
+    ladder_conv = joy->axes[RT];
 
 //    if(btn_released[BACK])
 //   	ROS_INFO("Triger values B:L \t %.2f : %.2f", bucket_motor, linear_actuator);
@@ -279,18 +316,20 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 //Publishes all zero messages to all motors
 void StopEverything()
 {
-	//Generate msgs
-    //Format data
-    common_files::Motor motor_msg;
-
-    //Fill msgs with 0s
-    motor_msg.left = 0;
-    motor_msg.right = 0;
-	
-	//publish the message
-    motor_pub.publish(motor_msg);
+	common_files::Drive drive_msg;
+	drive_msg.left = 0;
+	drive_msg.right = 0;
+	drive_pub.publish(drive_msg);
     
+	common_files::Bucket bucket_msg;
+	bucket_msg.lift = 0.0;
+	bucket_msg.dump = 0.0;
+	bucket_pub.publish(bucket_msg);
 
+	common_files::Ladder ladder_msg;
+	ladder_msg.lift = 0.0;
+	ladder_msg.conv = 0.0;
+	ladder_pub.publish(ladder_msg);
 }
 
 int main(int argc, char** argv)
@@ -341,7 +380,9 @@ int main(int argc, char** argv)
 
 
     //Set up publisher on motor_rc, buffer up to 10 msgs
-    motor_pub = n.advertise<common_files::Motor>("motor_vals", 10);
+    drive_pub = n.advertise<common_files::Drive>("drive_vals", 10);
+    bucket_pub = n.advertise<common_files::Bucket>("bucket_vals", 10);
+    ladder_pub = n.advertise<common_files::Ladder>("ladder_vals", 10);
 
     //Initilize time
     last_time = ros::Time::now();
