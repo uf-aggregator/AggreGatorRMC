@@ -1,3 +1,5 @@
+#define ENCODER_OPTIMIZE_INTERRUPTS
+#include <Encoder.h> 
 #include <Wire.h>
 
 unsigned long last_motor_write = 0;
@@ -17,12 +19,15 @@ const int right_dirb = 11;
 const int right_curr = 20;
 
 //encoders
-//const int left_enca = ;
-//const int left_encb = ;
+const int left_enca = 7;
+const int left_encb = 6;
 //const int right_enca = ;
 //const int right_encb = ;
 
 volatile char command;
+
+Encoder left_enc(left_enca, left_encb);
+int left_position = 0;
 
 
 void both_forward(){
@@ -58,7 +63,8 @@ void setup() {
   //setup i2c
   Wire.begin(1); //slave with address of 1
   Wire.onReceive(interpretCommand);
-
+  Wire.onRequest(returnData);
+  
   pinMode(led, OUTPUT);
 
   //setup motor pins
@@ -81,6 +87,8 @@ void setup() {
   //attachInterrupt(right_encb, encoderRightB, CHANGE); 
   
   digitalWrite(led, LOW);
+  
+  left_enc.write(0); //start encoder at 0
 }
 
 void loop() {
@@ -95,6 +103,7 @@ void loop() {
     digitalWrite(led, HIGH);
     digitalWrite(m_enable, HIGH);
   }
+  
 }
 
 void interpretCommand(int howMany){
@@ -136,3 +145,18 @@ void interpretCommand(int howMany){
     analogWrite(right_pwm, temp);
   }
 }
+
+
+void returnData(){
+  uint8_t encoder_buffer[4];
+  int posLeft = left_enc.read();
+  encoder_buffer[0] = posLeft << 8;
+  encoder_buffer[1] = posLeft && 0xFF;
+  encoder_buffer[2] = 0;
+  encoder_buffer[3] = 0;  
+  left_enc.write(0);
+  Wire.write(encoder_buffer, 4);
+}
+
+
+

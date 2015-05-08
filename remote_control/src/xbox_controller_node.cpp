@@ -69,7 +69,7 @@ int ladder_conv_dir = 1;
 bool enable = false; //for all motors, not just wheels
 double wheel_gear = 0.7;
 double ladder_gear = 0.7;
-double bucket_gear = 0.2;
+double bucket_gear = 0.5;
 
 //Keep track of button presses (to find button releases)
 bool btn_pressed[NUM_BTNS] = { false };  //TODO: Eventually convert these to hashes
@@ -277,10 +277,10 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 	if(btn_released[Y])
 	{
 		ladder_gear += 0.1f;
-		if (ladder_gear >= 0.7f)
+		if (ladder_gear >= 1.0f)
 		{
-			ladder_gear = 0.7f;
-			ROS_INFO("Mining speed maximum (70%% of max)");
+			ladder_gear = 1.0f;
+			ROS_INFO("Mining speed maximum (100%% of max)");
 		}
 		else
 			ROS_INFO("Mining speed limited to %.2f%% of max", ladder_gear );

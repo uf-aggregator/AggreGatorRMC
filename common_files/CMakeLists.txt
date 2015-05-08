@@ -50,6 +50,7 @@ add_message_files (DIRECTORY msg
   keys.msg
   Avg_Noise.msg
   Filtered.msg
+#  CurrentSense.msg
 )
 
 add_service_files (DIRECTORY srv 
