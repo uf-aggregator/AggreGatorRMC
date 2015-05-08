@@ -18,7 +18,7 @@ class IrReader {
 		/* Constructor */
 		IrReader(int addr, int size);
 		~IrReader(){}
-		
+
 		/* Instance methods */
 		uint getValue();
 		int getCentimeters();
@@ -31,9 +31,12 @@ class IrReader {
 		static float getMetersOf(int addr, int size);
 		static float getFeetOf(int addr, int size);
 		static int getCentimeterI2CMap(int value);
+		static int getMetersOf(int centimeters);
+		static int getFeetOf(int centimeters);
+		static void ros_init();
 
 		/* Callbacks */
-		
+		static void publishDistances();
 };
 
 #endif

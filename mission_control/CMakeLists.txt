@@ -30,7 +30,12 @@ add_library(
 	mission_utils
   include/mission_control/behaviors/orientation_behavior.cpp
   include/mission_control/behaviors/motor_utility.cpp
-	include/mission_control/stateMachine/state_machine.cpp
+  include/mission_control/stateMachines/state_start.cpp
+  include/mission_control/stateMachines/state_navigation.cpp
+  include/mission_control/stateMachines/state_orientation.cpp
+  include/mission_control/stateMachines/state_mine.cpp
+  include/mission_control/stateMachines/state_dump.cpp
+  include/mission_control/stateMachines/state_machine.cpp
 	include/mission_control/mission_control.cpp
 )
 
@@ -47,5 +52,4 @@ add_dependencies(mission_control_node mission_control_generate_messages_cpp)
 target_link_libraries(mission_control_node
    ${catkin_LIBRARIES}
    mission_utils
-   motor_utils
  )

@@ -52,7 +52,7 @@ void MissionControl::start(){
 
 	try {
 		StateMachine *sm = new StateMachine();
-		sm->start(WAIT);
+		sm->start(START);
 
 	} catch(...) {
 		cout << "Some exception has occurred." << "\n";

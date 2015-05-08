@@ -202,7 +202,10 @@ int I2C::write_i2c(int address, int size, char* data)
     if(write(file, data, size) != size) {
 		//ERROR HANDLING: i2c transaction failed
 		printf("Failed to write to the i2c bus.\n\n");
+		printf("Test0");
 		printf("Error: %i", errno);
+		printf("Test1");
+		printf("\n");
 		close(file);
 		return 1;
     }
@@ -216,6 +219,7 @@ int I2C::init_i2c(void)
 {
 	//Turn on lv output pin for all logic level converters
 //	setGPIOWrite(17,1);   //NOTE: Logic level converters now powered externally
+	printf("Opening i2c bus at %s\n", FILENAME);
 	return 0;
 }
 

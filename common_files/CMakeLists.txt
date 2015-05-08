@@ -42,6 +42,8 @@ add_message_files (DIRECTORY msg
   Bucket.msg
   Ladder.msg
   Centroid.msg
+  IRDistance.msg
+  IRDistances.msg
   WriteI2C.msg
   WriteI2CRegister.msg
   RawIRData.msg
