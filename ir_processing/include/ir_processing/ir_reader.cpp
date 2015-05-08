@@ -3,6 +3,7 @@
 #include "ir_reader.h"
 #include "common_files/WriteI2C.h"
 #include "common_files/ReadI2C.h"
+#include "common_files/IRDistances.h"
 
 /*CONSTRUCTOR===============================*/
 IrReader::IrReader(int addr, int size){
@@ -83,12 +84,41 @@ float IrReader::getFeetOf(int addr, int size){
 	return 0.3048 * getMetersOf(addr, size);
 }
 
+int IrReader::getMetersOf(int centimeters) {
+	return 1000 * (float)centimeters;
+}
+
+int IrReader::getFeetOf(int centimeters) {
+	return 0.3048 * getMetersOf(centimeters);
+}
+
 //datasheet for IR: https://www.pololu.com/file/0J156/gp2y0a02yk_e.pdf
 int IrReader::getCentimeterI2CMap(int value){
 	int distance_in_cm;
 	float voltage = (value/i2c_max) * ir_max_out;
 
 	//using the following eqn:
-	//	f(y) = 
+	//	y = mx + b
+	float m = -2.35/135.0; 		//derived from datasheet graph
+	float intercept = 3.011;	//derived from datasheet graph
+	distance_in_cm = (voltage - intercept) / m;
 	return distance_in_cm;
+}
+
+void IrReader::ros_init(){
+	int argc; char** argv;
+	ros::init(argc, argv, "ir_reader_class");
+}
+
+void IrReader::publishDistances(){
+	if(!ros::isInitialized()) ros_init();
+
+	ros::NodeHandle nh;
+	common_files::IRDistances irds;
+
+	ros::Publisher pub = nh.advertise<common_files::IRDistances>("", 100);
+	
+	pub.publish(irds);
+
+	ros::spinOnce();
 }

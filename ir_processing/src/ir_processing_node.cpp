@@ -7,8 +7,8 @@ using namespace std;
 int main(int argc, char** argv){
 	ros::init(argc, argv, "ir_processing_node");
 
-	IrReader *ir1 = new IrReader(21, 128);
-	IrReader *ir2 = new IrReader(22, 128);
-	IrReader *ir3 = new IrReader(23, 128);
+	ros::NodeHandle nh;
+	//ros::Subscriber sub = nh.subscribe("/", 100, IrReader::publishDistances);
+	ros::spin();
 	return 0;
 }
