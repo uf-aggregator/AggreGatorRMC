@@ -1,5 +1,4 @@
-#define ENCODER_OPTIMIZE_INTERRUPTS
-#include <Encoder.h> 
+
 #include <Wire.h>
 
 unsigned long last_motor_write = 0;
@@ -19,16 +18,55 @@ const int right_dirb = 11;
 const int right_curr = 20;
 
 //encoders
-const int left_enca = 7;
-const int left_encb = 6;
+const int encoder0PinA = 7;
+const int encoder0PinB = 6;
 //const int right_enca = ;
 //const int right_encb = ;
 
 volatile char command;
 
-Encoder left_enc(left_enca, left_encb);
-int left_position = 0;
+volatile int encoder0Pos = 0;
 
+void doEncoderA(){
+  // look for a low-to-high on channel A
+  if (digitalRead(encoder0PinA) == HIGH) { 
+    // check channel B to see which way encoder is turning
+    if (digitalRead(encoder0PinB) == LOW) {  
+      encoder0Pos = encoder0Pos + 1;         // CW
+    } else {
+      encoder0Pos = encoder0Pos - 1;         // CCW
+    }
+  } else {  // must be a high-to-low edge on channel A                                       
+    // check channel B to see which way encoder is turning  
+    if (digitalRead(encoder0PinB) == HIGH) {   
+      encoder0Pos = encoder0Pos + 1;          // CW
+    } else {
+      encoder0Pos = encoder0Pos - 1;          // CCW
+    }
+  }
+}
+
+void doEncoderB(){
+  // look for a low-to-high on channel B
+  if (digitalRead(encoder0PinB) == HIGH) {   
+   // check channel A to see which way encoder is turning
+    if (digitalRead(encoder0PinA) == HIGH) {  
+      encoder0Pos = encoder0Pos + 1;         // CW
+    } 
+    else {
+      encoder0Pos = encoder0Pos - 1;         // CCW
+    }
+  } else { // Look for a high-to-low on channel B
+    // check channel B to see which way encoder is turning  
+    if (digitalRead(encoder0PinA) == LOW) {   
+      encoder0Pos = encoder0Pos + 1;          // CW
+    } 
+    else {
+      encoder0Pos = encoder0Pos - 1;          // CCW
+    }
+  }
+
+} 
 
 void both_forward(){
   digitalWrite(left_dira, HIGH);
@@ -60,6 +98,8 @@ void both_backward(){
 }
 
 void setup() {
+  //Serial.begin(9600);
+  
   //setup i2c
   Wire.begin(1); //slave with address of 1
   Wire.onReceive(interpretCommand);
@@ -75,20 +115,19 @@ void setup() {
   pinMode(right_dirb, OUTPUT);
   
   //setup encoder pins
-//  pinMode(left_enca, INPUT);
-//  pinMode(left_encb, INPUT);
+  pinMode(encoder0PinA, INPUT);
+  pinMode(encoder0PinB, INPUT);
  // pinMode(right_enca, INPUT);
   //pinMode(right_encb, INPUT);
   
   //setup encoder interrupts
-  //attachInterrupt(left_enca, encoderLeftA, CHANGE);
-  //attachInterrupt(left_encb, encoderLeftB, CHANGE);
+  attachInterrupt(encoder0PinA, doEncoderA, CHANGE);
+  attachInterrupt(encoder0PinB, doEncoderB, CHANGE);
   //attachInterrupt(right_enca, encoderRightA, CHANGE);
   //attachInterrupt(right_encb, encoderRightB, CHANGE); 
   
   digitalWrite(led, LOW);
   
-  left_enc.write(0); //start encoder at 0
 }
 
 void loop() {
@@ -103,6 +142,9 @@ void loop() {
     digitalWrite(led, HIGH);
     digitalWrite(m_enable, HIGH);
   }
+  
+  //Serial.print("encoder0Pos: ");
+  //Serial.println(encoder0Pos, DEC);
   
 }
 
@@ -149,12 +191,12 @@ void interpretCommand(int howMany){
 
 void returnData(){
   uint8_t encoder_buffer[4];
-  int posLeft = left_enc.read();
-  encoder_buffer[0] = posLeft << 8;
-  encoder_buffer[1] = posLeft && 0xFF;
-  encoder_buffer[2] = 0;
-  encoder_buffer[3] = 0;  
-  left_enc.write(0);
+  int curr_left = encoder0Pos;
+  encoder0Pos = 0;
+  encoder_buffer[0] = (curr_left & 0xFF000000) >> 24;
+  encoder_buffer[1] = (curr_left & 0x00FF0000) >> 16;
+  encoder_buffer[2] = (curr_left & 0x0000FF00) >> 8;
+  encoder_buffer[3] = (curr_left & 0xFF);  
   Wire.write(encoder_buffer, 4);
 }
 

@@ -102,16 +102,16 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-# add_executable(sensors_node src/sensors_node.cpp)
+add_executable(sensor_node src/sensor_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(sensors_node sensors_generate_messages_cpp)
+#add_dependencies(sensors_node sensors_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(sensors_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(sensor_node
+   ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
