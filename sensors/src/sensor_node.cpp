@@ -2,19 +2,20 @@
 	This node is meant to poll any and all sensors on the i2c bus
 		-The only data returned from the teensy is encoders
 		-The only data returned from the mega is current sense
-
 */
 
 #include <iostream>
 #include <cmath>
 #include "ros/ros.h"
 #include "common_files/ReadI2C.h"
+#include "common_files/Encoders.h"
+//#include "common_files/CurrentSense.h"
 
-
-int total_left_pos = 0;
-int total_right_pos = 0;
+common_files::Encoders encoder_total;
 
 ros::ServiceClient read_i2c;
+ros::Publisher encoders;
+ros::Publisher motor_current;
 
 void sensorCallback(const ros::TimerEvent&){
 	int curr_left_pos = 0;
@@ -33,10 +34,9 @@ void sensorCallback(const ros::TimerEvent&){
                 curr_right_pos = 0;
 
         //        ROS_INFO("curr_left_pos: %d, curr_right_pos: %d", curr_left_pos, curr_right_pos);
-                total_left_pos = total_left_pos + curr_left_pos;
-                total_right_pos = total_right_pos + curr_right_pos;
-//		total_left_pos = curr_left_pos;
-//		total_right_pos = curr_right_pos;
+                encoder_total.encoder0Pos = encoder_total.encoder0Pos + curr_left_pos;
+                encoder_total.encoder1Pos = 0;
+		encoders.publish(encoder_total);
         }else{
                 ROS_INFO("Failed to call read_i2c teensy service");
         }
@@ -67,15 +67,16 @@ void sensorCallback(const ros::TimerEvent&){
 }
 
 void rosoutCallback(const ros::TimerEvent&){
-	ROS_INFO("total_left_pos: %d, total_right_pos: %d", total_left_pos, total_right_pos);
+	ROS_INFO("total_left_pos: %d, total_right_pos: %d", encoder_total.encoder0Pos, encoder_total.encoder1Pos);
 }
 
 int main(int argc, char** argv){
 	ros::init(argc, argv, "sensor_node"); 
 	ros::NodeHandle n;
-	
+		
 	read_i2c = n.serviceClient<common_files::ReadI2C>("read_i2c");
-
+	encoders = n.advertise<common_files::Encoders>("encoders", 1);
+	
 	//read sensors every tenth of a second
 	ros::Timer sensor_timer = n.createTimer(ros::Duration(0.05), sensorCallback);
 	
