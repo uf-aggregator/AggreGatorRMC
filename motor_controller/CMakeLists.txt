@@ -8,7 +8,6 @@ find_package(catkin REQUIRED COMPONENTS
 	roscpp 
 	rospy 
 	std_msgs 
-	hardware_interface
 	common_files
 )
 
@@ -53,9 +52,9 @@ find_package(catkin REQUIRED COMPONENTS
 
 #configure the package's catkin stuff
 catkin_package(
-	INCLUDE_DIRS include
+#	INCLUDE_DIRS include
 	#LIBRARIES 
-	CATKIN_DEPENDS roscpp rospy std_msgs common_files hardware_interface
+	CATKIN_DEPENDS roscpp rospy std_msgs common_files
 )
 
 
