@@ -113,6 +113,11 @@ target_link_libraries(sensor_node
    ${catkin_LIBRARIES}
 )
 
+add_executable(mpu_node src/mpu_node.cpp)
+target_link_libraries(mpu_node
+   ${catkin_LIBRARIES}
+)
+
 #############
 ## Install ##
 #############

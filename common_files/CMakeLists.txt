@@ -53,6 +53,7 @@ add_message_files (DIRECTORY msg
   keys.msg
   Avg_Noise.msg
   Filtered.msg
+  Gyro.msg
 #  CurrentSense.msg
 )
 
