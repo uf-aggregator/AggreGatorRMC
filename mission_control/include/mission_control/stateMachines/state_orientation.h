@@ -6,6 +6,8 @@
 class OrientationState {
 	public:
 		OrientationState(States state);
+		int orientToMine();
+		int orientToDump();
 };
 
 #endif

@@ -6,6 +6,9 @@
 class NavigationState {
 	public:
 		NavigationState(States state);
+		
+		int navigateToMine();
+		int navigateToDump();
 };
 
 #endif

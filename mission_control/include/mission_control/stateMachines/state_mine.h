@@ -6,6 +6,7 @@
 class MineState {
 	public:
 		MineState(States state);
+		int mine();
 };
 
 #endif

@@ -6,6 +6,7 @@
 class StartState {
 	public:
 		StartState(States state);
+		int start();
 };
 
 #endif

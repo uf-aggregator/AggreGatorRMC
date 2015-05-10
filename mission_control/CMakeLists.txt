@@ -45,9 +45,9 @@ include_directories(
   include ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(mission_control_node src/mission_control_node.cpp )
+add_executable( mission_control_node src/mission_control_node.cpp )
 
-add_dependencies(mission_control_node mission_control_generate_messages_cpp)
+add_dependencies( mission_control_node mission_control_generate_messages_cpp )
 
 target_link_libraries(mission_control_node
    ${catkin_LIBRARIES}
