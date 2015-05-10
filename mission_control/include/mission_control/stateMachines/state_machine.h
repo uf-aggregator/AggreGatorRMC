@@ -6,7 +6,7 @@
 
 class StateMachine {
 	public:
-	//DATA MEMBERS==================
+		//PUBLIC DATA MEMBERS==================
 		//cap for how many states to retain
 		static const int MAX_HISTORY = 100;
 
@@ -19,23 +19,40 @@ class StateMachine {
 		~StateMachine(){
 		}
 
-	//METHODS=======================
-		/*int start(int)
-		 *	start from a certain state
+		//PUBLIC METHODS=======================
+		/* int start(int)
+		 *		master start function
 		 */
-		int start(int startingQueue);
+		int start(int startState);
 
-		/*int next(void)
-		 *	decide next state
+		/* int startStateMachine(int)
+		 *		start the primary execution
+		 */
+		int startStateMachines(int startState);
+
+		/* int executeState(int)
+		 *		run a state
+		 */
+		int executeState(int executingState);
+
+		/* int next(void)
+		 *		decide next state
 		 */
 		int next();
 
-		/*void printHistory(void)
-		 *	prints out the state history in ascending order
+		/* void printHistory(void)
+		 *		prints out the state history in ascending order
 		 */
 		 void printHistory();
 
-		 //CALLBACKS
+	private:
+		static const int LOOP_LIMIT = 10;
+
+		//PRIVATE METHODS=======================
+		/* int check(int)
+		 *		check function for preventing infinite loops
+		 */
+		int check(int value);
 };
 
 #endif

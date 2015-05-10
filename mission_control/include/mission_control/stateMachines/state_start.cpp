@@ -6,3 +6,7 @@ StartState::StartState(States state){
 			std::cout << "START" << std::endl;
 	}
 }
+
+int StartState::start() {
+	return 0;
+}

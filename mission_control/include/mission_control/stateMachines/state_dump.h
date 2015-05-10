@@ -6,6 +6,8 @@
 class DumpState {
 	public:
 		DumpState(States state);
+		int dump();
+
 };
 
 #endif

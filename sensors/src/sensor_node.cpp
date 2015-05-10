@@ -1,7 +1,7 @@
 /*
-	This node is meant to poll any and all sensors on the i2c bus
-		-The only data returned from the teensy is encoders
-		-The only data returned from the mega is current sense
+This node is meant to poll any and all sensors on the i2c bus
+	-The only data returned from the teensy is encoders
+	-The only data returned from the mega is current sense
 */
 
 #include <iostream>
@@ -25,7 +25,7 @@ void sensorCallback(const ros::TimerEvent&){
         teensy_srv.request.addr = 1;
         teensy_srv.request.size = 4;
         if(read_i2c.call(teensy_srv)){
-        //        ROS_INFO("teensy_srv: %d, %d, %d, %d", teensy_srv.response.data[0], teensy_srv.response.data[1], teensy_srv.response.data[2], teensy_srv.response.data[3]);
+        //      ROS_INFO("teensy_srv: %d, %d, %d, %d", teensy_srv.response.data[0], teensy_srv.response.data[1], teensy_srv.response.data[2], teensy_srv.response.data[3]);
                 curr_left_pos = teensy_srv.response.data[0] << 24;
                 curr_left_pos = curr_left_pos | (teensy_srv.response.data[1] << 16);
 		curr_left_pos = curr_left_pos | (teensy_srv.response.data[2] << 8);
@@ -33,7 +33,7 @@ void sensorCallback(const ros::TimerEvent&){
 
                 curr_right_pos = 0;
 
-        //        ROS_INFO("curr_left_pos: %d, curr_right_pos: %d", curr_left_pos, curr_right_pos);
+        //      ROS_INFO("curr_left_pos: %d, curr_right_pos: %d", curr_left_pos, curr_right_pos);
                 encoder_total.encoder0Pos = encoder_total.encoder0Pos + curr_left_pos;
                 encoder_total.encoder1Pos = 0;
 		encoders.publish(encoder_total);
@@ -67,7 +67,7 @@ void sensorCallback(const ros::TimerEvent&){
 }
 
 void rosoutCallback(const ros::TimerEvent&){
-	ROS_INFO("total_left_pos: %d, total_right_pos: %d", encoder_total.encoder0Pos, encoder_total.encoder1Pos);
+        ROS_INFO("total_left_pos: %d, total_right_pos: %d", encoder_total.encoder0Pos, encoder_total.encoder1Pos);
 }
 
 int main(int argc, char** argv){
