@@ -65,9 +65,9 @@ void mpuCallback(const ros::TimerEvent&){
 		z_gyro = (mpu_srv.response.data[12] << 8) | mpu_srv.response.data[13];
 	
 		//convert the gyro adc data to degrees per second (dps)
-		last_gyro.x = ((float)(x_gyro/MAX_INT))*(250.0);
-		last_gyro.y = ((float)(y_gyro/MAX_INT))*(250.0);
-		last_gyro.z = ((float)(z_gyro/MAX_INT))*(250.0);
+		last_gyro.x = (((float)x_gyro)/MAX_INT)*(250.0);
+		last_gyro.y = (((float)y_gyro)/MAX_INT)*(250.0);
+		last_gyro.z = (((float)z_gyro)/MAX_INT)*(250.0);
 		gyro.publish(last_gyro);	
 
 	//	ROS_INFO("ACCELERATION: %d, %d, %d", x_acc, y_acc, z_acc);
