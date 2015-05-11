@@ -118,6 +118,12 @@ target_link_libraries(mpu_node
    ${catkin_LIBRARIES}
 )
 
+add_executable(angle_node src/angle_node.cpp)
+target_link_libraries(angle_node
+   ${catkin_LIBRARIES}
+)
+
+
 #############
 ## Install ##
 #############
