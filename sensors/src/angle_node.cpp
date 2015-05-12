@@ -1,8 +1,7 @@
 /*
 	angle node
 	subscribes to mpu_node to determine heading of robot
-
-
+	
 */
 
 #include <ros/ros.h>
@@ -26,7 +25,8 @@ double orientation = 0.0;
 
 void commandCallback(const std_msgs::Int8::ConstPtr& command){
 	if(command->data == 0){
-		//use the last_laser as the snapshot for this command
+		//Reset the orientation of the robot
+		//This would typically be performed before a turn
 		ROS_INFO("Zeroing");
 		orientation = 0.0;	
 		reading_time.fromSec(0.0);
@@ -39,9 +39,12 @@ void commandCallback(const std_msgs::Int8::ConstPtr& command){
 }
 
 void gyroCallBack(const common_files::Gyro::ConstPtr& gyro_reading){
-	if(calculatingOffset == 1){
+	if(calculatingOffset == 1){	//if offset calculation command was received
+		//save this sample in a vector of samples
 		samplesForOffset.push_back(gyro_reading->x);
-		if(samplesForOffset.size() == 400){
+		if(samplesForOffset.size() == 400){ //at 100 Hz, this is four seconds
+			//clear the calculatingOffset flag when finished
+			//and then calculate the average of th samples
 			calculatingOffset = 0;
 			double sample_total = 0.0;
 			for(int i = 0; i < samplesForOffset.size(); i++){
@@ -54,14 +57,25 @@ void gyroCallBack(const common_files::Gyro::ConstPtr& gyro_reading){
 	}	
 
 	if(previous_time.toSec() == 0.0){
+		//if this is the first sample after a reset, ignore it but save time
 		previous_time = ros::Time::now();
 		reading_time = ros::Time::now();		
 	}else{
+		//if this is a normal sample, integrate it!
 		previous_time = reading_time;
 		reading_time = ros::Time::now();
-		double time_difference = reading_time.toSec() - previous_time.toSec();
-		double angle = time_difference * (gyro_reading->x - offset);
-		orientation = orientation + angle;
+		//integration of degrees per second will give heading in degrees
+		//this is a basic riemman sum, n SUMMATION i=0: f(t_of_(i)) * (t_of_(i) - t_of_(i-1))
+		//every time we get a mpu callback, i increases.  But we always work with the current i. 
+		//see en.wikipedia.org/wiki/Riemmann_sum
+				//width is delta_t
+				//height is dps
+				//area is delta_t * dps
+		//first calculate t_of_(i) - t_of_(i-1), or delta_t
+		double time_difference = reading_time.toSec() - previous_time.toSec(); //in seconds
+		//now calculate f(t_of_(i)) * (t_of_(i) - t_of_(i-1)), or area of rectangle
+		double angle = time_difference * (gyro_reading->x - offset);  //in degrees
+		orientation = orientation + angle; //SUMMMATION 
 	}
 	
 }
