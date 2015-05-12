@@ -9,11 +9,9 @@ Node uses pcl_common's compute3DCentroid to get location of robot
 #include <pcl/point_cloud.h>
 #include <pcl/PointIndices.h>
 #include "common_files/Centroid.h"
-//#include "common_files/Velocity.h"
 
 ros::Subscriber cluster_pc;
 ros::Publisher centroid_pub;
-ros::Publisher velocity_pub;
 
 float last_centroid[3] = {0.0, 0.0, 0.0};
 float curr_centroid[3] = {0.0, 0.0, 0.0};
@@ -31,8 +29,6 @@ void cluster_pcCallBack(const sensor_msgs::PointCloud2::ConstPtr& ros_pc_in){
 	Eigen::Vector4f centroid;	
 	pcl::compute3DCentroid(*pc_in, centroid);
 	
-	//ROS_INFO("PC height=%d, width=%d", pc_in->height, pc_in->width);	
-	ROS_INFO("X:%f, Y:%f, Z:%f", centroid[1], centroid[0], centroid[2]);
 	if(countSinceLastVel == 2){
 		last_centroid[0] = curr_centroid[0];
 		last_centroid[1] = curr_centroid[1];
@@ -48,28 +44,8 @@ void cluster_pcCallBack(const sensor_msgs::PointCloud2::ConstPtr& ros_pc_in){
 	centroid_msg.x = curr_centroid[1];
 	centroid_msg.y = curr_centroid[0];
 	centroid_pub.publish(centroid_msg);
-/*
-	float x_diff = curr_centroid[1] - last_centroid[1];
-	float y_diff = curr_centroid[0] - last_centroid[0];	
-	float time_diff = curr_centroid_time - last_centroid_time;
-	if(last_centroid[0] != 0.0 && last_centroid[1] != 0.0 && last_centroid_time != 0.0 && countSinceLastVel == 2){
-		common_files::Velocity velocity_msg;
-		velocity_msg.x = x_diff/time_diff;
-		velocity_msg.y = y_diff/time_diff;
-		velocity_pub.publish(velocity_msg);
-		ROS_INFO("x_diff: %f, y_diff: %f, time_diff: %f", x_diff, y_diff, time_diff);
-	        ROS_INFO("Velocity: %f, %f", velocity_msg.x, velocity_msg.y);
-		
-		countSinceLastVel = 0;
-	}
-*/
+	ROS_INFO("Centroid: %f, %f", centroid_msg.x, centroid_msg.y);
 }
-
-//bool ReadLidarCallback(common_files::ReadLidar::Request&  request,
-//                     common_files::ReadLidar::Response& reply){
-//	reply.x = last_centroid[0];
-//	reply.y = last_centroid[1];
-//}
 
 int main(int argc, char** argv){
 	ros::init(argc, argv, "pcl_centroid_node");
@@ -77,7 +53,6 @@ int main(int argc, char** argv){
 
 	cluster_pc = nh.subscribe<sensor_msgs::PointCloud2>("lidar_pointcloud", 1, cluster_pcCallBack);
 	centroid_pub = nh.advertise<common_files::Centroid>("centroid", 1);
-	//velocity_pub = nh.advertise<common_files::Velocity>("velocity", 1);
 	
 	
 	while(ros::ok()){

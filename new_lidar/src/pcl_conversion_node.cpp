@@ -95,7 +95,7 @@ int main(int argc, char**argv){
 	output = nh.advertise<sensor_msgs::PointCloud2>("lidar_pointcloud", 1);
 
 	input = nh.subscribe("/scan", 1, scanCallBack);
-	command = nh.subscribe("/command", 1, commandCallBack);	
+	command = nh.subscribe("/lidar_command", 1, commandCallBack);	
 		
 
 	ros::spin();
