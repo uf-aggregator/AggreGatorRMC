@@ -36,7 +36,6 @@ add_library(
   include/mission_control/stateMachines/state_mine.cpp
   include/mission_control/stateMachines/state_dump.cpp
   include/mission_control/stateMachines/state_machine.cpp
-	include/mission_control/mission_control.cpp
 )
 
 #make the include directory known

@@ -50,12 +50,11 @@ void mpuCallback(const ros::TimerEvent&){
 	write_i2c.publish(mpu_reg_msg);
 
 	//now read 14 registers starting at 0x3B
-
-        common_files::ReadI2C mpu_srv;
+    common_files::ReadI2C mpu_srv;
 	mpu_srv.request.addr = MPU_ADDR;
 	mpu_srv.request.size = 14;
 
-        if(read_i2c.call(mpu_srv)){
+    if(read_i2c.call(mpu_srv)){
 		x_acc = (mpu_srv.response.data[0] << 8) | mpu_srv.response.data[1];
 		y_acc = (mpu_srv.response.data[2] << 8) | mpu_srv.response.data[3];
 		z_acc = (mpu_srv.response.data[4] << 8) | mpu_srv.response.data[5];
@@ -63,7 +62,7 @@ void mpuCallback(const ros::TimerEvent&){
 		x_gyro = (mpu_srv.response.data[8] << 8) | mpu_srv.response.data[9];
 		y_gyro = (mpu_srv.response.data[10] << 8) | mpu_srv.response.data[11];
 		z_gyro = (mpu_srv.response.data[12] << 8) | mpu_srv.response.data[13];
-	
+
 		//convert the gyro adc data to degrees per second (dps)
 		last_gyro.x = (((float)x_gyro)/MAX_INT)*(250.0);
 		last_gyro.y = (((float)y_gyro)/MAX_INT)*(250.0);
@@ -73,17 +72,15 @@ void mpuCallback(const ros::TimerEvent&){
 	//	ROS_INFO("ACCELERATION: %d, %d, %d", x_acc, y_acc, z_acc);
 	//	ROS_INFO("Temperature: %d", temperature);
 	//	ROS_INFO("GYRO: %d, %d, %d", x_gyro, y_gyro, z_gyro);
-		
-	}else{
-                ROS_INFO("Failed to call read_i2c teensy service");
-        }
-
+	} else {
+        ROS_INFO("Failed to call read_i2c teensy service");
+    }
 }
 
 void rosoutCallback(const ros::TimerEvent&){
 	ROS_INFO("ACCELERATION: %d, %d, %d", x_acc, y_acc, z_acc);
-        ROS_INFO("Temperature: %d", temperature);
-        ROS_INFO("GYRO: %d, %d, %d", x_gyro, y_gyro, z_gyro);
+    ROS_INFO("Temperature: %d", temperature);
+    ROS_INFO("GYRO: %d, %d, %d", x_gyro, y_gyro, z_gyro);
 	ROS_INFO("%f, %f, %f degrees per second", last_gyro.x, last_gyro.y, last_gyro.z);
 }
 
@@ -111,11 +108,10 @@ int main(int argc, char** argv){
 	ROS_INFO("MPU6050 awake");
 	ros::Duration(1).sleep();
 
-
 	//read mpu every tenth of a second
-        ros::Timer mpu_timer = n.createTimer(ros::Duration(0.05), mpuCallback);
+    ros::Timer mpu_timer = n.createTimer(ros::Duration(0.05), mpuCallback);
 
-        ros::Timer ros_out_timer = n.createTimer(ros::Duration(.25), rosoutCallback);
+    ros::Timer ros_out_timer = n.createTimer(ros::Duration(.25), rosoutCallback);
 
 	while(ros::ok()){
 		ros::spinOnce();

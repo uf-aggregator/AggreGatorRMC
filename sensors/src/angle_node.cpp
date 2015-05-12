@@ -6,11 +6,16 @@
 
 #include <ros/ros.h>
 #include <std_msgs/Int8.h>
+#include <std_msgs/Float32.h>
 #include "common_files/Gyro.h"
 #include <ros/time.h>
 #include <vector>
 
 ros::Subscriber gyro;
+ros::Subscriber command_topic;
+
+ros::Publisher pub_angle;
+
 ros::Time reading_time(0);
 ros::Time previous_time(0);
 ros::Time offset_calculation(0);
@@ -85,6 +90,16 @@ void rosoutCallback(const ros::TimerEvent&){
 		ROS_INFO("Calculating offset");	
 	}else{
 		ROS_INFO("Orientation: %f", orientation);
+		int argc; char** argv;
+		ros::init(argc, argv, "publish_orientation_angle");
+		
+		ros::NodeHandle nh;
+		pub_angle = nh.advertise<std_msgs::Float32>("orientation_angle", 1);
+		
+		//publish orientation to orientation_angle topic
+		std_msgs::Float32 angle;
+		angle.data = orientation;
+		pub_angle.publish(angle);
 	}
 }
 
@@ -93,7 +108,7 @@ int main(int argc, char** argv){
 	ros::NodeHandle nh;
 	
 	gyro = nh.subscribe("gyro", 1, gyroCallBack);
-	ros::Subscriber command_topic = nh.subscribe("gyro_command", 1, commandCallback);	
+	command_topic = nh.subscribe("gyro_command", 1, commandCallback);	
 
 	ros::Timer ros_out_timer = nh.createTimer(ros::Duration(.25), rosoutCallback);
 

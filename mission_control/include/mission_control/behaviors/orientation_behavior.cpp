@@ -4,16 +4,27 @@
 #include "behaviors.h"
 #include "common_files/Coordinates.h"
 
-OrientationBehavior::OrientationBehavior(){
-	lastSeen = NONE;
-	x1 = -1.0;
-	y1 = -1.0;
-	x2 = -1.0;
-	y2 = -1.0;
-	width = 0.0;
-	height = 0.0;
+#define INVALID_VAL 32768.0
+
+/* INITIALIZE STATIC MEMBERS ======================*/
+Direction OrientationBehavior::lastSeen = NONE;
+float OrientationBehavior::x1 = -1.0;
+float OrientationBehavior::y1 = -1.0;
+float OrientationBehavior::x2 = -1.0;
+float OrientationBehavior::y2 = -1.0;
+float OrientationBehavior::width = 0.0;
+float OrientationBehavior::height = 0.0;
+float OrientationBehavior::angle = INVALID_VAL;
+
+
+/* CALLBACKS ======================*/
+void OrientationBehavior::orientAngleCallback(const std_msgs::Float32::ConstPtr& msg) {
+	angle = msg->data;
 }
 
+
+/* OPERATIONAL METHODS ======================*/
+// turns based on the LED static variables
 void OrientationBehavior::turn(){
 	float mX = abs( x1 + x2 )/2.0;
 	float centerX = width/2.0;
@@ -39,9 +50,46 @@ void OrientationBehavior::turn(){
 	motor_utility::write(left_value, right_value);
 }
 
+//turns based on a given amount of degrees using /gyro topic
+void OrientationBehavior::turn(int degrees){
+	int argc; char **argv;
+	ros::init(argc, argv, "turning_using_gyro_topic");
+	ros::NodeHandle nh;
+
+	ros::Subscriber sub = nh.subscribe("orientation_angle", 1, orientAngleCallback);
+	while(angle == INVALID_VAL)
+		ros::spinOnce();
+
+	bool negative = degrees < 0;
+	degrees = negative ? degrees * -1.0 : degrees;
+	float fixed = angle;
+	float delta = 0.0;
+
+	while(delta <= degrees){
+		delta = angle - fixed;
+		delta = std::abs(delta);
+
+		if(negative) motor_utility::write(-50.0, 50.0);
+		else motor_utility::write(50.0, -50.0);
+	}
+
+	motor_utility::stop();
+}
+
+//updates only the current angle
+void OrientationBehavior::updateAngle(){
+	int argc; char **argv;
+	ros::init(argc, argv, "updating_angle");
+	ros::NodeHandle nh;
+	ros::Subscriber sub = nh.subscribe("orientation_angle", 1, orientAngleCallback);
+	do {
+		ros::spinOnce();
+	} while(angle == INVALID_VAL);
+}
+
+//uses the video processing service to find the position of the red LEDs
 void OrientationBehavior::find(){
 	int argc; char **argv;
-
 	ros::init(argc, argv, "calling_video_processing_service");
 	ros::NodeHandle nh;
 	char const* serviceNm = "get_target_coordinates_in_meters";
@@ -69,7 +117,8 @@ void OrientationBehavior::find(){
 	}
 }
 
-void OrientationBehavior::orient(){
+//orients the robot so LEDs are in the center of the camera
+void OrientationBehavior::orientToLEDs(){
 	float mX = abs( x1 + x2 )/2.0;
 	float centerX = width/2.0;
 	
@@ -88,7 +137,7 @@ void OrientationBehavior::orient(){
 		centerX = width/2.0;
 		offset = abs(mX - centerX)/(centerX);
 	}
+
+	motor_utility::stop();
 }
-
-
 
