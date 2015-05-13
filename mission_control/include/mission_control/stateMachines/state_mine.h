@@ -2,6 +2,7 @@
 #define STATE_MINE_H
 
 #include "../behaviors/behaviors.h"
+#include <ros/ros.h>
 
 class MineState {
 	public:

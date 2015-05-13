@@ -70,7 +70,7 @@ int NavigationState::navigateToMine() {
 	navigateTo(true);
 }
 
-int NavigationState::navigateTo(bool mine){
+int NavigationState::navigateTo(bool forward){
 	int argc; char** argv; 
 	ros::init(argc, argv, "navigate_to_mine");
 	ros::NodeHandle nh;
@@ -81,17 +81,25 @@ int NavigationState::navigateTo(bool mine){
 
 	while(++index < 15 && ros::ok()){ //find a real condition, currently placeholding
 		//read in the "front" ir distances and move accordingly
-		switch(checkIRs(mine)){
-			case -1:
+		switch(checkIRs(forward)){
+			case -1: //obstacle on right IR
+				if(forward) {}
+				else {}
 				break;
 	
-			case 0:
+			case 0: //no obstacles
+				if(forward) {}
+				else {}
 				break;
 	
-			case 1:
+			case 1: //obstacle on left IR
+				if(forward) {}
+				else {}
 				break;
 	
-			case 2:
+			case 2: //obstacles both ways
+				if(forward) {}
+				else {}
 				break;
 		}
 
