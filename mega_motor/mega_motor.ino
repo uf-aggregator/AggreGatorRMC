@@ -35,13 +35,15 @@ const int ladder_conv_dirb = 5;
 const int ladder_conv_pwm = 4;
 const int ladder_conv_cs_num = 1; //adc num
 
+const int power_mon_num = 4; //adc num
+
 volatile char command;
 
 volatile int ladder_lift_cs_val = 0;
 volatile int ladder_conv_cs_val = 0;
 volatile int bucket_lift_cs_val = 0;
 volatile int bucket_dump_cs_val = 0;
-
+volatile int power_mon_val = 0;
 
 void bucket_lift_pos_dump_pos(){
   digitalWrite(bucket_lift_dira, HIGH);
@@ -162,13 +164,14 @@ void loop() {
   ladder_conv_cs_val = analogRead(ladder_lift_cs_num);
   bucket_lift_cs_val = analogRead(bucket_lift_cs_num);
   bucket_dump_cs_val = analogRead(bucket_dump_cs_num);
+  power_mon_val = analogRead(power_mon_num);
   
 }
 
 void returnData(){
   //to send multiple bytes, 
   //you  must create a buffer and send it all at once
-  uint8_t i2c_buffer[8];
+  uint8_t i2c_buffer[10];
   i2c_buffer[0] = ladder_lift_cs_val >> 8;
   i2c_buffer[1] = ladder_lift_cs_val & 0xFF;
   i2c_buffer[2] = ladder_conv_cs_val >> 8;
@@ -177,7 +180,9 @@ void returnData(){
   i2c_buffer[5] = bucket_lift_cs_val & 0xFF;
   i2c_buffer[6] = bucket_dump_cs_val >> 8;
   i2c_buffer[7] = bucket_dump_cs_val & 0xFF;
-  Wire.write(i2c_buffer, 8);
+  i2c_buffer[8] = power_mon_val >> 8;
+  i2c_buffer[9] = power_mon_val & 0xFF;
+  Wire.write(i2c_buffer, 10);
   
 }
 
