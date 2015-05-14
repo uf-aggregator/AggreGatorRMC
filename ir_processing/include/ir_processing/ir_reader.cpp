@@ -115,9 +115,10 @@ void IrReader::publishDistances(){
 
 	ros::NodeHandle nh;
 	common_files::IRDistances irds;
-
-	ros::Publisher pub = nh.advertise<common_files::IRDistances>("", 100);
+	ros::Publisher pub = nh.advertise<common_files::IRDistances>("IrDistances", 100);
 	
+
+
 	pub.publish(irds);
 
 	ros::spinOnce();

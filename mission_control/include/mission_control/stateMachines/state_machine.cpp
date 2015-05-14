@@ -15,11 +15,13 @@
 
 #include "state_machine.h"
 
+//constructor
 StateMachine::StateMachine () {
 	//initialize starting index for stateHistory
 	currentHistoryIndex = 0;
 }
 
+//primary start method
 int StateMachine::start(int startState){
 	currentState = startState;
 	stateHistory[currentHistoryIndex] = currentState;
@@ -162,9 +164,6 @@ int StateMachine::next(){
 				return START;
 		}
 }
-
-//CALLBACKS============================================
-
 
 //UTILITY METHODS======================================
 void StateMachine::printHistory() {

@@ -14,9 +14,12 @@ OrientationState::OrientationState(States state){
 }
 
 int OrientationState::orientToMine(){
+	OrientationBehavior::updateAngle();
 	return 0;
 }
 
 int OrientationState::orientToDump(){
+	OrientationBehavior::updateAngle();
+	OrientationBehavior::turn(180);
 	return 0;
 }
