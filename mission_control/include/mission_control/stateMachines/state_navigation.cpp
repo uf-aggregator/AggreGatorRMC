@@ -4,6 +4,11 @@
 #define TOO_CLOSE 20 //cm
 
 
+/* GLOBAL VARIABLES =====================================*/
+const ros::Duration move_time(1.5);
+const float moveSpd = 1.0;
+
+
 /* INIT STATIC VARIABLES =====================================*/
 common_files::IRDistances NavigationState::ir_distances;
 
@@ -60,6 +65,54 @@ int NavigationState::checkIRs(bool front) {
 	return obstaclesAt(leftObstacle, rightObstacle);
 }
 
+int NavigationState::moveStraight(bool front){
+	ros::Time startTime = ros::Time::now();
+	
+	while(startTime - ros::Time::now() < move_time){
+		motor_utility::write(moveSpd, moveSpd);
+	}
+
+	motor_utility::stop_wheels();
+
+	return 0;
+}
+
+int NavigationState::turnLeft(bool front){
+	ros::Time startTime = ros::Time::now();
+	
+	while(startTime - ros::Time::now() < move_time){
+		motor_utility::write(-moveSpd, moveSpd);
+	}
+
+	motor_utility::stop_wheels();
+
+	return 0;
+}
+
+int NavigationState::turnRight(bool front){
+	ros::Time startTime = ros::Time::now();
+	
+	while(startTime - ros::Time::now() < move_time){
+		motor_utility::write(moveSpd, -moveSpd);
+	}
+
+	motor_utility::stop_wheels();
+
+	return 0;
+}
+
+int NavigationState::backUp(bool front){
+	ros::Time startTime = ros::Time::now();
+	
+	while(startTime - ros::Time::now() < move_time){
+		motor_utility::write(-moveSpd, -moveSpd);
+	}
+
+	motor_utility::stop_wheels();
+
+	return 0;
+}
+
 
 /* WRAPPER METHODS =====================================*/
 int NavigationState::navigateToDump() {
@@ -83,23 +136,19 @@ int NavigationState::navigateTo(bool forward){
 		//read in the "front" ir distances and move accordingly
 		switch(checkIRs(forward)){
 			case -1: //obstacle on right IR
-				if(forward) {}
-				else {}
+				turnLeft(forward);
 				break;
 	
 			case 0: //no obstacles
-				if(forward) {}
-				else {}
+				moveStraight(forward);
 				break;
 	
 			case 1: //obstacle on left IR
-				if(forward) {}
-				else {}
+				turnRight(forward);
 				break;
 	
 			case 2: //obstacles both ways
-				if(forward) {}
-				else {}
+				backUp(forward);
 				break;
 		}
 

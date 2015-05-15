@@ -19,6 +19,10 @@ class NavigationState {
 		static common_files::IRDistances ir_distances;
 		static void readIrDistancesCallback(const common_files::IRDistances::ConstPtr& msg);
 		int checkIRs(bool front);
+		int moveStraight(bool front);
+		int turnLeft(bool front);
+		int turnRight(bool front);
+		int backUp(bool front);
 };
 
 #endif

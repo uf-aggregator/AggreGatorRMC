@@ -100,10 +100,10 @@ void WriteMotorValue()
 { 
     	double left = 0.0;
     	double right = 0.0;
-	double buck_lift = 0.0;
-	double dump = 0.0;
-	double ladd_lift = 1.0;
-	double conv = 1.0;
+		double buck_lift = 0.0;
+		double dump = 0.0;
+		double ladd_lift = 1.0;
+		double conv = 1.0;
     	current_time = ros::Time::now();
     	if(current_time - last_time > send_time){
 	    	
@@ -114,10 +114,10 @@ void WriteMotorValue()
 			common_files::Ladder ladder_msg;
 			if(enable){
 			//Bounds: [-1,1] * wheel_gear = [-wheel_gear, wheel_gear]
-				left = left_motors  * wheel_gear;       //Scale to gear
+				left = left_motors * wheel_gear;       //Scale to gear
 				right = right_motors * wheel_gear;     //Scale to gear
-				buck_lift = bucket_lift*bucket_gear;
-				dump = bucket_dump*bucket_gear;
+				buck_lift = bucket_lift * bucket_gear;
+				dump = bucket_dump * bucket_gear;
 				ladd_lift = ladder_lift;
 				conv = ladder_conv;
 				//triggers are scaled from -1 released to 1 pressed
@@ -136,11 +136,12 @@ void WriteMotorValue()
 				//now scale from 0 to 1
 				ladd_lift = ((-1.0*ladd_lift) + 1.0)/2.0;
 				conv = ((-1.0*conv) + 1.0)/2.0;
+
 				//now scale them with the gear as normal
 				ladd_lift = ladd_lift*ladder_lift_dir*ladder_gear;
 				conv = conv*ladder_conv_dir*ladder_gear;
 				
-			}else{
+			} else {
 				left = 0.0;
 				right = 0.0;
 				buck_lift = 0.0;
@@ -157,18 +158,17 @@ void WriteMotorValue()
 			bucket_msg.dump = dump;
 			ladder_msg.lift = ladd_lift;
 			ladder_msg.conv = conv;
+			
 			//Send msgs right away
 			drive_pub.publish(drive_msg);
 			bucket_pub.publish(bucket_msg);
 			ladder_pub.publish(ladder_msg);
+			
 			//mark the time the message was sent
 			last_time = ros::Time::now();
-			
-		}
 
-	
-     }
-    
+		}//end if-enable
+     }//end-if
 }
 
 /* XboxCallback - executed each time a message is recieved from /joy topic
@@ -215,10 +215,9 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 	if (btn_released[START])
 	{
 		enable = !enable;
-		//If we disable input imediatly send a stop msg
+		//If we disable input immediatly send a stop msg
 		if (!enable)
 		{
-//			
 			StopEverything();
 			ROS_INFO("Motors disabled");
 		}
@@ -236,7 +235,7 @@ void XboxCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		//Stop imediatly if stop
 		if(!mining_motion_enable)
 		{
-//			StopMining();
+			//StopMining();
 			ROS_INFO("Mining system disabled");
 		}
 		else
