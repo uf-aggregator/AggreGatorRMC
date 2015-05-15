@@ -82,7 +82,6 @@ If it says `roslaunch` isn't a command, check that you `source`'d `devel/setup.b
 
 ###Recovering from Crashes
 
-
 First, connect to the Odroid via ssh.
 
 Once logged in, run the kill all processes command:
@@ -95,3 +94,8 @@ Once logged in, run the kill all processes command:
 Your ssh session will end after this command; log into the ODroid again, and run the ODroidStart script as before. 
 roscore on the Odroid will now be running, and you can once again connect to it with Command Nodes.  
 
+---------------------------------------------------------
+
+###System Structure
+
+Granted you have the appropriate permissions, you can view our design doc [here](https://docs.google.com/presentation/d/1R9dvbtlgpm_iyYBrbS1A0h2gCdaTvyt2T7zIN8LaEMw/edit?usp=sharing).
