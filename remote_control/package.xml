@@ -1,17 +1,14 @@
 <?xml version="1.0"?>
 <package>
   <name>remote_control</name>
-  <version>0.0.0</version>
-  <description>The remote_control package</description>
+  <version>0.1.0</version>
+  <description>The package for handling input from the XBox controller. Writes to the motor_controller topics.</description>
 
-  <maintainer email="fnivek@gmail.com">fnivek</maintainer>
-
+  <maintainer email="joey@todo.todo">Joey S.</maintainer>
 
   <license>TODO</license>
 
-
   <author email="fnivek@gmail.com">Kevin French</author>
-
 
   <!-- Dependencies -->
   <buildtool_depend>catkin</buildtool_depend>

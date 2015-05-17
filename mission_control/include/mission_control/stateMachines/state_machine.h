@@ -46,7 +46,7 @@ class StateMachine {
 		 void printHistory();
 
 	private:
-		static const int LOOP_LIMIT = 10;
+		static const int LOOP_LIMIT = 3;
 
 		//PRIVATE METHODS=======================
 		/* int check(int)

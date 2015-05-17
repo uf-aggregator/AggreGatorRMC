@@ -130,9 +130,10 @@ int NavigationState::navigateTo(bool forward){
 
 	ros::Subscriber sub = nh.subscribe("ir_distances", 1, readIrDistancesCallback);
 	ros::spinOnce();
-	int index = 0;
+	ros::Time startTime = ros::Time::now();
+	ros::Duration duration(5);
 
-	while(++index < 15 && ros::ok()){ //find a real condition, currently placeholding
+	while((startTime - ros::Time::now() < duration) && ros::ok()){ //find a real condition, currently placeholding
 		//read in the "front" ir distances and move accordingly
 		switch(checkIRs(forward)){
 			case -1: //obstacle on right IR

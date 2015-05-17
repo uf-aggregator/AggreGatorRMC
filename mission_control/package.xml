@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
   <name>mission_control</name>
-  <version>0.0.1</version>
-  <description>The mission_control package</description>
+  <version>0.1.0</version>
+  <description>The high-level control package for dictating autonomous actions. It draws information from other packages via topics and services.</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
@@ -19,13 +19,14 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/mission_control</url> -->
+  <url type="website">http://www.ufaggregator.com/</url>
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
   <!-- Authors do not have to be maintianers, but could be -->
   <!-- Example: -->
-  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+  <author email="todo@todo.todo">Joey S.</author>
+  <author email="todo@todo.todo">Andrew V.</author>
 
 
   <!-- The *_depend tags are used to specify dependencies -->

@@ -39,7 +39,10 @@ In order to setup the workspace, first run the usual commands from the directory
 
 ###Connecting to the Odroid (AggreGator)
 
-First, ssh into the Odroid:
+First, make sure the router is setup and that the Odroid is set to connect.
+Alternatively, you can hook up an ethernet cable between your machine and the Odroid.
+
+Connect to that router's network, then ssh into the Odroid:
 
 ```bash
 

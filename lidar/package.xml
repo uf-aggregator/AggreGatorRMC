@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package>
-  <name>new_lidar</name>
-  <version>0.0.0</version>
-  <description>The new_lidar package</description>
+  <name>lidar</name>
+  <version>0.1.0</version>
+  <description>The (new) primary lidar package for laser processing and centroid calculation.</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="joey@todo.todo">joey</maintainer>
+  <maintainer email="joey@todo.todo">Joey S.</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
@@ -19,13 +19,13 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/new_lidar</url> -->
+  <url type="website">http://www.ufaggregator.com/</url>
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
   <!-- Authors do not have to be maintianers, but could be -->
   <!-- Example: -->
-  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+  <author email="joey@todo.todo">Joey S.</author>
 
 
   <!-- The *_depend tags are used to specify dependencies -->

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--xml file for roslaunch
+	Used to launch LIDAR nodes automatically-->
+<launch>
+	
+	<node name="urg_node" pkg="urg_node" type="urg_node"/>
+	<node name="pcl_conversion_node" pkg="lidar" type="pcl_conversion_node" output="screen"/>
+	<node name="pcl_centroid_node" pkg ="lidar" type="pcl_centroid_node" output="screen" />
+
+</launch>
+
