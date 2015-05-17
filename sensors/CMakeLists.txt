@@ -79,10 +79,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES sensors
-#  CATKIN_DEPENDS common_files roscpp
-#  DEPENDS system_lib
+  INCLUDE_DIRS include
+  LIBRARIES sensors
+  CATKIN_DEPENDS common_files roscpp
+  #DEPENDS system_lib
 )
 
 ###########
@@ -94,12 +94,14 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  include ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a cpp library
-# add_library(sensors
-#   src/${PROJECT_NAME}/sensors.cpp
-# )
+add_library(
+	ir_processing_utils
+	include/${PROJECT_NAME}/ir_reader.cpp
+)
 
 ## Declare a cpp executable
 add_executable(sensor_node src/sensor_node.cpp)
@@ -121,6 +123,12 @@ target_link_libraries(mpu_node
 add_executable(angle_node src/angle_node.cpp)
 target_link_libraries(angle_node
    ${catkin_LIBRARIES}
+)
+
+add_executable(ir_node src/ir_node.cpp)
+add_dependencies(ir_node ir_processing_generate_messages_cpp)
+target_link_libraries(ir_node
+	${catkin_LIBRARIES}	ir_processing_utils
 )
 
 

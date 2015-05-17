@@ -128,7 +128,7 @@ int NavigationState::navigateTo(bool forward){
 	ros::init(argc, argv, "navigate_to_mine");
 	ros::NodeHandle nh;
 
-	ros::Subscriber sub = nh.subscribe("IrDistances", 1, readIrDistancesCallback);
+	ros::Subscriber sub = nh.subscribe("ir_distances", 1, readIrDistancesCallback);
 	ros::spinOnce();
 	int index = 0;
 
