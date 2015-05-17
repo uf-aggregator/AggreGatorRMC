@@ -94,7 +94,6 @@ void both_backward(){
   digitalWrite(left_dirb, HIGH);
   digitalWrite(right_dira, LOW);
   digitalWrite(right_dirb, HIGH);
-  
 }
 
 void setup() {
@@ -127,7 +126,6 @@ void setup() {
   //attachInterrupt(right_encb, encoderRightB, CHANGE); 
   
   digitalWrite(led, LOW);
-  
 }
 
 void loop() {

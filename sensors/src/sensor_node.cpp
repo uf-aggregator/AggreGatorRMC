@@ -74,7 +74,7 @@ void sensorCallback(const ros::TimerEvent&){
         //              ROS_INFO("data[%d]: %d", i, mega_srv.response.data[i]);
         //      }
 	//	ROS_INFO("Ladder lift: %d, ladder conv: %d, bucket lift: %d, bucket dump: %d", ladder_lift_cs, ladder_conv_cs, bucket_lift_cs, bucket_dump_cs);
-        }else{
+        } else {
                 ROS_ERROR("Failed to call read_i2c mega service");
         }
 }

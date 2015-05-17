@@ -10,14 +10,6 @@ find_package(catkin REQUIRED COMPONENTS
   common_files
 )
 
-
-################################################
-## Declare ROS messages, services and actions ##
-################################################
-
-## Generate added messages and services with any dependencies listed here
-
-
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -32,26 +24,9 @@ catkin_package(
   CATKIN_DEPENDS roscpp std_msgs common_files
 )
 
-###########
-## Build ##
-###########
-
-## Specify additional locations of header files
-## Your package locations should be listed before other locations
-# include_directories(include)
 include_directories(
   include ${catkin_INCLUDE_DIRS}
 )
-
-
-#############
-## Install ##
-#############
-
-#############
-## Testing ##
-#############
-
 
 #################
 ## Executables ##

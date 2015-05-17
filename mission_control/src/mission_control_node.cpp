@@ -15,7 +15,6 @@ int main(int argc, char **argv){
 
 	StateMachine *sm = new StateMachine();
 	sm->start(0);
-
-	ros::shutdown();
+	
 	return 0;
 }

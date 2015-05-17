@@ -10,11 +10,6 @@ find_package(catkin REQUIRED COMPONENTS
   hardware_interface
 )
 
-################################################
-## Declare ROS messages, services and actions ##
-################################################
-
-
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES mission_control
@@ -51,4 +46,4 @@ add_dependencies( mission_control_node mission_control_generate_messages_cpp )
 target_link_libraries(mission_control_node
    ${catkin_LIBRARIES}
    mission_utils
- )
+)
