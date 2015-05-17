@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--xml file for roslaunch
-	This will launch nodes meant to run on the O-Droid
+	This will launch nodes meant to run on the Odroid
 -->
 
 <launch>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--xml file for roslaunch
+	This will start the required nodes to begin autonomous op on the robot
+-->
+
+<launch>
+	<!--start the nodes for writing to the hardware-->
+	<node name="i2c_node" pkg="hardware_interface" type="i2c_node"/>
+	
+	<!--launches motor topics listener-->
+	<node name="motor_node" pkg="motor_controller" type="motor_node"/>	
+
+	<!--start listening to the sensors-->
+	<node name="sensor_node" pkg="sensors" type="sensor_node"/>
+	<node name="mpu_node" pkg="sensors" type="mpu_node"/>
+	<node name="angle_node" pkg="sensors" type="angle_node"/>
+	<node name="ir_node" pkg="sensors" type="ir_node"/>
+
+	<!--start the state machines-->
+	<!--requiring the mission_control_node will kill all nodes launched if it's killed-->
+	<node name="mission_control_node" pkg="mission_control" type="mission_control_node" required="true"/>
+</launch>

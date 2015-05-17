@@ -72,8 +72,6 @@ int NavigationState::moveStraight(bool front){
 		motor_utility::write(moveSpd, moveSpd);
 	}
 
-	motor_utility::stop_wheels();
-
 	return 0;
 }
 
@@ -83,8 +81,6 @@ int NavigationState::turnLeft(bool front){
 	while(startTime - ros::Time::now() < move_time){
 		motor_utility::write(-moveSpd, moveSpd);
 	}
-
-	motor_utility::stop_wheels();
 
 	return 0;
 }
@@ -96,8 +92,6 @@ int NavigationState::turnRight(bool front){
 		motor_utility::write(moveSpd, -moveSpd);
 	}
 
-	motor_utility::stop_wheels();
-
 	return 0;
 }
 
@@ -107,8 +101,6 @@ int NavigationState::backUp(bool front){
 	while(startTime - ros::Time::now() < move_time){
 		motor_utility::write(-moveSpd, -moveSpd);
 	}
-
-	motor_utility::stop_wheels();
 
 	return 0;
 }
@@ -152,6 +144,9 @@ int NavigationState::navigateTo(bool forward){
 				backUp(forward);
 				break;
 		}
+
+		//clear topics
+		motor_utility::stop_wheels();
 
 		//next iteration, read new data
 		ros::spinOnce();	

@@ -1,10 +1,7 @@
 <?xml version="1.0"?>
-<!--xml file for roslaunch
-	This file is for the command computer
--->
+<!--This file is for the command computer-->
 
 <launch>
-	
 	<!--Joy nodes-->
 	<node name="joy_node" pkg="joy" type="joy_node" output="screen"/>
 
@@ -21,12 +18,10 @@
 	
 	<!--
 	For quick command line input:
+
+	rosrun image_rotate image_rotate image:=/usb_cam/image_raw __name:=image_rotater _image_transport:=theora
 	
-
-rosrun image_rotate image_rotate image:=/usb_cam/image_raw __name:=image_rotater _image_transport:=theora
-
-rosrun image_view image_view image:=rotated/image _image_transport:=theora	
+	rosrun image_view image_view image:=rotated/image _image_transport:=theora	
 	-->
-
 </launch>
 
