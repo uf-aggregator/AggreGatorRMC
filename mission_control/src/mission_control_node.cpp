@@ -3,7 +3,6 @@
 #include <ros/ros.h>
 #include <signal.h>
 #include "std_msgs/String.h"
-#include <common_files/Motor.h>
 #include "mission_control/stateMachines/state_machine.h"
 
 

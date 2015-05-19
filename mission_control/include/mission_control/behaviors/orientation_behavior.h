@@ -3,6 +3,7 @@
 
 #include <std_msgs/Float32.h>
 #include "common_files/Gyro.h"
+#include "common_files/Centroid.h"
 
 enum Direction {
 	NONE = -1,
@@ -21,20 +22,23 @@ class OrientationBehavior {
 		static float x2, y2; //second pair of coords
 		static float width, height; //resolution of the camera
 		static float angle;
+		static float centroid_x, centroid_y;
 
 		/* methods */
 		static void updateAngle();
+		static void turn(int degrees); //uses mpu
 
 		/* callbacks */
 		static void orientAngleCallback(const std_msgs::Float32::ConstPtr& msg);
+		static void centroidCallback(const common_files::Centroid::ConstPtr& msg);
 
 		/* orient by LEDs */
 		static void turn();
 		static void find();
 		static void orientToLEDs();
 
-		/* orient by mpu */
-		static void turn(int degrees);
+		/* orient by centroid */
+		static void orientByCentroid();
 };
 
 #endif

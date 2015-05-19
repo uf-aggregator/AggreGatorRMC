@@ -2,9 +2,12 @@
 #include <cmath>
 #include <iostream>
 #include "behaviors.h"
+#include "navigation_behavior.h"
 #include "common_files/Coordinates.h"
 
+
 #define INVALID_VAL 32768.0
+#define ALIGNED_VERTICAL -32768.0
 
 /* INITIALIZE STATIC MEMBERS ======================*/
 Direction OrientationBehavior::lastSeen = NONE;
@@ -15,6 +18,8 @@ float OrientationBehavior::y2 = -1.0;
 float OrientationBehavior::width = 0.0;
 float OrientationBehavior::height = 0.0;
 float OrientationBehavior::angle = INVALID_VAL;
+float OrientationBehavior::centroid_x = INVALID_VAL;
+float OrientationBehavior::centroid_y = INVALID_VAL;
 
 
 /* CALLBACKS ======================*/
@@ -22,8 +27,103 @@ void OrientationBehavior::orientAngleCallback(const std_msgs::Float32::ConstPtr&
 	angle = msg->data;
 }
 
+void OrientationBehavior::centroidCallback(const common_files::Centroid::ConstPtr& msg){
+	centroid_x = msg->x;
+	centroid_y = msg->y;
+}
+
 
 /* OPERATIONAL METHODS ======================*/
+//turns based on a given amount of degrees using /gyro topic
+void OrientationBehavior::turn(int degrees){
+	int argc; char **argv;
+	ros::init(argc, argv, "turning_using_gyro_topic");
+	ros::NodeHandle nh;
+
+	ros::Subscriber sub = nh.subscribe("orientation_angle", 1, orientAngleCallback);
+	while(angle == INVALID_VAL)
+		ros::spinOnce();
+
+	bool negative = degrees < 0;
+	degrees = negative ? degrees * -1.0 : degrees;
+	float fixed = angle;
+	float delta = 0.0;
+
+	while(delta <= degrees){
+		delta = angle - fixed;
+		delta = std::abs(delta);
+
+		if(negative) motor_utility::write(50.0, -50.0);
+		else motor_utility::write(-50.0, -50.0);
+	}
+
+	motor_utility::stop();
+}
+
+//updates only the current angle
+void OrientationBehavior::updateAngle(){
+	int argc; char **argv;
+	ros::init(argc, argv, "updating_angle");
+	ros::NodeHandle nh;
+	ros::Subscriber sub = nh.subscribe("orientation_angle", 1, orientAngleCallback);
+	do {
+		ros::spinOnce();
+	} while(angle == INVALID_VAL);
+}
+
+/* Centroid-based orientation ===================================*/
+float getSlope(float x1, float y1, float x2, float y2) {
+	if(x2 - x1 == 0.0) 
+		return ALIGNED_VERTICAL;
+	return (y2 - y1)/(x2 - x1);
+}
+
+//orients based on the slope calculated by the centroid
+void OrientationBehavior::orientByCentroid(){
+	int argc; char **argv;
+	ros::init(argc, argv, "orienting_using_centroids");
+	ros::NodeHandle nh;
+	ros::Subscriber sub = nh.subscribe("centroid", 1, centroidCallback);
+	while(centroid_x == INVALID_VAL && centroid_y == INVALID_VAL)
+		ros::spinOnce();
+
+	float last_centroid_x = centroid_x;
+	float last_centroid_y = centroid_y;
+
+	NavigationBehavior::moveStraight(true); //move straight
+	ros::spinOnce();
+
+	float slope = getSlope(last_centroid_x, last_centroid_y, centroid_x, centroid_y);
+	float acceptMargin = 0.2;
+
+	while(	(slope != ALIGNED_VERTICAL) && 
+			(slope < -acceptMargin || slope > acceptMargin)){
+		//move according to the slope
+		if(slope > 0) { //positive slope
+			turn(5.0);
+		}
+		else if(slope == 0.0){ //0 slope
+			turn(90.0);
+		}
+		else { //negative slope
+			turn(5.0);
+		}
+
+		//update current centroid to last
+		last_centroid_x = centroid_x;
+		last_centroid_y = centroid_y;
+
+		//get new values
+		ros::spinOnce();
+
+		//get new slope
+		slope = getSlope(last_centroid_x, last_centroid_y, centroid_x, centroid_y);
+	}
+	motor_utility::stop_wheels();
+}
+
+
+/* LED-based orientation =====================================*/
 // turns based on the LED static variables
 void OrientationBehavior::turn(){
 	float mX = abs( x1 + x2 )/2.0;
@@ -48,43 +148,6 @@ void OrientationBehavior::turn(){
 
 	//write the values
 	motor_utility::write(left_value, right_value);
-}
-
-//turns based on a given amount of degrees using /gyro topic
-void OrientationBehavior::turn(int degrees){
-	int argc; char **argv;
-	ros::init(argc, argv, "turning_using_gyro_topic");
-	ros::NodeHandle nh;
-
-	ros::Subscriber sub = nh.subscribe("orientation_angle", 1, orientAngleCallback);
-	while(angle == INVALID_VAL)
-		ros::spinOnce();
-
-	bool negative = degrees < 0;
-	degrees = negative ? degrees * -1.0 : degrees;
-	float fixed = angle;
-	float delta = 0.0;
-
-	while(delta <= degrees){
-		delta = angle - fixed;
-		delta = std::abs(delta);
-
-		if(negative) motor_utility::write(-50.0, 50.0);
-		else motor_utility::write(50.0, -50.0);
-	}
-
-	motor_utility::stop();
-}
-
-//updates only the current angle
-void OrientationBehavior::updateAngle(){
-	int argc; char **argv;
-	ros::init(argc, argv, "updating_angle");
-	ros::NodeHandle nh;
-	ros::Subscriber sub = nh.subscribe("orientation_angle", 1, orientAngleCallback);
-	do {
-		ros::spinOnce();
-	} while(angle == INVALID_VAL);
 }
 
 //uses the video processing service to find the position of the red LEDs

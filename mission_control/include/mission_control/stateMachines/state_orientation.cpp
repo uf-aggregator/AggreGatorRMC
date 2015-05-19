@@ -1,5 +1,6 @@
 #include "state_orientation.h"
 
+/* CONSTRUCTORS =====================================*/
 OrientationState::OrientationState(States state){
 	//for initializing data members for the particular state
 	switch(state){
@@ -13,13 +14,15 @@ OrientationState::OrientationState(States state){
 	}
 }
 
+
+/* METHODS =====================================*/
 int OrientationState::orientToMine(){
 	OrientationBehavior::updateAngle();
+	OrientationBehavior::orientByCentroid();
 	return 0;
 }
 
 int OrientationState::orientToDump(){
 	OrientationBehavior::updateAngle();
-	OrientationBehavior::turn(180);
 	return 0;
 }

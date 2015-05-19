@@ -24,6 +24,7 @@ catkin_package(
 add_library(
 	mission_utils
   include/mission_control/behaviors/orientation_behavior.cpp
+  include/mission_control/behaviors/navigation_behavior.cpp
   include/mission_control/behaviors/motor_utility.cpp
   include/mission_control/stateMachines/state_start.cpp
   include/mission_control/stateMachines/state_navigation.cpp

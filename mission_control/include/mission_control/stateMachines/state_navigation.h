@@ -2,6 +2,7 @@
 #define STATE_NAVIGATION_H
 
 #include "../behaviors/behaviors.h"
+#include "../behaviors/navigation_behavior.h"
 #include "common_files/IRDistances.h"
 
 class NavigationState {
@@ -19,10 +20,6 @@ class NavigationState {
 		static common_files::IRDistances ir_distances;
 		static void readIrDistancesCallback(const common_files::IRDistances::ConstPtr& msg);
 		int checkIRs(bool front);
-		int moveStraight(bool front);
-		int turnLeft(bool front);
-		int turnRight(bool front);
-		int backUp(bool front);
 };
 
 #endif
