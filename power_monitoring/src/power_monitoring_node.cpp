@@ -28,6 +28,9 @@ float multi_energy = 0.00;		//Stores energy over multiple runs, percentage
 float current_energy = 0.00; 		//store energy over one run, percentage
 float remaining_energy = 100.00;	//Remaining energy left in battery, percentage
 
+float TOTAL_KWH = TOTAL_JOULES * 2.778 * pow(10, -7);
+float remaining_kwH = TOTAL_KWH;
+
 /*Write percentage to file*/
 bool writePercentage(float percentage_1, float percentage_2){
 	ofstream batteryFile("../../../../BatteryPercentage.txt", ios::trunc | ios::out);
@@ -83,6 +86,7 @@ void TrackElectronicPower(const common_files::ElectronicPowerData& data)
 	current_energy += percent;
 	multi_energy += percent;
 	remaining_energy = 100 - multi_energy;
+
 	if(remaining_energy <= 20)
 		ROS_ERROR("Low Battery! Consider charging electronics battery.");
 	last_callback = current_time;
@@ -95,6 +99,7 @@ void UpdateElectronicPowerUsage()
 {
 	ROS_INFO("Power used (this run : multiple runs) = %.2f%% : %.2f%%", current_energy, multi_energy);
 	ROS_INFO("Remaining Power = %.2f%% ", remaining_energy);
+	ROS_INFO("Remaining kwH = %.2f%% ", ((remaining_energy/100 * TOTAL_JOULES) * (2.778 * pow(10, -7))));
 	writePercentage(current_energy,multi_energy);	
 }
 
