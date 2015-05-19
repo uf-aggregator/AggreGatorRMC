@@ -76,7 +76,7 @@ void ConvertRawMotorToPower(const common_files::RawMotorPowerData& data)
 void TrackElectronicPower(const common_files::ElectronicPowerData& data)
 {
 	float calculatedPower = data.power; //Calculates power based on the digital value from the INA226 and the bit-to-Watt conversion ratio. Calculated in the ina226 node
-	//ROS_INFO("%i",data.power);
+	//ROS_INFO("%.2f kwH", (data.voltage * data.current/1000));
 	current_time = ros::Time::now();
 	
 	float percent = (calculatedPower * (current_time - last_callback).toSec()) * 100 / TOTAL_JOULES;
@@ -93,13 +93,11 @@ void TrackElectronicPower(const common_files::ElectronicPowerData& data)
 //Outputs power data for electronics and writes data to a file for logging purposes
 void UpdateElectronicPowerUsage()
 {
-
 	ROS_INFO("Power used (this run : multiple runs) = %.2f%% : %.2f%%", current_energy, multi_energy);
 	ROS_INFO("Remaining Power = %.2f%% ", remaining_energy);
-	writePercentage(current_energy,multi_energy);
-	
-	
+	writePercentage(current_energy,multi_energy);	
 }
+
 int main(int argc, char** argv)
 {
     /*
@@ -139,7 +137,5 @@ int main(int argc, char** argv)
         ros::spinOnce();
     }
 
-	
-	
 	return 0;
 }

@@ -9,6 +9,7 @@
 #include "state_dump.h"
 #include "state_start.h"
 #include "state_orientation.h"
+#include "state_orientation_prime.h"
 #include "state_mine.h"
 #include "state_navigation.h"
 
@@ -67,9 +68,16 @@ int StateMachine::executeState(int executingState) {
 		}
 
 		case ORIENTATION_START: {
+			/* Default Orientation State Machine
 			OrientationState *oss = new OrientationState(ORIENTATION_START);
 			while( oss->orientToMine() != 0 && (loopCnt = check(++loopCnt)) != 0 ){}
 			delete oss;
+			*/
+			///* Alternative Orientation State Machine
+			OrientationStatePrime *ossp = new OrientationStatePrime();
+			while( ossp->OrientToStart() != 0 && (loopCnt = check(++loopCnt)) != 0 ){}
+			delete ossp;
+			//*/
 			break;
 		}
 
