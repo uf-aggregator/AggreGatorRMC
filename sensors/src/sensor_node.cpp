@@ -1,8 +1,7 @@
 /*
 This node is meant to poll any and all sensors on the i2c bus
-	-The only data returned from the teensy is encoders
-	-The only data returned from the mega is current sense
-
+        -The only data returned from the teensy is encoders and motor current
+        -The only data returned from the mega is motor current, overall current, and IR sensors
 */
 
 #include <iostream>

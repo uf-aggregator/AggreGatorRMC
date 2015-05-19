@@ -109,7 +109,7 @@ int main(int argc, char** argv){
 	ros::Duration(1).sleep();
 
 	//read mpu every tenth of a second
-    ros::Timer mpu_timer = n.createTimer(ros::Duration(0.05), mpuCallback);
+    ros::Timer mpu_timer = n.createTimer(ros::Duration(0.01), mpuCallback);
 
     ros::Timer ros_out_timer = n.createTimer(ros::Duration(.25), rosoutCallback);
 

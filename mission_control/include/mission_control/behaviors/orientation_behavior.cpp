@@ -95,6 +95,7 @@ void OrientationBehavior::orientByCentroid(){
 
 	float slope = getSlope(last_centroid_x, last_centroid_y, centroid_x, centroid_y);
 	float acceptMargin = 0.2;
+	NavigationBehavior::backUp(true); //move back from moving straight
 
 	while(	(slope != ALIGNED_VERTICAL) && 
 			(slope < -acceptMargin || slope > acceptMargin)){
@@ -120,6 +121,25 @@ void OrientationBehavior::orientByCentroid(){
 		slope = getSlope(last_centroid_x, last_centroid_y, centroid_x, centroid_y);
 	}
 	motor_utility::stop_wheels();
+}
+
+void OrientationBehavior::turnIfFacingLidar(){
+	//check if we're facing the lidar
+	int argc; char **argv;
+	ros::init(argc, argv, "orienting_using_centroids");
+	ros::NodeHandle nh;
+	ros::Subscriber sub = nh.subscribe("centroid", 1, centroidCallback);
+	while(centroid_x == INVALID_VAL && centroid_y == INVALID_VAL)
+		ros::spinOnce();
+
+	float last_centroid_x = centroid_x;
+	float last_centroid_y = centroid_y;
+
+	NavigationBehavior::moveStraight(true); //move straight
+	ros::spinOnce();
+
+	//turn if we are
+	if(last_centroid_y > centroid_y) turn(180);
 }
 
 
