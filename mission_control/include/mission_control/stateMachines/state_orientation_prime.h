@@ -21,14 +21,17 @@ public:
 	int x, y, Gyroscope;
 	int Starting_Line;
 	string Position;
+	int Status;
 	static double Initial_x;
 	static double Initial_y;
 	
 	OrientationStatePrime();
 	double Distance_Traveled();
-	void Move_A_Bit();
+	int Move_A_Bit();
+	void Move_Backwords();
+	void ResetGyro();
 	int OrientToStart();
-	int Determine_Location( double x, double y);
+	//int Determine_Location( double x, double y);
 	static void LidarCoordinatesCallback(const common_files::Centroid::ConstPtr& msg);
 	static void GyroCallback(const std_msgs::Float32::ConstPtr& msg);
 	
