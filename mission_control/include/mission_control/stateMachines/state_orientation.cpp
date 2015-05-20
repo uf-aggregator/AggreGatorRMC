@@ -19,6 +19,7 @@ OrientationState::OrientationState(States state){
 int OrientationState::orientToMine(){
 	OrientationBehavior::updateAngle();
 	OrientationBehavior::orientByCentroid();
+	OrientationBehavior::turnIfFacingLidar();
 	return 0;
 }
 

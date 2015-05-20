@@ -39,6 +39,7 @@ class OrientationBehavior {
 
 		/* orient by centroid */
 		static void orientByCentroid();
+		static void turnIfFacingLidar();
 };
 
 #endif

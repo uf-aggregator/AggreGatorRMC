@@ -8,34 +8,35 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "common_files/RawMotorPowerData.h"
-#include "common_files/ElectronicPowerData.h"
+#include "std_msgs/Float32.h"
+
+//Global variables
+ros::Subscriber overall_cs;
+ros::Time last_time(0), curr_time(0);
+ros::Duration update_rate(5); //time in seconds between power monitoring updates
 
 using namespace std;
 
-//Global variables
-ros::Subscriber raw_motor_power_sub;
-ros::Subscriber electronic_power_sub;
-
-ros::Time last_time(0), current_time, start_time, last_callback(0); //Timing variables
-ros::Duration update_rate(15); //time in seconds between power monitoring updates
+//name of log file
+const string log_file = "~/AggreGator_ws/src/AggreGatorRMC/power_monitoring/power_log.txt";
 
 //hardcode battery capacity
-int TOTAL_JOULES = 133200;
+const float TOTAL_JOULES = 133200.0;
 
-//global battery percentage value
-float multi_energy = 0.00;		//Stores energy over multiple runs, percentage
-float current_energy = 0.00; 		//store energy over one run, percentage
-float remaining_energy = 100.00;	//Remaining energy left in battery, percentage
+//instantaneous power
+float inst_power = 0.0;
 
-/*Write percentage to file*/
-bool writePercentage(float percentage_1, float percentage_2){
-	ofstream batteryFile("../../../../BatteryPercentage.txt", ios::trunc | ios::out);
+//joules used in previous and current run
+float prev_coulombs = 0.0;
+float curr_coulombs = 0.0;
+
+
+bool writeCoulombs(float total_coulombs){
+	ofstream batteryFile("/home/odroid/AggreGator_ws/src/AggreGatorRMC/power_monitoring/power_log.txt", fstream::trunc | fstream::out); //trunc will clear the file while opening
 	if(batteryFile.is_open())
 	{	
-		batteryFile << "UF AggreGator, Percent of Electronics Battery Used. \n";
-		batteryFile << "Single Run: " << percentage_1 << "\t"; 
-		batteryFile << "Overall Total: " << percentage_2;
+		//TODO: Write accumulated power
+		batteryFile << total_coulombs;
 		batteryFile.close();
 		return true;
 	}
@@ -45,97 +46,61 @@ bool writePercentage(float percentage_1, float percentage_2){
 	}
 }
 
-/*Read percentage from file and then set global multi_energy to that value*/
-bool readPercentage(){
-	string percentage;
-	fstream batteryFile("../../../../BatteryPercentage.txt", ios::in);
+bool readCoulombs(){
+	string temp_str;
+	fstream batteryFile("/home/odroid/AggreGator_ws/src/AggreGatorRMC/power_monitoring/power_log.txt", ios::in);
 	if(batteryFile.is_open()){
-		batteryFile.seekg(88,ios::beg); //Set stream pointer to read correct float value
-		while(getline(batteryFile, percentage)){
-			multi_energy = (float)atof(percentage.c_str());
-			remaining_energy = 100.00 - multi_energy;
-			//ROS_INFO("multi_energy %f",multi_energy);
-		}//endwhile	
+		getline(batteryFile, temp_str);
+		prev_coulombs = (float)atof(temp_str.c_str());
 		batteryFile.close();
 		return true;
 	} else {
-		ROS_WARN("Battery log can't be opened, assuming 0.");
+		prev_coulombs = 0.0;
+		ROS_WARN("Battery log can't be opened, assuming no power used.");
 		return false;
 	}
 }
 
-
-
-//Converts raw data from ADC into power
-void ConvertRawMotorToPower(const common_files::RawMotorPowerData& data)
-{
-  //  ROS_INFO("Raw data [Voltage: %i, Current: %i]", data.voltage, data.current);
+void currentCallback(const std_msgs::Float32::ConstPtr& current){
+	last_time = curr_time;
+	curr_time = ros::Time::now(); 
+	if(last_time.toSec() != 0.0){
+		inst_power = current->data*22.0;	
+		float inst_coulombs = current->data*(curr_time.toSec() - last_time.toSec());
+		//ROS_INFO("inst_coulombs = %f", inst_coulombs);
+		//ROS_INFO("curr coulombs, before addition: %f", curr_coulombs);
+		curr_coulombs = curr_coulombs + inst_coulombs;
+		//ROS_INFO("curr_coulombs, after addition:  %f", curr_coulombs);
+	} //else, ignore the first value
 }
 
-//Tracks the power used by the electronics
-void TrackElectronicPower(const common_files::ElectronicPowerData& data)
-{
-	float calculatedPower = data.power; //Calculates power based on the digital value from the INA226 and the bit-to-Watt conversion ratio. Calculated in the ina226 node
-	//ROS_INFO("%.2f kwH", (data.voltage * data.current/1000));
-	current_time = ros::Time::now();
-	
-	float percent = (calculatedPower * (current_time - last_callback).toSec()) * 100 / TOTAL_JOULES;
-	current_energy += percent;
-	multi_energy += percent;
-	remaining_energy = 100 - multi_energy;
-	if(remaining_energy <= 20)
-		ROS_ERROR("Low Battery! Consider charging electronics battery.");
-	last_callback = current_time;
-	//ROS_INFO("actual power: %f",calculatedPower);
-	
-}
-
-//Outputs power data for electronics and writes data to a file for logging purposes
-void UpdateElectronicPowerUsage()
-{
-	ROS_INFO("Power used (this run : multiple runs) = %.2f%% : %.2f%%", current_energy, multi_energy);
-	ROS_INFO("Remaining Power = %.2f%% ", remaining_energy);
-	writePercentage(current_energy,multi_energy);	
+void logCallback(const ros::TimerEvent&){
+	ROS_INFO("Coulombs used this run: %f", curr_coulombs);
+        ROS_INFO("Coulombs used overall: %f", (curr_coulombs + prev_coulombs));
+	ROS_INFO("Watt*hours used this run: %f", curr_coulombs*22/3600);
+	ROS_INFO("Watt*hours used overall: %f", curr_coulombs*22/3600);
+	ROS_INFO("Current power usage (watts): %f", inst_power);
+        writeCoulombs(curr_coulombs + prev_coulombs);
 }
 
 int main(int argc, char** argv)
 {
-    /*
-     * Initialization
-     */
-
     //Initilize the power monitoring node
     ros::init(argc, argv, "power_monitoring_node");
-		
-	
-    //Node handler this is how you work with ROS
     ros::NodeHandle n;
 
     //Initilize publishers, subscribers, and services
-    raw_motor_power_sub = n.subscribe("raw_motor_power", 1000, ConvertRawMotorToPower);
-    electronic_power_sub = n.subscribe("electronic_power", 1000, TrackElectronicPower);
-    
-    start_time = ros::Time::now(); //Start time
-    last_time = start_time;
-    last_callback = start_time;
-
+    overall_cs = n.subscribe("overall_current", 1000, currentCallback);
+    ros::Timer log_timer = n.createTimer(ros::Duration(1), logCallback);	    
     //Initialize power
-    readPercentage();
+    readCoulombs();
 
     /*
      * Main loop
      */
     while (ros::ok())
     {
-	current_time = ros::Time::now(); //updated time
-		
-	if(current_time - last_time > update_rate)
-	{
-		last_time = current_time;
-		UpdateElectronicPowerUsage();
-	}
         ros::spinOnce();
     }
-
-	return 0;
+    return 0;
 }
